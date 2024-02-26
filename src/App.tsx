@@ -1,6 +1,7 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 // import Sidebar from "./components/Sidebar";
-import Header from './components/Header';
+import Header from "./components/Header";
+
 
 export default function App() {
   return (
@@ -14,9 +15,8 @@ export default function App() {
 
     <>
       <Header />
-      <div className='h-full'>
-        <Outlet />
-      </div>
+      <Outlet />
+
     </>
   );
 }
