@@ -4,6 +4,6 @@
 
 /* @layer base {
   #root {
-    @apply h-[200vh];
+    @apply h-screen;
   }
 } */
