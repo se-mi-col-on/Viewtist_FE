@@ -3,13 +3,18 @@ import App from "./App";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 
+
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <App />,
     children: [
       {
-        path: "",
+        path: '',
+        element: <Home />,
+      },
+      {
+        path: 'login',
         element: <Home />,
       },
       {
