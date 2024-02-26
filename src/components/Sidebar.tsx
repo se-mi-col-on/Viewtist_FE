@@ -1,7 +1,3 @@
 export default function Sidebar() {
-  return (
-    <aside className="w-1/6 h-screen border-2 fixed top-0 left-0">
-      sidebar
-    </aside>
-  );
+  return <aside className='fixed top-0 left-0 w-1/6 h-screen border-2'>sidebar</aside>;
 }
