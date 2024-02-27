@@ -4,6 +4,6 @@
 
 /* @layer base {
   #root {
-    @apply h-screen;
+    @apply h-full;
   }
 } */
