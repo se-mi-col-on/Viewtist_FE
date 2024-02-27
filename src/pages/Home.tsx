@@ -1,28 +1,63 @@
+import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
+
+type StreamingData = {
+  id: number;
+  user_id: string;
+  title: string;
+  category: string;
+  start_at: string;
+  viewer_count: number;
+  transmission_method: string;
+  created_at: string;
+  modified_at: string;
+};
+
+type StreamingListArray = StreamingData[];
+
+type CardProps = {
+  title: string;
+  category: string;
+  viewer_count: number;
+  user_id: string;
+};
+
+const fetchData = async () => {
+  const response = await axios.get('/data/live-streaming.json');
+  return response.data as StreamingListArray;
+};
+
 export default function Home() {
+  const {
+    data: liveStreamingList,
+    isLoading,
+    error,
+  } = useQuery<StreamingListArray>({
+    queryKey: ['liveStreamingList'],
+    queryFn: fetchData,
+  });
+
   return (
-    <div className='flex flex-col items-end h-full '>
-      <div className='flex flex-col w-5/6 h-full gap-2 p-3 border-2'>
+    <div className='flex flex-col items-end w-5/6 h-full'>
+      <div className='flex flex-col h-full gap-2 p-3'>
         <p>현재 스트리밍 중인 채널</p>
         <div className='flex flex-wrap justify-center h-full gap-4 p-3'>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          {liveStreamingList?.map(({ id, title, category, viewer_count, user_id }) => (
+            <Card
+              key={id}
+              title={title}
+              category={category}
+              viewer_count={viewer_count}
+              user_id={user_id}
+            />
+          ))}
         </div>
       </div>
     </div>
   );
 }
 
-const Card = () => {
+const Card = ({ title, category, viewer_count, user_id }: CardProps) => {
   return (
     <div className='shadow-xl card w-80 bg-base-100'>
       <figure>
@@ -39,12 +74,12 @@ const Card = () => {
           </div>
         </div>
         <div className='flex flex-col gap-2 text-sm'>
-          <p>춤추는나비</p>
-          <p>뉴진스 신곡 챌린지</p>
+          <p className='text-amber-200'>{user_id}</p>
+          <p className='font-extrabold'>{title}</p>
         </div>
         <div className='flex flex-col gap-1 ml-auto mr-3'>
-          <button className='btn btn-xs'>댄스</button>
-          <button className='btn btn-xs'>569명 시청</button>
+          <button className='btn btn-xs'>{category}</button>
+          <button className='btn btn-xs'>{viewer_count} 명 시청</button>
         </div>
       </div>
     </div>
