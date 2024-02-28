@@ -28,12 +28,17 @@ export default function SignUp() {
   // ); // watch input value by passing the name of it
 
   return (
-    <div className='flex items-center mt-6 '>
+    <div className='flex items-center w-full mt-6 border-2'>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className='flex flex-col items-center w-1/2 p-3 m-auto border-2 rounded-lg'
       >
         <h1 className='mb-3 text-3xl'>회원가입</h1>
+
+        {/* <label className='w-full max-w-xs form-control'>
+          <div className='label'>
+            <span className='font-bold label-text'>아이디</span>
+        <h1 className='mb-3 text-3xl'>회원가입</h1> */}
         <label className='w-full max-w-xs form-control'>
           <div className='label'>
             <span className='font-bold label-text'>아이디</span>
@@ -121,7 +126,7 @@ export default function SignUp() {
                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                 message: '이메일 형식을 지켜주세요.',
               },
-              required:"필수 항목입니다."
+              required: '필수 항목입니다.',
             })}
           />
           {errors.email && <span className='text-red-700'>{errors.email.message}</span>}
