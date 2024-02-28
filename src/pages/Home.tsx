@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
 
 type StreamingData = {
   id: number;
@@ -36,13 +37,19 @@ export default function Home() {
     queryKey: ['liveStreamingList'],
     queryFn: fetchData,
   });
+  const { categoryName } = useParams<{ categoryName: string }>();
+
+  const filteredLiveStreamingList =
+    categoryName !== 'all' && categoryName !== undefined
+      ? liveStreamingList?.filter(({ category }) => category === categoryName)
+      : liveStreamingList;
 
   return (
-    <div className='flex flex-col items-end w-5/6 h-full'>
+    <div className='flex flex-col items-start w-5/6 h-full'>
       <div className='flex flex-col h-full gap-2 p-3'>
         <p>현재 스트리밍 중인 채널</p>
-        <div className='flex flex-wrap justify-center h-full gap-4 p-3'>
-          {liveStreamingList?.map(({ id, title, category, viewer_count, user_id }) => (
+        <div className='flex flex-wrap h-full gap-4 p-3'>
+          {filteredLiveStreamingList?.map(({ id, title, category, viewer_count, user_id }) => (
             <Card
               key={id}
               title={title}

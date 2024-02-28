@@ -14,6 +14,7 @@ import { TbMoodUnamused } from 'react-icons/tb';
 import { ImUserTie } from 'react-icons/im';
 import { PiFinnTheHumanFill } from 'react-icons/pi';
 import { GiGuitar } from 'react-icons/gi';
+import { FaCirclePlay } from 'react-icons/fa6';
 
 export default function Submenu() {
   return (
@@ -64,39 +65,44 @@ export default function Submenu() {
           </summary>
           <ul>
             <li>
-              <div>
+              <Link to={'/category/all'}>
+                <FaCirclePlay /> 전체
+              </Link>
+            </li>
+            <li>
+              <Link to={'category/sing'}>
                 <FaMicrophone /> 노래
-              </div>
+              </Link>
             </li>
             <li>
-              <div>
+              <Link to={'category/dance'}>
                 <GiSmart /> 댄스
-              </div>
+              </Link>
             </li>
             <li>
-              <div>
+              <Link to={'/category/composition'}>
                 <FaMusic /> 작곡
-              </div>
+              </Link>
             </li>
             <li>
-              <div>
+              <Link to={'/category/painting'}>
                 <FaPaintbrush /> 그림
-              </div>
+              </Link>
             </li>
             <li>
-              <div>
+              <Link to={'/category/picture'}>
                 <MdMonochromePhotos /> 사진
-              </div>
+              </Link>
             </li>
             <li>
-              <div>
+              <Link to={'/category/performance'}>
                 <PiFinnTheHumanFill /> 연기
-              </div>
+              </Link>
             </li>
             <li>
-              <div>
+              <Link to={'/category/instrument'}>
                 <GiGuitar /> 악기
-              </div>
+              </Link>
             </li>
           </ul>
         </details>
