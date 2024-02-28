@@ -1,3 +1,12 @@
+import Submenu from './Submenu';
+
 export default function Sidebar() {
-  return <aside className='fixed top-0 left-0 w-1/6 h-screen border-2'>sidebar</aside>;
+  return (
+    <div className='w-1/6 h-full '>
+      <div className='flex flex-col'>
+        <button className='border-none btn btn-active bg-base-100'>Quick Menu Bar</button>
+        <Submenu />
+      </div>
+    </div>
+  );
 }

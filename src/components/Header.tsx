@@ -1,48 +1,75 @@
 import { CiSearch } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
-import { GiHamburgerMenu } from 'react-icons/gi';
+import { FaRegBell } from 'react-icons/fa';
+import { IoVideocamOutline } from 'react-icons/io5';
 
 export default function Header() {
-  return (
-    <div className='flex items-center justify-between w-full p-3 border-2'>
-      <div className='flex items-center gap-x-2'>
-        <Drawer />
-        <Link to={'/'}><button className="p-3 rounded-lg btn-ghost">Viewtist</button></Link>
-      </div>
-      <label className='flex items-center w-1/4 gap-2 rounded-full input input-bordered input-success '>
-        <input type='text' className='grow' placeholder='스트리머 검색' />
-        <CiSearch className='text-xl' />
-      </label>
+  const isLogin: boolean = !!localStorage.getItem('currentUserToken');
 
-      <Link to={"sign-in"}>
-        <button className="btn btn-outline btn-sm">로그인</button>
-      </Link>
+  return (
+    <div className='fixed top-0 left-0 z-10 flex items-center justify-between w-full p-3 bg-base-100 '>
+      <div className='flex items-center justify-center w-1/6 gap-x-2'>
+        <Link to={'/'}>
+          <button className='p-3 rounded-lg btn-wide'>Viewtist</button>
+        </Link>
+      </div>
+      <div className='w-2/5'>
+        <label className='flex items-center gap-2 rounded-full input input-bordered input-success'>
+          <input type='text' className='grow' placeholder='스트리머 검색' />
+          <CiSearch size='24' />
+        </label>
+      </div>
+      <div className='flex items-center gap-2 p-2'>
+        <div className='flex gap-1 p-1 mb-2 rounded-full'>
+          <button className='border-none btn btn-outline btn-sm'>
+            <IoVideocamOutline size='35' />
+          </button>
+          <button className='border-none btn btn-outline btn-sm'>
+            <FaRegBell size='30' />
+          </button>
+        </div>
+        {isLogin ? (
+          <DropDown />
+        ) : (
+          <Link to={'sign-in'}>
+            <button className='btn btn-outline btn-sm'>로그인</button>
+          </Link>
+        )}
+      </div>
     </div>
   );
 }
 
-const Drawer = () => {
+const DropDown = () => {
   return (
-    <div className='drawer'>
-      <input id='my-drawer' type='checkbox' className='drawer-toggle' />
-      <div className='drawer-content'>
-        {/* Page content here */}
-        <label htmlFor="my-drawer" className="btn btn-ghost drawer-button">
-          <GiHamburgerMenu />
-        </label>
+    <div className='dropdown dropdown-end'>
+      <div tabIndex={0} role='button' className='m-1'>
+        <div className='avatar'>
+          <div className='w-10 rounded-full'>
+            <img src='https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg' />
+          </div>
+        </div>
       </div>
-      <div className=' drawer-side'>
-        <label htmlFor='my-drawer' aria-label='close sidebar' className=' drawer-overlay'></label>
-        <ul className='h-full p-4 overflow-y-hidden menu w-80 bg-base-200'>
-          {/* Sidebar content here */}
-          <li>
-            <a>Sidebar Item 1</a>
-          </li>
-          <li>
-            <a>Sidebar Item 2</a>
-          </li>
-        </ul>
-      </div>
+      <ul
+        tabIndex={0}
+        className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'
+      >
+        <li>
+          <div>내 정보</div>
+        </li>
+        <li>
+          <div>내 채널</div>
+        </li>
+        <li>
+          <div>내 구독 리스트</div>
+        </li>
+        <li>
+          <div>설정</div>
+        </li>
+        <li>
+          <div>로그아웃</div>
+        </li>
+      </ul>
     </div>
   );
 };

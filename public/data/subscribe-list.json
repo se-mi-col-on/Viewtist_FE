@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "user_id": "노래하는개구리",
+    "live_streamer_id": 2
+  },
+  {
+    "id": 2,
+    "user_id": "바니즈",
+    "live_streamer_id": 2
+  },
+  {
+    "id": 3,
+    "user_id": "모짜르트",
+    "live_streamer_id": 2
+  },
+  {
+    "id": 4,
+    "user_id": "피카소",
+    "live_streamer_id": 2
+  },
+  {
+    "id": 5,
+    "user_id": "아이폰",
+    "live_streamer_id": 2
+  },
+  {
+    "id": 6,
+    "user_id": "박진영",
+    "live_streamer_id": 2
+  }
+]
