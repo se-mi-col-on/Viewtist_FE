@@ -1,11 +1,22 @@
 import { CiSearch } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
-import { FaRegBell } from 'react-icons/fa';
-import { IoVideocamOutline } from 'react-icons/io5';
+import { isLoggedIn } from './../store';
+import { useRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
-  const isLogin: boolean = !!localStorage.getItem('currentUserToken');
+  const [isLogIn, setIsLogIn] = useRecoilState(isLoggedIn);
+  const navigate = useNavigate();
 
+  const handleAuthClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (e.currentTarget.innerText === '로그인') {
+      navigate('sign-in');
+      return;
+    } else {
+      setIsLogIn(false);
+      return;
+    }
+  };
   return (
     <div className='fixed top-0 left-0 z-10 flex items-center justify-between w-full p-3 bg-base-100 '>
       <div className='flex items-center justify-center w-1/6 gap-x-2'>
@@ -13,28 +24,23 @@ export default function Header() {
           <button className='p-3 rounded-lg btn-wide'>Viewtist</button>
         </Link>
       </div>
-      <div className='w-2/5'>
-        <label className='flex items-center gap-2 rounded-full input input-bordered input-success'>
-          <input type='text' className='grow' placeholder='스트리머 검색' />
-          <CiSearch size='24' />
-        </label>
-      </div>
-      <div className='flex items-center gap-2 p-2'>
-        <div className='flex gap-1 p-1 mb-2 rounded-full'>
-          <button className='border-none btn btn-outline btn-sm'>
-            <IoVideocamOutline size='35' />
-          </button>
-          <button className='border-none btn btn-outline btn-sm'>
-            <FaRegBell size='30' />
-          </button>
-        </div>
-        {isLogin ? (
+      <label className='flex items-center w-1/4 gap-2 rounded-full input input-bordered input-success '>
+        <input type='text' className='grow' placeholder='스트리머 검색' />
+        <CiSearch className='text-xl' />
+      </label>
+
+      <div className='flex items-center cursor-pointer gap-x-5'>
+        <button onClick={handleAuthClick} className='btn btn-outline btn-sm'>
+          {isLogIn ? '로그아웃' : '로그인'}
+        </button>
+
+        {/* {isLogIn ? (
           <DropDown />
         ) : (
           <Link to={'sign-in'}>
             <button className='btn btn-outline btn-sm'>로그인</button>
           </Link>
-        )}
+        )} */}
       </div>
     </div>
   );

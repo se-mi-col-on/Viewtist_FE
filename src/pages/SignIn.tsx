@@ -2,10 +2,15 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+import { isLoggedIn } from '../store';
 export default function SignIn() {
   const [id, setId] = useState('kminchelle');
   const [pw, setPw] = useState('0lelplR');
+  const navigate = useNavigate();
+  const setIsLogin = useSetRecoilState(isLoggedIn);
+
   return (
     <div className='flex flex-col justify-center p-3 px-3 m-auto border-2 rounded-lg sm:w-full md:w-1/2 lg:w-1/4 h-96 gap-y-5'>
       <h1 className='text-center sm:text-xl md:text-3xl'>로그인</h1>
@@ -13,7 +18,7 @@ export default function SignIn() {
         onSubmit={async (e) => {
           e.preventDefault();
           try {
-            const res = await axios
+            const { token } = await axios
               .post(
                 `https://dummyjson.com/auth/login`,
                 {
@@ -25,7 +30,11 @@ export default function SignIn() {
                 },
               )
               .then((res) => res.data);
-            console.log(res);
+
+            if (token !== '') {
+              setIsLogin(true);
+              navigate('/');
+            }
           } catch (e) {
             console.log(e);
           }
