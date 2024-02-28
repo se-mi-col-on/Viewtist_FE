@@ -14,7 +14,7 @@ export default function App() {
 
     <>
       <Header />
-      <div className='flex'>
+      <div className='flex mt-32'>
         <Sidebar />
         <Outlet />
       </div>

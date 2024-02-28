@@ -7,7 +7,7 @@ export default function Header() {
   const isLogin: boolean = !!localStorage.getItem('currentUserToken');
 
   return (
-    <div className='flex items-center justify-between w-auto p-3 '>
+    <div className='fixed top-0 left-0 z-10 flex items-center justify-between w-full p-3 bg-base-100 '>
       <div className='flex items-center justify-center w-1/6 gap-x-2'>
         <Link to={'/'}>
           <button className='p-3 rounded-lg btn-wide'>Viewtist</button>

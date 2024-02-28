@@ -28,7 +28,7 @@ export default function SignUp() {
   // ); // watch input value by passing the name of it
 
   return (
-    <div className='flex items-center w-full mt-6'>
+    <div className='flex items-center w-full mt-6 border-2'>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className='flex flex-col items-center w-1/2 p-3 m-auto border-2 rounded-lg'
