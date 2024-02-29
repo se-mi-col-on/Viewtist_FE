@@ -45,19 +45,21 @@ export default function Home() {
       : liveStreamingList;
 
   return (
-    <div className='flex flex-col items-start w-5/6 h-full'>
-      <div className='flex flex-col h-full gap-2 p-3'>
-        <p>현재 스트리밍 중인 채널</p>
-        <div className='flex flex-wrap h-full gap-4 p-3'>
-          {filteredLiveStreamingList?.map(({ id, title, category, viewer_count, user_id }) => (
-            <Card
-              key={id}
-              title={title}
-              category={category}
-              viewer_count={viewer_count}
-              user_id={user_id}
-            />
-          ))}
+    <div className='flex w-5/6 ml-[17%]'>
+      <div className='flex flex-col items-start h-full'>
+        <div className='flex flex-col h-full gap-2 p-3'>
+          <p>현재 스트리밍 중인 채널</p>
+          <div className='flex flex-wrap h-full gap-4 p-3'>
+            {filteredLiveStreamingList?.map(({ id, title, category, viewer_count, user_id }) => (
+              <Card
+                key={id}
+                title={title}
+                category={category}
+                viewer_count={viewer_count}
+                user_id={user_id}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
