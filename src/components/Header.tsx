@@ -1,13 +1,23 @@
-import { CiSearch } from 'react-icons/ci';
-import { Link } from 'react-router-dom';
-import { isLoggedIn } from './../store';
+import { useState } from 'react';
 import { useRecoilState } from 'recoil';
+import { Link, useNavigate } from 'react-router-dom';
+import { CiSearch } from 'react-icons/ci';
 import { GoBell } from 'react-icons/go';
 import { IoVideocamOutline } from 'react-icons/io5';
-import { useState } from 'react';
+import { isLoggedIn } from './../store';
 
 export default function Header() {
   const [isLogIn, setIsLogIn] = useRecoilState(isLoggedIn);
+  const [inputValue, setInputValue] = useState('');
+  const navigate = useNavigate();
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+  const handleInputSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    navigate(`/search/${inputValue}`);
+  };
+
   const handleLogoutClick = () => setIsLogIn(false);
   return (
     <header className='fixed top-0 left-0 z-10 flex items-center justify-between w-full p-3 bg-base-100 '>
@@ -16,10 +26,21 @@ export default function Header() {
           <button className='p-3 rounded-lg btn-wide'>Viewtist</button>
         </Link>
       </div>
-      <label className='flex items-center w-1/4 gap-2 rounded-full input input-bordered input-success '>
-        <input type='text' className='grow' placeholder='스트리머 검색' />
-        <CiSearch className='text-xl' />
-      </label>
+      <form
+        className='flex items-center w-1/4 gap-2 rounded-full input input-bordered input-success'
+        onSubmit={handleInputSubmit}
+      >
+        <input
+          type='text'
+          className='grow'
+          placeholder='스트리머 검색'
+          value={inputValue}
+          onChange={handleInputChange}
+        />
+        <button type='submit'>
+          <CiSearch className='text-xl' />
+        </button>
+      </form>
 
       <div className='flex items-center cursor-pointer gap-x-5'>
         {isLogIn ? (
