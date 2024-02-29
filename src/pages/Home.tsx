@@ -1,6 +1,7 @@
-import axios from 'axios';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { filterAndSortedStreamerByKeyword } from '../utils/filterAndSortedStreamerByKeyword';
 
 type StreamingData = {
   id: number;
@@ -23,26 +24,72 @@ type CardProps = {
   user_id: string;
 };
 
+type Page = {
+  data: StreamingData[];
+  nextCursor?: string | null;
+  prevCursor?: string | null;
+};
+
 const fetchData = async () => {
   const response = await axios.get('/data/live-streaming.json');
   return response.data as StreamingListArray;
 };
 
-export default function Home() {
-  const {
-    data: liveStreamingList,
-    isLoading,
-    error,
-  } = useQuery<StreamingListArray>({
-    queryKey: ['liveStreamingList'],
-    queryFn: fetchData,
-  });
-  const { categoryName } = useParams<{ categoryName: string }>();
+// live-streaming.json 에서 페이지 단위로 데이터 끊어오는것 처럼 페이크구현
+const fetchPage = async (page: number): Promise<Page> => {
+  const pageSize = 12;
+  const startIdx = (page - 1) * pageSize;
+  const endIdx = startIdx + pageSize;
 
-  const filteredLiveStreamingList =
-    categoryName !== 'all' && categoryName !== undefined
-      ? liveStreamingList?.filter(({ category }) => category === categoryName)
-      : liveStreamingList;
+  const fetchDataList = await fetchData();
+  const currentPage = fetchDataList.slice(startIdx, endIdx);
+
+  const nextPage = endIdx < fetchDataList.length ? page + 1 : null;
+  const prevPage = page > 1 ? page - 1 : null;
+
+  return {
+    data: currentPage,
+    nextCursor: nextPage ? nextPage.toString() : null,
+    prevCursor: prevPage ? prevPage.toString() : null,
+  };
+};
+
+export default function Home() {
+  // const {
+  //   data: liveStreamingList,
+  //   isLoading,
+  //   error,
+  // } = useQuery<StreamingListArray>({
+  //   queryKey: ['liveStreamingList'],
+  //   queryFn: fetchData,
+  // });
+
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: ['myInfiniteQuery'],
+    queryFn: ({ pageParam }) => fetchPage(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+    getPreviousPageParam: (firstPage) => firstPage.prevCursor,
+  });
+
+  const liveStreamingList = data.pages[0].data || [];
+  console.log(liveStreamingList);
+  const { categoryName } = useParams<{ categoryName: string }>();
+  const { streamerName } = useParams<{ streamerName: string }>();
+
+  let filteredLiveStreamingList = liveStreamingList || [];
+
+  if (categoryName && categoryName !== 'all') {
+    filteredLiveStreamingList = liveStreamingList?.filter(
+      ({ category }) => category === categoryName,
+    );
+  }
+  if (streamerName) {
+    filteredLiveStreamingList = filterAndSortedStreamerByKeyword(
+      filteredLiveStreamingList,
+      streamerName,
+    );
+  }
 
   return (
     <div className='flex w-5/6 ml-[17%]'>
