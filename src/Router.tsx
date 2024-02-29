@@ -3,14 +3,19 @@ import App from './App';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-import Profile from './pages/Profile';
-import StudioSet from './pages/StudioSet';
-import ChannelSet from './pages/ChannelSet';
+import NotFound from './pages/NotFound';
+import Community from './pages/Community';
+import Muse from './pages/Muse';
+import Subscriptions from './pages/Subscriptions';
+import Notify from './pages/Notify';
+import Channel from './pages/Channel';
+import ChannelSettings from './pages/ChannelSettings';
 
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <NotFound />,
     children: [
       {
         path: '',
@@ -33,16 +38,28 @@ export const router = createBrowserRouter([
         element: <SignUp />,
       },
       {
-        path: 'profile',
-        element: <Profile />,
+        path: 'notify',
+        element: <Notify />,
+      },
+      {
+        path: 'channel-settings',
+        element: <ChannelSettings />,
+      },
+      {
+        path: 'channel',
+        element: <Channel />,
         children: [
           {
-            path: 'studio-set',
-            element: <StudioSet />,
+            path: 'muse',
+            element: <Muse />,
           },
           {
-            path: 'channel-set',
-            element: <ChannelSet />,
+            path: 'subscriptions',
+            element: <Subscriptions />,
+          },
+          {
+            path: 'community',
+            element: <Community />,
           },
         ],
       },

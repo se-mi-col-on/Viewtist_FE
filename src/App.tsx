@@ -4,17 +4,9 @@ import Header from './components/Header';
 
 export default function App() {
   return (
-    // <div className="flex h-full">
-    //   <Sidebar />
-    //   <div className="w-full h-full">
-    //     <Header />
-    //     <Outlet />
-    //   </div>
-    // </div>
-
     <>
       <Header />
-      <div className='flex mt-32'>
+      <div className='flex mt-20 '>
         <Sidebar />
         <Outlet />
       </div>
