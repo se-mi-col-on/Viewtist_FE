@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
+import { filterAndSortedStreamerByKeyword } from '../utils/filterAndSortedStreamerByKeyword';
 import axios from 'axios';
 
 type StreamingData = {
@@ -39,10 +40,20 @@ export default function Home() {
   });
   const { categoryName } = useParams<{ categoryName: string }>();
   const { streamerName } = useParams<{ streamerName: string }>();
-  const filteredLiveStreamingList =
-    categoryName !== 'all' && categoryName !== undefined
-      ? liveStreamingList?.filter(({ category }) => category === categoryName)
-      : liveStreamingList;
+
+  let filteredLiveStreamingList = liveStreamingList;
+
+  if (categoryName && categoryName !== 'all') {
+    filteredLiveStreamingList = liveStreamingList?.filter(
+      ({ category }) => category === categoryName,
+    );
+  }
+  if (streamerName) {
+    filteredLiveStreamingList = filterAndSortedStreamerByKeyword(
+      filteredLiveStreamingList,
+      streamerName,
+    );
+  }
 
   return (
     <div className='flex w-5/6 ml-[17%]'>

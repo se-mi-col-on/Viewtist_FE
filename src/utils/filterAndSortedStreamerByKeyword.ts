@@ -13,7 +13,7 @@ type StreamingData = {
 type StreamingListArray = StreamingData[];
 
 export const filterAndSortedStreamerByKeyword = (
-  liveStreamingList: StreamingListArray, // 타입 지정 추가
+  liveStreamingList: StreamingListArray = [],
   searchKey: string,
 ): StreamingData[] => {
   const lowerSearchKey = searchKey.toLowerCase();
