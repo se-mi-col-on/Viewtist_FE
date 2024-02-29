@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 type StreamingData = {
   id: number;
@@ -38,7 +38,7 @@ export default function Home() {
     queryFn: fetchData,
   });
   const { categoryName } = useParams<{ categoryName: string }>();
-
+  const { streamerName } = useParams<{ streamerName: string }>();
   const filteredLiveStreamingList =
     categoryName !== 'all' && categoryName !== undefined
       ? liveStreamingList?.filter(({ category }) => category === categoryName)
