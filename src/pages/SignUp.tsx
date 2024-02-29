@@ -8,6 +8,7 @@ type Inputs = {
   nickName: string;
 };
 
+
 export default function SignUp() {
   const {
     register,
@@ -35,10 +36,6 @@ export default function SignUp() {
       >
         <h1 className='mb-3 text-3xl'>회원가입</h1>
 
-        {/* <label className='w-full max-w-xs form-control'>
-          <div className='label'>
-            <span className='font-bold label-text'>아이디</span>
-        <h1 className='mb-3 text-3xl'>회원가입</h1> */}
         <label className='w-full max-w-xs form-control'>
           <div className='label'>
             <span className='font-bold label-text'>아이디</span>

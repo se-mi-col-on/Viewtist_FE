@@ -2,23 +2,15 @@ import { CiSearch } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
 import { isLoggedIn } from './../store';
 import { useRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
+import { GoBell } from 'react-icons/go';
+import { IoVideocamOutline } from 'react-icons/io5';
+import { useState } from 'react';
 
 export default function Header() {
   const [isLogIn, setIsLogIn] = useRecoilState(isLoggedIn);
-  const navigate = useNavigate();
-
-  const handleAuthClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (e.currentTarget.innerText === '로그인') {
-      navigate('sign-in');
-      return;
-    } else {
-      setIsLogIn(false);
-      return;
-    }
-  };
+  const handleLogoutClick = () => setIsLogIn(false);
   return (
-    <div className='fixed top-0 left-0 z-10 flex items-center justify-between w-full p-3 bg-base-100 '>
+    <header className='fixed top-0 left-0 z-10 flex items-center justify-between w-full p-3 bg-base-100 '>
       <div className='flex items-center justify-center w-1/6 gap-x-2'>
         <Link to={'/'}>
           <button className='p-3 rounded-lg btn-wide'>Viewtist</button>
@@ -30,25 +22,28 @@ export default function Header() {
       </label>
 
       <div className='flex items-center cursor-pointer gap-x-5'>
-        <button onClick={handleAuthClick} className='btn btn-outline btn-sm'>
-          {isLogIn ? '로그아웃' : '로그인'}
-        </button>
-
-        {/* {isLogIn ? (
-          <DropDown />
+        {isLogIn ? (
+          <>
+            <IoVideocamOutline className='text-xl' />
+            <Link to={'notify'}>
+              <GoBell className='text-xl hover:text-white' />
+            </Link>
+            <DropDown onLogoutClick={handleLogoutClick} />
+          </>
         ) : (
           <Link to={'sign-in'}>
             <button className='btn btn-outline btn-sm'>로그인</button>
           </Link>
-        )} */}
+        )}
       </div>
-    </div>
+    </header>
   );
 }
 
-const DropDown = () => {
+const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
+  const [version, setVersion] = useState(1);
   return (
-    <div className='dropdown dropdown-end'>
+    <div className='dropdown dropdown-end' key={version}>
       <div tabIndex={0} role='button' className='m-1'>
         <div className='avatar'>
           <div className='w-10 rounded-full'>
@@ -60,20 +55,26 @@ const DropDown = () => {
         tabIndex={0}
         className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'
       >
-        <li>
-          <div>내 정보</div>
+        <li onClick={() => setVersion((prev) => (prev += 1))}>
+          <button>내 정보</button>
         </li>
-        <li>
-          <div>내 채널</div>
+        <li onClick={() => setVersion((prev) => (prev += 1))}>
+          <Link to={'channel/muse'}>
+            <button className='text-white'>내 채널</button>
+          </Link>
         </li>
-        <li>
-          <div>내 구독 리스트</div>
+        <li onClick={() => setVersion((prev) => (prev += 1))}>
+          <Link to={'channel/subscriptions'}>
+            <button className='text-white'>내 구독 리스트</button>
+          </Link>
         </li>
-        <li>
-          <div>설정</div>
+        <li onClick={() => setVersion((prev) => (prev += 1))}>
+          <button>설정</button>
         </li>
-        <li>
-          <div>로그아웃</div>
+        <li onClick={() => setVersion((prev) => (prev += 1))}>
+          <button className='text-white' onClick={onLogoutClick}>
+            로그아웃
+          </button>
         </li>
       </ul>
     </div>

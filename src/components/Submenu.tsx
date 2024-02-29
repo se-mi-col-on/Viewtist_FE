@@ -20,7 +20,9 @@ export default function Submenu() {
     <ul className='w-full menu bg-base-100 rounded-box'>
       <li>
         <Link to={'/'}>
-          <FaHome /> 홈
+          <button className='flex items-center text-white gap-x-2'>
+            <FaHome /> 홈
+          </button>
         </Link>
       </li>
       <li>
@@ -30,29 +32,35 @@ export default function Submenu() {
           </summary>
           <ul>
             <li>
-              <div>
+              <button>
                 <ImUserTie /> 내 프로필
-              </div>
+              </button>
             </li>
             <li>
-              <div>
-                <GrChannel /> 내 채널
-              </div>
+              <Link to={'/channel/muse'}>
+                <button className='flex items-center text-white gap-x-2'>
+                  <GrChannel /> 내 채널
+                </button>
+              </Link>
             </li>
             <li>
-              <div>
+              <button>
                 <PiBroadcastBold /> 스트리밍 시작하기
-              </div>
+              </button>
             </li>
             <li>
-              <div>
-                <FaListAlt /> 내 구독 리스트
-              </div>
+              <Link to={'/channel/subscriptions'}>
+                <button className='flex items-center text-white gap-x-2'>
+                  <FaListAlt /> 내 구독리스트
+                </button>
+              </Link>
             </li>
             <li>
-              <div>
-                <TbMoodUnamused /> 뮤즈 구입하기
-              </div>
+              <Link to={'/channel/muse'}>
+                <button className='flex items-center text-white gap-x-2'>
+                  <TbMoodUnamused /> 뮤즈 구입하기
+                </button>
+              </Link>
             </li>
           </ul>
         </details>

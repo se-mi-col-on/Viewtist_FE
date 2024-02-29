@@ -12,7 +12,7 @@ export default function SignIn() {
   const setIsLogin = useSetRecoilState(isLoggedIn);
 
   return (
-    <div className='flex flex-col justify-center p-3 px-3 m-auto border-2 rounded-lg sm:w-full md:w-1/2 lg:w-1/4 h-96 gap-y-5'>
+    <div className='flex flex-col justify-center p-3 px-3 m-auto border-2 rounded-lg sm:w-full md:w-1/2 lg:w-1/3 h-96 gap-y-5'>
       <h1 className='text-center sm:text-xl md:text-3xl'>로그인</h1>
       <form
         onSubmit={async (e) => {
@@ -82,20 +82,22 @@ export default function SignIn() {
         <button className='text-white btn btn-success'>로그인</button>
       </form>
 
-      <div className='flex justify-center w-full sm:text-[12px] text-sm '>
-        <button>비밀번호 찾기</button>
-        <div className='divider divider-horizontal divider-success'></div>
-        <button>아이디 찾기</button>
-        <div className='divider divider-horizontal divider-success'></div>
-        <Link to={'/sign-up'}>
-          <button>회원가입</button>
-        </Link>
-      </div>
+      <div className='flex flex-col gap-y-5'>
+        <div className='flex justify-center w-full sm:text-[10px] md:text-sm'>
+          <button>비밀번호 찾기</button>
+          <div className='divider divider-horizontal divider-success'></div>
+          <button>아이디 찾기</button>
+          <div className='divider divider-horizontal divider-success'></div>
+          <Link to={'/sign-up'}>
+            <button>회원가입</button>
+          </Link>
+        </div>
 
-      <button className='flex justify-center items-center sm:w-full md:w-3/4 px-2 py-1 m-auto text-sm text-black bg-white border-2 rounded-lg gap-x-3 border-slate-400 hover:bg-[rgba(255,255,255,.8)]'>
-        <FcGoogle className='text-xl' />
-        <span>구글 계정으로 로그인</span>
-      </button>
+        <button className='flex justify-center items-center sm:w-full md:w-3/4 lg:w-1/2 px-2 py-1 m-auto sm:text-xs md:text-sm lg:text-sm text-black bg-white border-2 rounded-lg gap-x-3 border-slate-400 hover:bg-[rgba(255,255,255,.8)]'>
+          <FcGoogle className='text-xl' />
+          <span>구글 계정으로 로그인</span>
+        </button>
+      </div>
     </div>
   );
 }
