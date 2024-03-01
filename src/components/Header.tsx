@@ -1,12 +1,31 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
 import { CiSearch } from 'react-icons/ci';
 import { GoBell } from 'react-icons/go';
 import { IoVideocamOutline } from 'react-icons/io5';
 import { isLoggedIn } from './../store';
+import ToggleThemeBtn from './ToggleThemeBtn';
 
 export default function Header() {
+  const [theme, setTheme] = useState(
+    localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light',
+  );
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme!);
+    const localTheme = localStorage.getItem('theme');
+    document.querySelector('html')?.setAttribute('data-theme', localTheme!);
+  }, [theme]);
+
+  const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.checked) {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
+  };
+
   const [isLogIn, setIsLogIn] = useRecoilState(isLoggedIn);
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
@@ -43,6 +62,7 @@ export default function Header() {
       </form>
 
       <div className='flex items-center cursor-pointer gap-x-5'>
+        <ToggleThemeBtn onChange={handleToggle} theme={theme!} />
         {isLogIn ? (
           <>
             <IoVideocamOutline className='text-xl' />
