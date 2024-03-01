@@ -29,13 +29,13 @@ export default function SignUp() {
 
   //<div className='flex items-center w-full mt-6 border-2'>
   return (
-    <div className='w-5/6 ml-auto'>
+    <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className='flex flex-col items-center justify-center border-2'
       >
         <h1 className='text-3xl'>회원가입</h1>
-        <label className='w-full max-w-xs  form-control'>
+        <label className='w-full max-w-xs form-control'>
           <div className='label'>
             <span className='font-bold label-text'>아이디</span>
           </div>
