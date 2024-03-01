@@ -19,7 +19,7 @@ export default function Channel() {
     }
   }, [isLogIn, navigate]);
   return (
-    <div className='w-4/5 p-3 m-auto mt-5 border-2'>
+    <div className='w-5/6 p-3 mt-5 ml-auto border-2'>
       <div className='flex p-3 my-5 border-2 sm:flex-col sm:items-center sm:justify-center sm:gap-y-5 md:flex-row md:items-start md:justify-between'>
         <div className='flex items-center gap-x-5'>
           <div className='avatar'>

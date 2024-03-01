@@ -8,7 +8,6 @@ type Inputs = {
   nickName: string;
 };
 
-
 export default function SignUp() {
   const {
     register,
@@ -28,15 +27,15 @@ export default function SignUp() {
   //   watch("nickName")
   // ); // watch input value by passing the name of it
 
+  //<div className='flex items-center w-full mt-6 border-2'>
   return (
-    <div className='flex items-center w-full mt-6 border-2'>
+    <div className='w-5/6 ml-auto'>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className='flex flex-col items-center w-1/2 p-3 m-auto border-2 rounded-lg'
+        className='flex flex-col items-center justify-center border-2'
       >
-        <h1 className='mb-3 text-3xl'>회원가입</h1>
-
-        <label className='w-full max-w-xs form-control'>
+        <h1 className='text-3xl'>회원가입</h1>
+        <label className='w-full max-w-xs  form-control'>
           <div className='label'>
             <span className='font-bold label-text'>아이디</span>
           </div>
@@ -55,7 +54,7 @@ export default function SignUp() {
               },
             })}
           />
-          {errors.id && <span className='text-red-700'>{errors.id.message}</span>}
+          {errors.id && <span className='mt-3 text-red-700'>{errors.id.message}</span>}
         </label>
 
         <label className='w-full max-w-xs form-control'>
@@ -77,7 +76,7 @@ export default function SignUp() {
               },
             })}
           />
-          {errors.pw && <span className='text-red-700'>{errors.pw.message}</span>}
+          {errors.pw && <span className='mt-3 text-red-700'>{errors.pw.message}</span>}
         </label>
 
         <label className='w-full max-w-xs form-control'>
@@ -104,7 +103,9 @@ export default function SignUp() {
               },
             })}
           />
-          {errors.pwRequired && <span className='text-red-700'>{errors.pwRequired.message}</span>}
+          {errors.pwRequired && (
+            <span className='mt-3 text-red-700'>{errors.pwRequired.message}</span>
+          )}
         </label>
 
         <label className='w-full max-w-xs form-control'>
@@ -126,7 +127,7 @@ export default function SignUp() {
               required: '필수 항목입니다.',
             })}
           />
-          {errors.email && <span className='text-red-700'>{errors.email.message}</span>}
+          {errors.email && <span className='mt-3 text-red-700'>{errors.email.message}</span>}
         </label>
 
         <label className='w-full max-w-xs form-control'>
