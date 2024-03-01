@@ -1,8 +1,9 @@
-import axios from 'axios';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { filterAndSortedStreamerByKeyword } from '../utils/filterAndSortedStreamerByKeyword';
 
-type StreamingData = {
+interface StreamingData {
   id: number;
   user_id: string;
   title: string;
@@ -12,37 +13,69 @@ type StreamingData = {
   transmission_method: string;
   created_at: string;
   modified_at: string;
-};
+}
 
-type StreamingListArray = StreamingData[];
+interface StreamingListArray extends Array<StreamingData> {}
 
-type CardProps = {
+interface CardProps {
   title: string;
   category: string;
   viewer_count: number;
   user_id: string;
-};
+}
+
+interface Page {
+  data: StreamingData[];
+  nextCursor?: number | null;
+}
 
 const fetchData = async () => {
   const response = await axios.get('/data/live-streaming.json');
   return response.data as StreamingListArray;
 };
 
-export default function Home() {
-  const {
-    data: liveStreamingList,
-    isLoading,
-    error,
-  } = useQuery<StreamingListArray>({
-    queryKey: ['liveStreamingList'],
-    queryFn: fetchData,
-  });
-  const { categoryName } = useParams<{ categoryName: string }>();
+const fetchPage = async (page: number): Promise<Page> => {
+  const pageSize = 8;
+  const startIdx = (page - 1) * pageSize;
+  const endIdx = startIdx + pageSize;
 
-  const filteredLiveStreamingList =
-    categoryName !== 'all' && categoryName !== undefined
-      ? liveStreamingList?.filter(({ category }) => category === categoryName)
-      : liveStreamingList;
+  const fetchDataList = await fetchData();
+  const currentPage = fetchDataList.slice(startIdx, endIdx);
+  const nextPage = endIdx < fetchDataList.length ? page + 1 : null;
+
+  return {
+    data: currentPage,
+    nextCursor: nextPage ? nextPage : null,
+  };
+};
+
+export default function Home() {
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: ['myInfiniteQuery'],
+    queryFn: ({ pageParam }) => fetchPage(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+  });
+
+  const flattenArray = (arr: Array<Page>) => arr.flatMap((obj) => obj.data);
+  const liveStreamingList = data ? flattenArray(data.pages) : [];
+
+  const { categoryName } = useParams<{ categoryName: string }>();
+  const { streamerName } = useParams<{ streamerName: string }>();
+
+  let filteredLiveStreamingList = liveStreamingList;
+
+  if (categoryName && categoryName !== 'all') {
+    filteredLiveStreamingList = liveStreamingList?.filter(
+      ({ category }) => category === categoryName,
+    );
+  }
+  if (streamerName) {
+    filteredLiveStreamingList = filterAndSortedStreamerByKeyword(
+      filteredLiveStreamingList,
+      streamerName,
+    );
+  }
 
   return (
     <div className='flex w-5/6 ml-[17%]'>
@@ -60,13 +93,18 @@ export default function Home() {
               />
             ))}
           </div>
+          {hasNextPage && (
+            <button className='border-2' onClick={() => fetchNextPage()}>
+              더 보기
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-const Card = ({ title, category, viewer_count, user_id }: CardProps) => {
+const Card: React.FC<CardProps> = ({ title, category, viewer_count, user_id }) => {
   return (
     <div className='shadow-xl card w-80 bg-base-100'>
       <figure>

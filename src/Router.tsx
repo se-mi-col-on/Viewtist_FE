@@ -26,6 +26,10 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: 'search/:streamerName',
+        element: <Home />,
+      },
+      {
         path: 'login',
         element: <Home />,
       },
