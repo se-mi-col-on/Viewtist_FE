@@ -56,9 +56,7 @@ export default function Home() {
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
-  // 카테고리 혹은 키워드 검색 시 리스트가 8개 이하인데도
-  // 페이지 단위로 데이터를 불러오기때문에 더보기 버튼을 눌러야 추가로 필터링된 리스트가 나오는 문제점이 있음
-  // API 에 카테고리 및 키워드 별 데이터 요청 만들어달라고 해야하나?
+
   const flattenArray = (arr: Array<Page>) => arr.flatMap((obj) => obj.data);
   const liveStreamingList = data ? flattenArray(data.pages) : [];
 
