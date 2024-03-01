@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { filterAndSortedStreamerByKeyword } from '../utils/filterAndSortedStreamerByKeyword';
 
-type StreamingData = {
+interface StreamingData {
   id: number;
   user_id: string;
   title: string;
@@ -13,71 +13,59 @@ type StreamingData = {
   transmission_method: string;
   created_at: string;
   modified_at: string;
-};
+}
 
-type StreamingListArray = StreamingData[];
+interface StreamingListArray extends Array<StreamingData> {}
 
-type CardProps = {
+interface CardProps {
   title: string;
   category: string;
   viewer_count: number;
   user_id: string;
-};
+}
 
-type Page = {
+interface Page {
   data: StreamingData[];
-  nextCursor?: string | null;
-  prevCursor?: string | null;
-};
+  nextCursor?: number | null;
+}
 
 const fetchData = async () => {
   const response = await axios.get('/data/live-streaming.json');
   return response.data as StreamingListArray;
 };
 
-// live-streaming.json 에서 페이지 단위로 데이터 끊어오는것 처럼 페이크구현
 const fetchPage = async (page: number): Promise<Page> => {
-  const pageSize = 12;
+  const pageSize = 8;
   const startIdx = (page - 1) * pageSize;
   const endIdx = startIdx + pageSize;
 
   const fetchDataList = await fetchData();
   const currentPage = fetchDataList.slice(startIdx, endIdx);
-
   const nextPage = endIdx < fetchDataList.length ? page + 1 : null;
-  const prevPage = page > 1 ? page - 1 : null;
 
   return {
     data: currentPage,
-    nextCursor: nextPage ? nextPage.toString() : null,
-    prevCursor: prevPage ? prevPage.toString() : null,
+    nextCursor: nextPage ? nextPage : null,
   };
 };
 
 export default function Home() {
-  // const {
-  //   data: liveStreamingList,
-  //   isLoading,
-  //   error,
-  // } = useQuery<StreamingListArray>({
-  //   queryKey: ['liveStreamingList'],
-  //   queryFn: fetchData,
-  // });
-
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ['myInfiniteQuery'],
     queryFn: ({ pageParam }) => fetchPage(pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
-    getPreviousPageParam: (firstPage) => firstPage.prevCursor,
   });
+  // 카테고리 혹은 키워드 검색 시 리스트가 8개 이하인데도
+  // 페이지 단위로 데이터를 불러오기때문에 더보기 버튼을 눌러야 추가로 필터링된 리스트가 나오는 문제점이 있음
+  // API 에 카테고리 및 키워드 별 데이터 요청 만들어달라고 해야하나?
+  const flattenArray = (arr: Array<Page>) => arr.flatMap((obj) => obj.data);
+  const liveStreamingList = data ? flattenArray(data.pages) : [];
 
-  const liveStreamingList = data.pages[0].data || [];
-  console.log(liveStreamingList);
   const { categoryName } = useParams<{ categoryName: string }>();
   const { streamerName } = useParams<{ streamerName: string }>();
 
-  let filteredLiveStreamingList = liveStreamingList || [];
+  let filteredLiveStreamingList = liveStreamingList;
 
   if (categoryName && categoryName !== 'all') {
     filteredLiveStreamingList = liveStreamingList?.filter(
@@ -107,13 +95,18 @@ export default function Home() {
               />
             ))}
           </div>
+          {hasNextPage && (
+            <button className='border-2' onClick={() => fetchNextPage()}>
+              더 보기
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-const Card = ({ title, category, viewer_count, user_id }: CardProps) => {
+const Card: React.FC<CardProps> = ({ title, category, viewer_count, user_id }) => {
   return (
     <div className='shadow-xl card w-80 bg-base-100'>
       <figure>
