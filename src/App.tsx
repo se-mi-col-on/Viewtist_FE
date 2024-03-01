@@ -8,7 +8,9 @@ export default function App() {
       <Header />
       <div className='flex mt-20 '>
         <Sidebar />
-        <Outlet />
+        <div className='w-5/6 ml-auto overflow-x-hidden'>
+          <Outlet />
+        </div>
       </div>
     </>
   );
