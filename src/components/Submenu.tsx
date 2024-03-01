@@ -33,11 +33,6 @@ export default function Submenu() {
           </summary>
           <ul>
             <li>
-              <button>
-                <ImUserTie /> 내 프로필
-              </button>
-            </li>
-            <li>
               <Link to={'/channel/muse'}>
                 <button className='flex items-center text-white gap-x-2'>
                   <GrChannel /> 내 채널
