@@ -147,8 +147,8 @@ export default function SignUp() {
             placeholder=' '
             {...register('nickName', {
               pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: '2자 이상 16자 이하, 영어 또는 숫자 또는 한글로 구성',
+                value: /^[A-Za-zㄱ-ㅎㅏ-ㅣ가-힣0-9]{4,12}$/,
+                message: '특수문자 제외 2자~ 20자',
               },
               required: '필수 항목입니다.',
             })}
