@@ -10,6 +10,7 @@ import Subscriptions from './pages/Subscriptions';
 import Notify from './pages/Notify';
 import Channel from './pages/Channel';
 import ChannelSettings from './pages/ChannelSettings';
+import StreamingSetting from './pages/StreamingSetting';
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
       {
         path: 'search/:streamerName',
         element: <Home />,
+      },
+      {
+        path: 'streaming/setting',
+        element: <StreamingSetting />,
       },
       {
         path: 'login',
