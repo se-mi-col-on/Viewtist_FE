@@ -11,7 +11,6 @@ import { GrChannel } from 'react-icons/gr';
 import { PiBroadcastBold } from 'react-icons/pi';
 import { FaListAlt } from 'react-icons/fa';
 import { TbMoodUnamused } from 'react-icons/tb';
-import { ImUserTie } from 'react-icons/im';
 import { PiFinnTheHumanFill } from 'react-icons/pi';
 import { GiGuitar } from 'react-icons/gi';
 import { FaCirclePlay } from 'react-icons/fa6';
