@@ -17,9 +17,10 @@ export default function StreamingSetting() {
     register,
     handleSubmit,
     formState: { errors },
-    // watch,
+    watch,
   } = useForm<LiveSet>();
 
+  console.log(watch('donation'));
   const onSubmit: SubmitHandler<LiveSet> = (data) => {
     console.log(data);
     navigate('/streaming/live');
@@ -63,24 +64,14 @@ export default function StreamingSetting() {
           <label className='p-2 w-36' htmlFor='donation'>
             후원 설정
           </label>
-          <input
-            id='donation'
-            type='radio'
-            className='radio'
-            {...register('donation', { required: '후원 설정을 선택하세요' })}
-          />
+          <input id='donation' type='radio' className='radio' {...register('donation')} />
           <p>라이브 스트리밍 중 후원 기능을 활성화 합니다.</p>
         </div>
         <div className='flex items-center gap-8 p-8 border-2 border-gray-500'>
           <label className='p-2 w-36' htmlFor='chat'>
             실시간 채팅 설정
           </label>
-          <input
-            id='chat'
-            type='radio'
-            className='radio'
-            {...register('liveChat', { required: '채팅 설정을 선택하세요' })}
-          />
+          <input id='chat' type='radio' className='radio' {...register('liveChat')} />
           <p>라이브 스트리밍 중 실시간 채팅 기능을 활성화 합니다.</p>
         </div>
         <div className='flex items-center gap-8 p-8 border-2 border-gray-500'>
