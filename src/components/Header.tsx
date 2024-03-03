@@ -34,7 +34,7 @@ export default function Header() {
   };
   const handleInputSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    navigate(`/search/${inputValue}`);
+    if (inputValue) navigate(`/search/${inputValue}`);
   };
 
   const handleLogoutClick = () => setIsLogIn(false);
