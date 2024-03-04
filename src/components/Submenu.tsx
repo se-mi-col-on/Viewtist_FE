@@ -39,9 +39,11 @@ export default function Submenu() {
               </Link>
             </li>
             <li>
-              <button>
-                <PiBroadcastBold /> 스트리밍 시작하기
-              </button>
+              <Link to={'streaming/setting'}>
+                <button className='flex items-center text-white gap-x-2'>
+                  <PiBroadcastBold /> 스트리밍 시작하기
+                </button>
+              </Link>
             </li>
             <li>
               <Link to={'/channel/subscriptions'}>
