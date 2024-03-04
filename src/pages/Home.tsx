@@ -2,20 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { filterStreamer } from '../utils/filterStreamer';
-
-interface StreamingData {
-  id: number;
-  user_id: string;
-  title: string;
-  category: string;
-  start_at: string;
-  viewer_count: number;
-  transmission_method: string;
-  created_at: string;
-  modified_at: string;
-}
-
-interface StreamingListArray extends Array<StreamingData> {}
+import { StreamingData, StreamingListArray } from '../types/interface';
 
 interface CardProps {
   title: string;
