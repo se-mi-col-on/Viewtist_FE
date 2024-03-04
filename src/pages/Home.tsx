@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { filterStreamer } from '../utils/filterStreamer';
-import { StreamingData, StreamingListArray } from '../types/interface';
+import { StreamingData } from '../types/interface';
+import { getLiveStreamingList } from '../api';
 
 interface CardProps {
   title: string;
@@ -16,17 +16,12 @@ interface Page {
   nextCursor?: number | null;
 }
 
-const fetchData = async () => {
-  const response = await axios.get('/data/live-streaming.json');
-  return response.data as StreamingListArray;
-};
-
 const fetchPage = async (page: number): Promise<Page> => {
   const pageSize = 8;
   const startIdx = (page - 1) * pageSize;
   const endIdx = startIdx + pageSize;
 
-  const fetchDataList = await fetchData();
+  const fetchDataList = await getLiveStreamingList();
   const currentPage = fetchDataList.slice(startIdx, endIdx);
   const nextPage = endIdx < fetchDataList.length ? page + 1 : null;
 
@@ -35,6 +30,8 @@ const fetchPage = async (page: number): Promise<Page> => {
     nextCursor: nextPage ? nextPage : null,
   };
 };
+
+//json-server --watch db.json --port 3001
 
 export default function Home() {
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
