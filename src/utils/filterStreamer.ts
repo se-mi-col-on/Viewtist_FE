@@ -12,7 +12,7 @@ type StreamingData = {
 
 type StreamingListArray = StreamingData[];
 
-export const filterAndSortedStreamerByKeyword = (
+export const filterStreamer = (
   liveStreamingList: StreamingListArray = [],
   searchKey: string,
 ): StreamingData[] => {

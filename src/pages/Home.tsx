@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { filterAndSortedStreamerByKeyword } from '../utils/filterAndSortedStreamerByKeyword';
+import { filterStreamer } from '../utils/filterStreamer';
 
 interface StreamingData {
   id: number;
@@ -71,10 +71,7 @@ export default function Home() {
     );
   }
   if (streamerName) {
-    filteredLiveStreamingList = filterAndSortedStreamerByKeyword(
-      filteredLiveStreamingList,
-      streamerName,
-    );
+    filteredLiveStreamingList = filterStreamer(filteredLiveStreamingList, streamerName);
   }
 
   return (
