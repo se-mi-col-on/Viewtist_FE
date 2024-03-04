@@ -1,13 +1,11 @@
 export default function StreamingLive() {
   return (
-    <div className='h-screen'>
-      <div className='flex bg-base-200 h-3/4'>
-        <div className='flex items-center justify-center w-4/5 border-2'>
-          라이브 스트리밍 화면 영역
-        </div>
-        <div className='flex flex-col w-1/5 h-screen border-2 bg-base-200'>
-          <div className='flex items-center justify-center w-full h-3/4'>실시간 채팅 영역</div>
-          <div className='flex flex-col gap-2 p-3 border-2 h-1/4'>
+    <div className='flex flex-col h-[90vh] gap-2 border-2'>
+      <div className='flex bg-base-200 h-4/5'>
+        <div className='flex items-center justify-center w-4/5 border-2'>실시간 스트리밍 영역</div>
+        <div className='absolute right-0 flex h-[89.7vh] flex-col w-1/6 border-2 bg-base-200'>
+          <div className='flex items-center justify-center border-2 h-[80%]'>실시간 채팅 영역</div>
+          <div className='flex flex-col gap-2 p-3'>
             <div>
               <textarea className='w-full textarea textarea-bordered' placeholder='Bio'></textarea>
             </div>
@@ -17,9 +15,9 @@ export default function StreamingLive() {
           </div>
         </div>
       </div>
-      <div className='flex flex-col w-4/5 gap-2 p-2 border-2 h-1/4'>
+      <div className='flex flex-col w-4/5 gap-2 p-2'>
         <p className='text-2xl'>Streaming Title</p>
-        <div className='flex items-center justify-between pl-2 pr-2 border-2'>
+        <div className='flex items-center justify-between pl-2 pr-2 '>
           <div className='flex gap-4'>
             <div className='avatar'>
               <div className='w-16 rounded-full'>
