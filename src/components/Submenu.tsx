@@ -11,7 +11,6 @@ import { GrChannel } from 'react-icons/gr';
 import { PiBroadcastBold } from 'react-icons/pi';
 import { FaListAlt } from 'react-icons/fa';
 import { TbMoodUnamused } from 'react-icons/tb';
-import { ImUserTie } from 'react-icons/im';
 import { PiFinnTheHumanFill } from 'react-icons/pi';
 import { GiGuitar } from 'react-icons/gi';
 import { FaCirclePlay } from 'react-icons/fa6';
@@ -32,11 +31,6 @@ export default function Submenu() {
             <FaUserCircle /> 내 정보
           </summary>
           <ul>
-            <li>
-              <button>
-                <ImUserTie /> 내 프로필
-              </button>
-            </li>
             <li>
               <Link to={'/channel/muse'}>
                 <button className='flex items-center text-white gap-x-2'>

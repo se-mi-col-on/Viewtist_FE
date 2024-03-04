@@ -78,7 +78,7 @@ export default function Home() {
   }
 
   return (
-    <div className='flex w-5/6 ml-[17%]'>
+    <div className='flex ml-auto'>
       <div className='flex flex-col items-start h-full'>
         <div className='flex flex-col h-full gap-2 p-3'>
           <p>현재 스트리밍 중인 채널</p>
