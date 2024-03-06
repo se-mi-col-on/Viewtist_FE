@@ -11,6 +11,7 @@ const StreamVideo: React.FC<StreamVideoProps> = ({ src, type }) => {
 
   useEffect(() => {
     if (type === 'm3u8' && Hls.isSupported()) {
+      console.log('m3u8 지원 확인');
       const hls = new Hls();
       hls.loadSource(src);
       hls.attachMedia(videoRef.current as HTMLVideoElement);
