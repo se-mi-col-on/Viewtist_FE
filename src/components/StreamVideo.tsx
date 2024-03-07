@@ -18,7 +18,12 @@ const StreamVideo: React.FC<StreamVideoProps> = ({ src, type }) => {
     }
   }, [src, type]);
 
-  return <video ref={videoRef} src={src} controls />;
+  const videoStyle = {
+    width: '100%',
+    height: '100%',
+  };
+
+  return <video ref={videoRef} src={src} controls style={videoStyle} />;
 };
 
 export default StreamVideo;

@@ -1,12 +1,13 @@
 import StreamVideo from '../components/StreamVideo';
 const testUrl = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+const myServer = 'http://54.180.97.181:8000/hls/test_src.m3u8';
 
 export default function StreamingLive() {
   return (
     <div className='flex flex-col h-[90vh] gap-2 border-2'>
       <div className='flex bg-base-200 h-4/5'>
         <div className='flex items-center justify-center w-4/5 border-2'>
-          <StreamVideo src={testUrl} type='m3u8' />
+          <StreamVideo src={myServer} type='m3u8' />
         </div>
         <div className='absolute right-0 flex h-[89.7vh] flex-col w-1/6 border-2 bg-base-200'>
           <div className='flex items-center justify-center border-2 h-[80%]'>실시간 채팅 영역</div>
