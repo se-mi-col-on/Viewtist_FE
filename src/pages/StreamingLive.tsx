@@ -1,6 +1,6 @@
 import StreamVideo from '../components/StreamVideo';
 const testUrl = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
-console.log(testUrl);
+
 export default function StreamingLive() {
   return (
     <div className='flex flex-col h-[90vh] gap-2 border-2'>
