@@ -1,5 +1,5 @@
 import StreamVideo from '../components/StreamVideo';
-const testUrl = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+// const testUrl = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
 const myServer = 'http://54.180.97.181:8000/hls/test_src.m3u8';
 
 export default function StreamingLive() {
