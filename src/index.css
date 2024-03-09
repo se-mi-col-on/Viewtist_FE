@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .editor-radius {
+    .ql-container.ql-snow {
+      border-radius: 15px;
+    }
+  }
+}
 /* width */
 ::-webkit-scrollbar {
   width: 10px;

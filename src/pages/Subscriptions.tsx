@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { addSubscribe, getsubscribeList, removeSubscribe } from '../api';
 import { ISubscribeList } from '../types/interface';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 //json-server --watch db.json --port 3001
 
@@ -29,10 +29,6 @@ export default function Subscriptions() {
 
 const SubscriptionListItem = (props: ISubscribeList) => {
   const [isSubscribe, setIsSubscribe] = useState(true);
-
-  useEffect(() => {
-    console.log('구독' + isSubscribe); // 테스트
-  }, [isSubscribe]);
 
   const { mutate: addFn } = useMutation({
     mutationFn: addSubscribe,
