@@ -1,18 +1,6 @@
-type StreamingData = {
-  id: number;
-  user_id: string;
-  title: string;
-  category: string;
-  start_at: string;
-  viewer_count: number;
-  transmission_method: string;
-  created_at: string;
-  modified_at: string;
-};
+import { StreamingData, StreamingListArray } from '../types/interface';
 
-type StreamingListArray = StreamingData[];
-
-export const filterAndSortedStreamerByKeyword = (
+export const filterStreamer = (
   liveStreamingList: StreamingListArray = [],
   searchKey: string,
 ): StreamingData[] => {

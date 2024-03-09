@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ISubscribeList, IUpdatePost } from './types/interface';
+import { ISubscribeList, IUpdatePost ,StreamingListArray} from './types/interface';
 
 export const getsubscribeList = async () => {
   // 구독 리스트 get
@@ -14,6 +14,11 @@ export const addSubscribe = async ({ id, name }: ISubscribeList) => {
 export const removeSubscribe = async (id: number) => {
   // 구독 취소
   return (await axios.delete(`http://localhost:3001/subscribe-list/${id}`)).data;
+};
+
+export const getLiveStreamingList = async () => {
+  const response = await axios.get('http://localhost:3001/liveStreaming-list');
+  return response.data as StreamingListArray;
 };
 
 export const getPosts = async () => {

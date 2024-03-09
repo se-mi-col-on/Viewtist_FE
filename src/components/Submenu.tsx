@@ -11,7 +11,6 @@ import { GrChannel } from 'react-icons/gr';
 import { PiBroadcastBold } from 'react-icons/pi';
 import { FaListAlt } from 'react-icons/fa';
 import { TbMoodUnamused } from 'react-icons/tb';
-import { ImUserTie } from 'react-icons/im';
 import { PiFinnTheHumanFill } from 'react-icons/pi';
 import { GiGuitar } from 'react-icons/gi';
 import { FaCirclePlay } from 'react-icons/fa6';
@@ -33,11 +32,6 @@ export default function Submenu() {
           </summary>
           <ul>
             <li>
-              <button>
-                <ImUserTie /> 내 프로필
-              </button>
-            </li>
-            <li>
               <Link to={'/channel/muse'}>
                 <button className='flex items-center text-white gap-x-2'>
                   <GrChannel /> 내 채널
@@ -45,21 +39,23 @@ export default function Submenu() {
               </Link>
             </li>
             <li>
-              <button>
-                <PiBroadcastBold /> 스트리밍 시작하기
-              </button>
+              <Link to={'streaming/setting'}>
+                <button className='flex items-center text-white gap-x-2'>
+                  <PiBroadcastBold /> 스트리밍
+                </button>
+              </Link>
             </li>
             <li>
               <Link to={'/channel/subscriptions'}>
                 <button className='flex items-center text-white gap-x-2'>
-                  <FaListAlt /> 내 구독리스트
+                  <FaListAlt /> 구독
                 </button>
               </Link>
             </li>
             <li>
               <Link to={'/channel/muse'}>
                 <button className='flex items-center text-white gap-x-2'>
-                  <TbMoodUnamused /> 뮤즈 구입하기
+                  <TbMoodUnamused /> 뮤즈
                 </button>
               </Link>
             </li>

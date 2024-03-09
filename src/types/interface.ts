@@ -4,7 +4,6 @@ export interface ISubscribeList {
   readonly id: number;
   readonly name: string;
 }
-
 export interface IPosts {
   readonly title: string;
   readonly content: string;
@@ -20,3 +19,17 @@ export interface IUpdatePost {
   title: string;
   content: string;
 }
+
+export interface StreamingData {
+  readonly id: number;
+  readonly user_id: string;
+  readonly title: string;
+  readonly category: string;
+  readonly start_at: string;
+  readonly viewer_count: number;
+  readonly transmission_method: string;
+  readonly created_at: string;
+  readonly modified_at: string;
+}
+
+export interface StreamingListArray extends Array<StreamingData> {}

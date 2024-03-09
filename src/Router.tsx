@@ -10,6 +10,8 @@ import Subscriptions from './pages/Subscriptions';
 import Notify from './pages/Notify';
 import Channel from './pages/Channel';
 import ChannelSettings from './pages/ChannelSettings';
+import StreamingSetting from './pages/StreamingSetting';
+import StreamingLive from './pages/StreamingLive';
 import CreatePost from './pages/CreatePost';
 import PostDetail from './pages/PostDetail';
 import UpdatePost from './pages/UpdatePost';
@@ -31,6 +33,14 @@ export const router = createBrowserRouter([
       {
         path: 'search/:streamerName',
         element: <Home />,
+      },
+      {
+        path: 'streaming/setting',
+        element: <StreamingSetting />,
+      },
+      {
+        path: 'streaming/live',
+        element: <StreamingLive />,
       },
       {
         path: 'login',

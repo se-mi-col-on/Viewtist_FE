@@ -1,21 +1,8 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { filterAndSortedStreamerByKeyword } from '../utils/filterAndSortedStreamerByKeyword';
-
-interface StreamingData {
-  id: number;
-  user_id: string;
-  title: string;
-  category: string;
-  start_at: string;
-  viewer_count: number;
-  transmission_method: string;
-  created_at: string;
-  modified_at: string;
-}
-
-interface StreamingListArray extends Array<StreamingData> {}
+import { filterStreamer } from '../utils/filterStreamer';
+import { StreamingData } from '../types/interface';
+import { getLiveStreamingList } from '../api';
 
 interface CardProps {
   title: string;
@@ -29,17 +16,12 @@ interface Page {
   nextCursor?: number | null;
 }
 
-const fetchData = async () => {
-  const response = await axios.get('/data/live-streaming.json');
-  return response.data as StreamingListArray;
-};
-
 const fetchPage = async (page: number): Promise<Page> => {
   const pageSize = 8;
   const startIdx = (page - 1) * pageSize;
   const endIdx = startIdx + pageSize;
 
-  const fetchDataList = await fetchData();
+  const fetchDataList = await getLiveStreamingList();
   const currentPage = fetchDataList.slice(startIdx, endIdx);
   const nextPage = endIdx < fetchDataList.length ? page + 1 : null;
 
@@ -48,6 +30,8 @@ const fetchPage = async (page: number): Promise<Page> => {
     nextCursor: nextPage ? nextPage : null,
   };
 };
+
+//json-server --watch db.json --port 3001
 
 export default function Home() {
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
@@ -71,14 +55,11 @@ export default function Home() {
     );
   }
   if (streamerName) {
-    filteredLiveStreamingList = filterAndSortedStreamerByKeyword(
-      filteredLiveStreamingList,
-      streamerName,
-    );
+    filteredLiveStreamingList = filterStreamer(filteredLiveStreamingList, streamerName);
   }
 
   return (
-    <div className='flex w-5/6 ml-[17%]'>
+    <div className='flex ml-auto'>
       <div className='flex flex-col items-start h-full'>
         <div className='flex flex-col h-full gap-2 p-3'>
           <p>현재 스트리밍 중인 채널</p>
