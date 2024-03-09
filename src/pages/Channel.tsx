@@ -16,7 +16,7 @@ export default function Channel() {
   const isLogIn = useRecoilValue(isLoggedIn);
   const navigate = useNavigate();
 
-  const matches=communityMatch||writeMatch||updateMatch||detailMatch
+  const matches = communityMatch || writeMatch || updateMatch || detailMatch;
 
   useEffect(() => {
     if (!isLogIn) {
@@ -40,10 +40,12 @@ export default function Channel() {
         </div>
 
         <div className='flex items-center gap-x-3'>
-          <button className='rounded-3xl btn btn-outline sm:btn-xs md:btn-sm'>
-            <IoVideocamOutline />
-            방송하기
-          </button>
+          <Link to={'/streaming/setting'}>
+            <button className='rounded-3xl btn btn-outline sm:btn-xs md:btn-sm'>
+              <IoVideocamOutline />
+              방송하기
+            </button>
+          </Link>
           <Link to={'/channel-settings'}>
             <button className='btn btn-outline sm:btn-xs md:btn-sm rounded-3xl'>
               <IoSettingsOutline />
