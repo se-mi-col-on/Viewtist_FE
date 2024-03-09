@@ -12,6 +12,9 @@ import Channel from './pages/Channel';
 import ChannelSettings from './pages/ChannelSettings';
 import StreamingSetting from './pages/StreamingSetting';
 import StreamingLive from './pages/StreamingLive';
+import CreatePost from './pages/CreatePost';
+import PostDetail from './pages/PostDetail';
+import UpdatePost from './pages/UpdatePost';
 
 export const router = createBrowserRouter([
   {
@@ -74,6 +77,20 @@ export const router = createBrowserRouter([
           {
             path: 'community',
             element: <Community />,
+            children: [
+              {
+                path: 'write',
+                element: <CreatePost />,
+              },
+              {
+                path: 'detail/:id',
+                element: <PostDetail />,
+              },
+              {
+                path: 'update/:id',
+                element: <UpdatePost />,
+              },
+            ],
           },
         ],
       },

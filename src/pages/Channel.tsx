@@ -10,8 +10,13 @@ export default function Channel() {
   const museMatch = useMatch('channel/muse');
   const subscriptionsMatch = useMatch('channel/subscriptions');
   const communityMatch = useMatch('/channel/community');
+  const writeMatch = useMatch('/channel/community/write');
+  const updateMatch = useMatch('/channel/community/update/:id');
+  const detailMatch = useMatch('/channel/community/detail/:id');
   const isLogIn = useRecoilValue(isLoggedIn);
   const navigate = useNavigate();
+
+  const matches=communityMatch||writeMatch||updateMatch||detailMatch
 
   useEffect(() => {
     if (!isLogIn) {
@@ -74,12 +79,12 @@ export default function Channel() {
           <Link to={'community'}>
             <button>커뮤니티</button>
           </Link>
-          {communityMatch && (
+          {matches ? (
             <motion.div
               layoutId='indicator'
               className='absolute left-0 right-0 m-auto bg-red-700 rounded-full sm:w-2 sm:h-2 md:w-3 md:h-3 -bottom-3'
             ></motion.div>
-          )}
+          ) : null}
         </li>
       </ul>
       <div className='my-12 divider'></div>
