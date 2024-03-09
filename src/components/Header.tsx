@@ -97,9 +97,6 @@ const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
         className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'
       >
         <li onClick={() => setVersion((prev) => (prev += 1))}>
-          <button>내 정보</button>
-        </li>
-        <li onClick={() => setVersion((prev) => (prev += 1))}>
           <Link to={'channel/muse'}>
             <button className='text-white'>내 채널</button>
           </Link>
@@ -110,7 +107,9 @@ const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
           </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
-          <button>설정</button>
+          <Link to={'channel-settings'}>
+            <button className='text-white'>설정</button>
+          </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
           <button className='text-white' onClick={onLogoutClick}>
