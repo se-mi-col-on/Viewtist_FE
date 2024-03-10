@@ -50,7 +50,7 @@ const PostListItem = (props: IPosts) => {
   };
   return (
     <li
-      className='flex justify-between w-full p-3 transition-all duration-200 border-2 rounded-lg cursor-pointer hover:scale-105'
+      className='flex justify-between w-full p-3 border-2 rounded-lg cursor-pointer'
       onClick={() => navigate(`detail/${props.id}`)}
     >
       <div className='relative flex p-1 gap-x-12'>
