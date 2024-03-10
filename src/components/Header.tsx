@@ -65,7 +65,7 @@ export default function Header() {
         <ToggleThemeBtn onChange={handleToggle} theme={theme!} />
         {isLogIn ? (
           <>
-            <Link to={'streaming/setting'}>
+            <Link to={'streaming/obs_downLoad'}>
               <IoVideocamOutline className='text-xl' />
             </Link>
             <Link to={'notify'}>

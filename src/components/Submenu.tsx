@@ -39,7 +39,7 @@ export default function Submenu() {
               </Link>
             </li>
             <li>
-              <Link to={'streaming/setting'}>
+              <Link to={'streaming/obs_downLoad'}>
                 <button className='flex items-center text-white gap-x-2'>
                   <PiBroadcastBold /> 스트리밍
                 </button>

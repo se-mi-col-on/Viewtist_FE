@@ -40,7 +40,7 @@ export default function Channel() {
         </div>
 
         <div className='flex items-center gap-x-3'>
-          <Link to={'/streaming/setting'}>
+          <Link to={'/streaming/obs_downLoad'}>
             <button className='rounded-3xl btn btn-outline sm:btn-xs md:btn-sm'>
               <IoVideocamOutline />
               방송하기
