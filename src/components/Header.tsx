@@ -41,6 +41,7 @@ export default function Header() {
   return (
     <header className='fixed top-0 left-0 z-10 flex items-center justify-between w-full p-3 bg-base-100 '>
       <div className='flex items-center justify-center w-1/6 gap-x-2'>
+        <Drawer />
         <Link to={'/'}>
           <button className='p-3 rounded-lg btn-wide'>Viewtist</button>
         </Link>
@@ -119,6 +120,32 @@ const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
           </button>
         </li>
       </ul>
+    </div>
+  );
+};
+
+const Drawer = () => {
+  return (
+    <div className='drawer'>
+      <input id='my-drawer' type='checkbox' className='drawer-toggle' />
+      <div className='drawer-content'>
+        {/* Page content here */}
+        <label htmlFor='my-drawer' className='btn btn-primary drawer-button'>
+          Open drawer
+        </label>
+      </div>
+      <div className='drawer-side'>
+        <label htmlFor='my-drawer' aria-label='close sidebar' className='drawer-overlay'></label>
+        <ul className='w-64 min-h-full p-4 border-2 menu bg-base-100 text-base-content'>
+          {/* Sidebar content here */}
+          <li>
+            <a>Sidebar Item 1</a>
+          </li>
+          <li>
+            <a>Sidebar Item 2</a>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };

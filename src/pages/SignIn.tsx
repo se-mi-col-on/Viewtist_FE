@@ -12,7 +12,7 @@ export default function SignIn() {
   const setIsLogin = useSetRecoilState(isLoggedIn);
 
   return (
-    <div className='absolute top-0 bottom-0 right-0 flex flex-col items-center justify-center w-5/6 ml-auto gap-y-5'>
+    <div className='flex flex-col items-center justify-center w-2/3 h-[40rem] gap-y-5'>
       <h1 className='text-center sm:text-xl md:text-3xl'>로그인</h1>
       <div className='flex flex-col gap-y-5'>
         <form
