@@ -41,10 +41,10 @@ export default function Header() {
   const handleLogoutClick = () => setIsLogIn(false);
   return (
     <header className='fixed top-0 left-0 z-10 flex items-center justify-between w-full p-3 bg-base-100 '>
-      <div className='flex items-center justify-center w-1/6 gap-x-2'>
+      <div className='flex items-center justify-center'>
         <Drawer />
         <Link to={'/'}>
-          <button className='p-3 rounded-lg btn-wide'>Viewtist</button>
+          <button className='p-3 rounded-lg w-44'>Viewtist</button>
         </Link>
       </div>
       <form
