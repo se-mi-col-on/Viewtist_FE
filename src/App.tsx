@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Header from './components/Header';
+import ScrollBarButton from './components/ScrollBarButton';
 
 export default function App() {
   return (
@@ -10,6 +11,7 @@ export default function App() {
           <Outlet />
         </div>
       </div>
+      <ScrollBarButton />
     </>
   );
 }
