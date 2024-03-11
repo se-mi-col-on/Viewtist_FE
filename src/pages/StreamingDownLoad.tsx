@@ -10,7 +10,7 @@ export default function StreamingDownLoad() {
   return (
     <div className='flex flex-col items-center h-full gap-3 p-10'>
       <p className='text-xl'>라이브 스트리밍 시작하기</p>
-      <div className='w-2/3 text-xl'>
+      <div className='text-xl'>
         <div className='flex flex-col justify-center gap-10'>
           <div className='flex flex-col justify-center gap-3'>
             <div className='flex items-center gap-2'>
