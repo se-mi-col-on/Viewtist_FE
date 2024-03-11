@@ -12,6 +12,7 @@ import Channel from './pages/Channel';
 import ChannelSettings from './pages/ChannelSettings';
 import StreamingSetting from './pages/StreamingSetting';
 import StreamingLive from './pages/StreamingLive';
+import StreamingDownLoad from './pages/StreamingDownLoad';
 import CreatePost from './pages/CreatePost';
 import PostDetail from './pages/PostDetail';
 import UpdatePost from './pages/UpdatePost';
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: 'search/:streamerName',
         element: <Home />,
+      },
+      {
+        path: 'streaming/obs_downLoad',
+        element: <StreamingDownLoad />,
       },
       {
         path: 'streaming/setting',

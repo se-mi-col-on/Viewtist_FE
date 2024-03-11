@@ -1,3 +1,4 @@
+import ScrollBarButton from '../components/ScrollBarButton';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { filterStreamer } from '../utils/filterStreamer';
@@ -59,28 +60,26 @@ export default function Home() {
   }
 
   return (
-    <div className='flex ml-auto'>
-      <div className='flex flex-col items-start h-full'>
-        <div className='flex flex-col h-full gap-2 p-3'>
-          <p>현재 스트리밍 중인 채널</p>
-          <div className='flex flex-wrap h-full gap-4 p-3'>
-            {filteredLiveStreamingList?.map(({ id, title, category, viewer_count, user_id }) => (
-              <Card
-                key={id}
-                title={title}
-                category={category}
-                viewer_count={viewer_count}
-                user_id={user_id}
-              />
-            ))}
-          </div>
-          {hasNextPage && (
-            <button className='border-2' onClick={() => fetchNextPage()}>
-              더 보기
-            </button>
-          )}
+    <div className='flex flex-col items-center gap-4 p-3'>
+      <p className='text-2xl'>현재 스트리밍 중인 채널</p>
+      <div className='p-3'>
+        <div className='grid grid-cols-4 gap-6'>
+          {filteredLiveStreamingList?.map(({ id, title, category, viewer_count, user_id }) => (
+            <Card
+              key={id}
+              title={title}
+              category={category}
+              viewer_count={viewer_count}
+              user_id={user_id}
+            />
+          ))}
         </div>
       </div>
+      {hasNextPage && (
+        <button className='btn btn-outline' onClick={() => fetchNextPage()}>
+          더 보기
+        </button>
+      )}
     </div>
   );
 }

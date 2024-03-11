@@ -10,12 +10,27 @@ const StreamVideo: React.FC<StreamVideoProps> = ({ src, type }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    let hls: any;
     if (type === 'm3u8' && Hls.isSupported()) {
       console.log('m3u8 지원 확인');
-      const hls = new Hls();
+      hls = new Hls();
       hls.loadSource(src);
       hls.attachMedia(videoRef.current as HTMLVideoElement);
+      // hls.on(Hls.Events.MANIFEST_PARSED, function () {
+      //   videoRef.current?.play();
+      // });
+    } else if (videoRef.current?.canPlayType('application/vnd.apple.mpegurl')) {
+      videoRef.current.src = src;
+      // videoRef.current.addEventListener('loadedmetadata', function () {
+      //   videoRef.current?.play();
+      // });
     }
+
+    return () => {
+      if (hls) {
+        hls.destroy();
+      }
+    };
   }, [src, type]);
 
   const videoStyle = {
