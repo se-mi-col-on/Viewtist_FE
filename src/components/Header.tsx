@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
-import { CiSearch } from 'react-icons/ci';
 import { GoBell } from 'react-icons/go';
 import { IoVideocamOutline } from 'react-icons/io5';
 import { isLoggedIn } from './../store';
 import ToggleThemeBtn from './ToggleThemeBtn';
+import { CiSearch } from 'react-icons/ci';
+import { motion } from 'framer-motion';
 
 export default function Header() {
+  const [isOpenSearch, setIsOpenSearch] = useState(false);
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light',
   );
@@ -45,23 +47,46 @@ export default function Header() {
           <button className='p-3 rounded-lg btn-wide'>Viewtist</button>
         </Link>
       </div>
-      <form
-        className='flex items-center w-1/4 gap-2 rounded-full input input-bordered input-success'
-        onSubmit={handleInputSubmit}
-      >
-        <input
-          type='text'
-          className='grow'
-          placeholder='스트리머 검색'
-          value={inputValue}
-          onChange={handleInputChange}
-        />
-        <button type='submit'>
-          <CiSearch className='text-xl' />
-        </button>
+      <form onSubmit={handleInputSubmit} className='w-1/3 sm:hidden md:block'>
+        <label className='flex items-center gap-2 input input-bordered rounded-xl'>
+          <input
+            type='text'
+            className='grow'
+            placeholder='스트리머 검색'
+            value={inputValue}
+            onChange={handleInputChange}
+          />
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox='0 0 16 16'
+            fill='currentColor'
+            className='w-4 h-4 opacity-70'
+          >
+            <path
+              fillRule='evenodd'
+              d='M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z'
+              clipRule='evenodd'
+            />
+          </svg>
+        </label>
       </form>
 
-      <div className='flex items-center cursor-pointer gap-x-5'>
+      <div className='flex items-center cursor-pointer sm:gap-x-3 md:gap-x-5 shrink-0'>
+        <div className='items-center sm:flex md:hidden gap-x-2'>
+          <form onSubmit={handleInputSubmit}>
+            <motion.input
+              animate={{ scaleX: isOpenSearch ? 1 : 0 }}
+              className=' origin-top-right min-[320px]:w-28 min-[375px]:w-40 border-2 rounded-lg px-2 py-1 text-sm placeholder:text-sm'
+              placeholder='스트리머 검색'
+              value={inputValue}
+              onChange={handleInputChange}
+            />
+          </form>
+          <CiSearch
+            className='text-xl font-bold '
+            onClick={() => setIsOpenSearch((prev) => !prev)}
+          />
+        </div>
         <ToggleThemeBtn onChange={handleToggle} theme={theme!} />
         {isLogIn ? (
           <>
@@ -73,7 +98,7 @@ export default function Header() {
           </>
         ) : (
           <Link to={'sign-in'}>
-            <button className='btn btn-outline btn-sm'>로그인</button>
+            <button className='btn btn-outline sm:btn-xs md:btn-sm'>로그인</button>
           </Link>
         )}
       </div>
