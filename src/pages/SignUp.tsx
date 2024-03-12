@@ -76,7 +76,7 @@ export default function SignUp() {
     }
   };
   return (
-    <div className='p-5 '>
+    <div className='w-2/3 p-5 h-[40rem]'>
       <form className='max-w-md mx-auto' onSubmit={handleSubmit(onSubmit)}>
         <h1 className='text-center sm:text-xl md:text-3xl mb-7'>회원가입</h1>
         <div className='relative z-0 w-full mb-5 group'>

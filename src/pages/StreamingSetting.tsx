@@ -19,7 +19,7 @@ export default function StreamingSetting() {
     category: '',
     donation: false,
     liveChat: false,
-    streamUrl: 'rtmp://54.180.97.181:1935/live',
+    streamUrl: 'rtmp://15.164.226.60:1935/live',
     streamKey: '',
   });
 

@@ -5,6 +5,7 @@ import { GoBell } from 'react-icons/go';
 import { IoVideocamOutline } from 'react-icons/io5';
 import { isLoggedIn } from './../store';
 import ToggleThemeBtn from './ToggleThemeBtn';
+import Drawer from './Drawer';
 import { CiSearch } from 'react-icons/ci';
 import { motion } from 'framer-motion';
 
@@ -42,9 +43,10 @@ export default function Header() {
   const handleLogoutClick = () => setIsLogIn(false);
   return (
     <header className='fixed top-0 left-0 z-10 flex items-center justify-between w-full p-3 bg-base-100 '>
-      <div className='flex items-center justify-center w-1/6 gap-x-2'>
+      <div className='flex items-center justify-center'>
+        <Drawer />
         <Link to={'/'}>
-          <button className='p-3 rounded-lg btn-wide'>Viewtist</button>
+          <button className='p-3 rounded-lg w-44'>Viewtist</button>
         </Link>
       </div>
       <form onSubmit={handleInputSubmit} className='w-1/3 sm:hidden md:block'>
@@ -90,7 +92,9 @@ export default function Header() {
         <ToggleThemeBtn onChange={handleToggle} theme={theme!} />
         {isLogIn ? (
           <>
-            <IoVideocamOutline className='text-xl' />
+            <Link to={'streaming/obs_downLoad'}>
+              <IoVideocamOutline className='text-xl' />
+            </Link>
             <Link to={'notify'}>
               <GoBell className='text-xl hover:text-white' />
             </Link>
@@ -122,9 +126,6 @@ const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
         className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'
       >
         <li onClick={() => setVersion((prev) => (prev += 1))}>
-          <button>내 정보</button>
-        </li>
-        <li onClick={() => setVersion((prev) => (prev += 1))}>
           <Link to={'channel/muse'}>
             <button className='text-white'>내 채널</button>
           </Link>
@@ -135,7 +136,9 @@ const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
           </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
-          <button>설정</button>
+          <Link to={'channel-settings'}>
+            <button className='text-white'>설정</button>
+          </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
           <button className='text-white' onClick={onLogoutClick}>

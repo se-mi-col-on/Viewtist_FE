@@ -17,7 +17,7 @@ import { FaCirclePlay } from 'react-icons/fa6';
 
 export default function Submenu() {
   return (
-    <ul className='w-full menu bg-base-100 rounded-box'>
+    <ul className='w-[15rem] min-h-full p-4 menu bg-base-100 text-base-content rounded-r-lg'>
       <li>
         <Link to={'/'}>
           <button className='flex items-center text-white gap-x-2'>
@@ -39,7 +39,7 @@ export default function Submenu() {
               </Link>
             </li>
             <li>
-              <Link to={'streaming/setting'}>
+              <Link to={'streaming/obs_downLoad'}>
                 <button className='flex items-center text-white gap-x-2'>
                   <PiBroadcastBold /> 스트리밍
                 </button>
