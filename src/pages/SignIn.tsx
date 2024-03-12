@@ -1,85 +1,70 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { isLoggedIn } from '../store';
+import { login } from '../utils/signIn/login';
 export default function SignIn() {
-  const [id, setId] = useState('kminchelle');
-  const [pw, setPw] = useState('0lelplR');
+  const [email, setEmail] = useState('ehdgns8339@naver.com');
+  const [password, setpassword] = useState('azsxdc123123');
   const navigate = useNavigate();
   const setIsLogin = useSetRecoilState(isLoggedIn);
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const { token } = await login(email, password);
+
+    
+    localStorage.setItem('accessToken', token);
+
+    navigate('/');
+  };
 
   return (
     <div className='absolute top-0 bottom-0 right-0 flex flex-col items-center justify-center w-5/6 ml-auto gap-y-5'>
       <h1 className='text-center sm:text-xl md:text-3xl'>로그인</h1>
       <div className='flex flex-col gap-y-5'>
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            try {
-              const { token } = await axios
-                .post(
-                  `https://dummyjson.com/auth/login`,
-                  {
-                    username: id,
-                    password: pw,
-                  },
-                  {
-                    headers: { 'Content-Type': 'application/json' },
-                  },
-                )
-                .then((res) => res.data);
-
-              if (token !== '') {
-                setIsLogin(true);
-                navigate('/');
-              }
-            } catch (e) {
-              console.log(e);
-            }
-          }}
-          className='flex flex-col justify-center gap-y-5'
-        >
-          <label className='flex items-center gap-2 input input-bordered'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              viewBox='0 0 16 16'
-              fill='currentColor'
-              className='w-4 h-4 opacity-70'
-            >
-              <path d='M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z' />
-            </svg>
+        <form onSubmit={handleLogin} className='flex flex-col justify-center gap-y-5'>
+          <div className='relative z-0 w-full mb-5 group'>
             <input
               type='text'
-              className='grow'
-              placeholder='아이디'
-              value={id}
-              onChange={(e) => setId(e.currentTarget.value)}
+              name='floating_id'
+              id='floating_id'
+              className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+              placeholder=' '
+              required
+              value={email}
+              onChange={(e) => setEmail(e.currentTarget.value)}
             />
-          </label>
-          <label className='flex items-center gap-2 input input-bordered'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              viewBox='0 0 16 16'
-              fill='currentColor'
-              className='w-4 h-4 opacity-70'
+            <label
+              htmlFor='floating_id'
+              className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
             >
-              <path
-                fillRule='evenodd'
-                d='M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z'
-                clipRule='evenodd'
-              />
-            </svg>
+              아이디
+            </label>
+          </div>
+
+          <div className='relative z-0 w-full mb-5 group'>
             <input
               type='password'
-              className='grow'
-              placeholder='비밀번호'
-              value={pw}
-              onChange={(e) => setPw(e.currentTarget.value)}
+              name='floating_password'
+              id='floating_password'
+              className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+              placeholder=' '
+              required
+              value={password}
+              onChange={(e) => setpassword(e.currentTarget.value)}
             />
-          </label>
+            <label
+              htmlFor='floating_password'
+              className='peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+            >
+              Password
+            </label>
+          </div>
+
           <button className='text-white btn btn-success'>로그인</button>
         </form>
         <div className='flex justify-center w-full sm:text-[10px] md:text-sm'>
