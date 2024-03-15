@@ -16,6 +16,7 @@ import StreamingDownLoad from './pages/StreamingDownLoad';
 import CreatePost from './pages/CreatePost';
 import PostDetail from './pages/PostDetail';
 import UpdatePost from './pages/UpdatePost';
+import ProtectedRoute from './components/ProtectedRoute';
 
 export const router = createBrowserRouter([
   {
@@ -48,10 +49,6 @@ export const router = createBrowserRouter([
         element: <StreamingLive />,
       },
       {
-        path: 'login',
-        element: <Home />,
-      },
-      {
         path: 'sign-in',
         element: <SignIn />,
       },
@@ -65,11 +62,19 @@ export const router = createBrowserRouter([
       },
       {
         path: 'channel-settings',
-        element: <ChannelSettings />,
+        element: (
+          <ProtectedRoute>
+            <ChannelSettings />
+          </ProtectedRoute>
+        ),
       },
       {
         path: 'channel',
-        element: <Channel />,
+        element: (
+          <ProtectedRoute>
+            <Channel />
+          </ProtectedRoute>
+        ),
         children: [
           {
             path: 'muse',
