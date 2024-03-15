@@ -40,13 +40,17 @@ export default function Header() {
     if (inputValue) navigate(`/search/${inputValue}`);
   };
 
-  const handleLogoutClick = () => setIsLogIn(false);
+  const handleLogoutClick = () => {
+    localStorage.removeItem('accessToken'), localStorage.removeItem('refreshToken');
+    setIsLogIn(false);
+    navigate('/');
+  };
   return (
     <header className='fixed top-0 left-0 z-10 flex items-center justify-between w-full p-3 bg-base-100 '>
       <div className='flex items-center justify-center'>
         <Drawer />
         <Link to={'/'}>
-          <button className='p-3 rounded-lg w-44'>Viewtist</button>
+          <button className='p-3 rounded-lg'>Viewtist</button>
         </Link>
       </div>
       <form onSubmit={handleInputSubmit} className='w-1/3 sm:hidden md:block'>

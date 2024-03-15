@@ -2,11 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'zal';
+  src: url('./assets/잘풀리는오늘 Medium.ttf');
+}
 @layer components {
   .editor-radius {
     .ql-container.ql-snow {
       border-radius: 15px;
     }
+  }
+}
+
+@layer base {
+  #root {
+    font-family: 'zal';
   }
 }
 /* width */
