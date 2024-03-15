@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getAuthAxios } from '../utils/signIn/authAxios';
 const categoryList = ['노래', '댄스', '작곡', '그림', '사진', '연기', '악기'];
 
 type LiveSet = {
@@ -30,8 +31,22 @@ export default function StreamingSetting() {
     console.log(streamOption);
     navigate('/streaming/live');
   };
+
+  useEffect(() => {
+    const access = localStorage.getItem('accessToken');
+    const refresh = localStorage.getItem('refreshToken');
+    const authAxios = getAuthAxios(access!, refresh!);
+
+    const fetch = async () => {
+      const res = (await authAxios.get('/api/users/stream-key')).data;
+      console.log(res);
+    };
+
+    fetch();
+  }, []);
+
   return (
-    <div className='flex flex-col items-center h-full gap-3 p-10 border-2'>
+    <div className='flex flex-col items-center w-2/3 h-full gap-3 p-10 border-2'>
       <p className='text-xl'>라이브 스트리밍 설정</p>
       <form className='flex flex-col w-5/6 gap-5' onSubmit={(e) => handleSubmit(e)}>
         <div className='flex items-center gap-8 p-8 border-2 border-gray-500'>
