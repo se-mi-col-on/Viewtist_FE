@@ -1,12 +1,79 @@
+import React, { useEffect, useState } from 'react';
+import { useMyPage } from '../utils/channelSetting/useMyPage';
+import axios from 'axios';
+import { useUpdateNickname } from '../utils/channelSetting/useUpdateNickname';
+import { useUpdateIntro } from '../utils/channelSetting/useUpdateIntro';
+import { useNavigate } from 'react-router-dom';
+
 export default function ChannelSettings() {
+  const [name, setName] = useState('');
+  const [introduction, setIntroduction] = useState('');
+  const { data, isLoading } = useMyPage();
+  const updateName = useUpdateNickname(name);
+  const updateChannelIntro = useUpdateIntro(introduction);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (data) {
+      setName(data.nickname);
+      setIntroduction(data.channelIntroduction);
+    }
+  }, [data]);
+
+  const handleChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.files) {
+      const file = e.currentTarget.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+      console.log(file);
+
+      const res = axios
+        .put('/api/api/users/update-profile-photo', formData, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => res.data);
+
+      console.log(res);
+
+      return res;
+    }
+  };
+
+  const handleUpdatePage = () => {
+    if (name === '') {
+      alert('retry');
+      return;
+    }
+    if (data?.nickname !== name) {
+      updateName();
+      return;
+    }
+    if (data.channelIntroduction !== introduction) {
+      updateChannelIntro();
+      return;
+    }
+    console.log(name);
+  };
+
+  if (isLoading) return <h1>loading...</h1>;
   return (
     <div>
       <div className='p-2 m-auto sm:w-full md:w-4/5'>
         <div className='flex items-center justify-between my-7'>
           <h1 className='sm:text-xl md:text-3xl'>채널관리</h1>
           <div className='flex items-center gap-x-3'>
-            <button className='btn btn-neutral sm:btn-sm md:btn-md'>취소</button>
-            <button className='text-white btn btn-success sm:btn-sm md:btn-md'>저장</button>
+            <button onClick={() => navigate(-1)} className='btn btn-neutral sm:btn-sm md:btn-md'>
+              취소
+            </button>
+            <button
+              onClick={handleUpdatePage}
+              className='text-white btn btn-success sm:btn-sm md:btn-md'
+            >
+              저장
+            </button>
           </div>
         </div>
 
@@ -16,16 +83,26 @@ export default function ChannelSettings() {
             <div className='flex items-center w-full sm:justify-center md:justify-start gap-x-4'>
               <div className='avatar'>
                 <div className='rounded-full sm:w-16 md:w-20 ring ring-primary ring-offset-base-100 ring-offset-2'>
-                  <img src='https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg' />
+                  <img src={data?.profilePhotoUrl} />
                 </div>
               </div>
-              <label
-                className='px-3 py-2 text-sm bg-transparent border-2 rounded-xl hover:bg-[rgba(0,0,0,.4)]'
-                htmlFor='fileUpload'
-              >
-                <input type='file' className='hidden ' id='fileUpload' />
-                이미지 수정
-              </label>
+              <div className='flex flex-col items-center justify-center gap-y-3'>
+                <label
+                  className='px-3 py-2 text-sm bg-transparent border-2 rounded-xl hover:bg-[rgba(0,0,0,.4)]'
+                  htmlFor='fileUpload'
+                >
+                  <input
+                    type='file'
+                    onChange={handleChangeImg}
+                    accept='image/*'
+                    className='hidden '
+                    id='fileUpload'
+                  />
+                  이미지 수정
+                </label>
+
+                <button className='w-full px-3 py-2 text-sm bg-transparent border-2 rounded-xl hover:bg-[rgba(0,0,0,.4)]'>삭제</button>
+              </div>
             </div>
           </div>
 
@@ -35,6 +112,8 @@ export default function ChannelSettings() {
               type='text'
               placeholder='닉네임'
               className='w-full input input-bordered input-success'
+              value={name}
+              onChange={(e) => setName(e.currentTarget.value)}
             />
           </div>
 
@@ -43,6 +122,8 @@ export default function ChannelSettings() {
             <textarea
               className='w-full resize-none textarea textarea-success'
               placeholder='내 채널을 소개하는 글을 적어보세요!'
+              value={introduction}
+              onChange={(e) => setIntroduction(e.currentTarget.value)}
             ></textarea>
           </div>
         </div>
