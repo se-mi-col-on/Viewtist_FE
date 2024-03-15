@@ -4,22 +4,35 @@ import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { isLoggedIn } from '../store';
-import { login } from '../utils/signIn/login';
+import axios from 'axios';
+import { googleLogin } from '../utils/signIn/googleLogin';
+// import { login } from '../utils/signIn/login';
 export default function SignIn() {
   const [email, setEmail] = useState('ehdgns8339@naver.com');
   const [password, setpassword] = useState('azsxdc123123');
+
   const navigate = useNavigate();
   const setIsLogin = useSetRecoilState(isLoggedIn);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const { token } = await login(email, password);
-
     
-    localStorage.setItem('accessToken', token);
+    try {
+      const { accessToken, refreshToken } = await axios
+        .post(`/api/api/users/signin`, {
+          email,
+          password,
+        })
+        .then((res) => res.data);
 
-    navigate('/');
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+      console.log(accessToken);
+      setIsLogin(true);
+      navigate('/');
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -77,7 +90,10 @@ export default function SignIn() {
           </Link>
         </div>
 
-        <button className='flex justify-center items-center w-full px-2 py-1 m-auto sm:text-xs md:text-sm lg:text-sm text-black bg-white border-2 rounded-lg gap-x-3 border-slate-400 hover:bg-[rgba(255,255,255,.8)]'>
+        <button
+          onClick={googleLogin}
+          className='flex justify-center items-center w-full px-2 py-1 m-auto sm:text-xs md:text-sm lg:text-sm text-black bg-white border-2 rounded-lg gap-x-3 border-slate-400 hover:bg-[rgba(255,255,255,.8)]'
+        >
           <FcGoogle className='text-xl' />
           <span>구글 계정으로 로그인</span>
         </button>
