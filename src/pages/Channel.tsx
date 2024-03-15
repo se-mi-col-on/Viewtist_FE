@@ -1,10 +1,8 @@
 import { IoVideocamOutline } from 'react-icons/io5';
 import { IoSettingsOutline } from 'react-icons/io5';
-import { Link, Outlet, useMatch, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useMatch } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
-import { isLoggedIn } from '../store';
+import { useMyPage } from '../utils/channelSetting/useMyPage';
 
 export default function Channel() {
   const museMatch = useMatch('channel/muse');
@@ -13,29 +11,25 @@ export default function Channel() {
   const writeMatch = useMatch('/channel/community/write');
   const updateMatch = useMatch('/channel/community/update/:id');
   const detailMatch = useMatch('/channel/community/detail/:id');
-  const isLogIn = useRecoilValue(isLoggedIn);
-  const navigate = useNavigate();
+
+  const { data, isLoading } = useMyPage();
 
   const matches = communityMatch || writeMatch || updateMatch || detailMatch;
 
-  useEffect(() => {
-    if (!isLogIn) {
-      navigate('/');
-    }
-  }, [isLogIn, navigate]);
+  if (isLoading) return <h1>loading...</h1>;
   return (
     <div className='w-2/3 p-3 mt-5 border-2'>
       <div className='flex p-3 my-5 border-2 sm:flex-col sm:items-center sm:justify-center sm:gap-y-5 md:flex-row md:items-start md:justify-between'>
         <div className='flex items-center gap-x-5'>
           <div className='avatar'>
             <div className='rounded-full w-14 ring ring-primary ring-offset-base-100 ring-offset-2'>
-              <img src='https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg' />
+              <img src={data?.profilePhotoUrl} />
             </div>
           </div>
 
           <div>
-            <h1 className='mb-1 text-2xl'>이름</h1>
-            <span>소개글</span>
+            <h1 className='mb-1 text-2xl'>{data?.nickname}</h1>
+            <span>{data?.channelIntroduction}</span>
           </div>
         </div>
 
