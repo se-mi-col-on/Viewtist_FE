@@ -13,7 +13,7 @@ export interface IPosts {
 export interface IEditor {
   readonly value: string;
   setValue: Dispatch<SetStateAction<string>>;
-  readonly readOnly:boolean
+  readonly readOnly: boolean;
 }
 export interface IUpdatePost {
   title: string;
@@ -33,3 +33,11 @@ export interface StreamingData {
 }
 
 export interface StreamingListArray extends Array<StreamingData> {}
+
+export interface IProfile {
+  email: string;
+  nickname: string;
+  profilePhotoUrl: string;
+  accountId: number | null;
+  channelIntroduction: string;
+}
