@@ -74,8 +74,8 @@ export default function Submenu() {
               </Link>
             </li>
             <li>
-              <Link to={'category/sing'}>
-                <FaMicrophone /> 노래
+              <Link to={'category/music'}>
+                <FaMusic /> 음악
               </Link>
             </li>
             <li>
@@ -84,12 +84,7 @@ export default function Submenu() {
               </Link>
             </li>
             <li>
-              <Link to={'/category/composition'}>
-                <FaMusic /> 작곡
-              </Link>
-            </li>
-            <li>
-              <Link to={'/category/painting'}>
+              <Link to={'/category/draw'}>
                 <FaPaintbrush /> 그림
               </Link>
             </li>
@@ -99,13 +94,8 @@ export default function Submenu() {
               </Link>
             </li>
             <li>
-              <Link to={'/category/performance'}>
+              <Link to={'/category/act'}>
                 <PiFinnTheHumanFill /> 연기
-              </Link>
-            </li>
-            <li>
-              <Link to={'/category/instrument'}>
-                <GiGuitar /> 악기
               </Link>
             </li>
           </ul>
