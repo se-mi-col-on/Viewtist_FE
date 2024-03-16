@@ -1,4 +1,3 @@
-import ScrollBarButton from '../components/ScrollBarButton';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { filterStreamer } from '../utils/filterStreamer';

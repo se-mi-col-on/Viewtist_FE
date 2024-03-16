@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { FaHome } from 'react-icons/fa';
 import { MdCategory } from 'react-icons/md';
 import { FaMusic } from 'react-icons/fa';
-import { FaMicrophone } from 'react-icons/fa';
 import { GiSmart } from 'react-icons/gi';
 import { FaPaintbrush } from 'react-icons/fa6';
 import { MdMonochromePhotos } from 'react-icons/md';
@@ -12,7 +11,6 @@ import { PiBroadcastBold } from 'react-icons/pi';
 import { FaListAlt } from 'react-icons/fa';
 import { TbMoodUnamused } from 'react-icons/tb';
 import { PiFinnTheHumanFill } from 'react-icons/pi';
-import { GiGuitar } from 'react-icons/gi';
 import { FaCirclePlay } from 'react-icons/fa6';
 
 export default function Submenu() {
