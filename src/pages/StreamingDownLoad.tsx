@@ -9,11 +9,11 @@ import streamStart from '../assets/stream_start.png';
 export default function StreamingDownLoad() {
   return (
     <div className='flex flex-col items-center h-full gap-3 p-10'>
-      <p className='text-xl'>라이브 스트리밍 시작하기</p>
+      <p className='pb-6 text-3xl'>라이브 스트리밍 시작하기</p>
       <div className='text-xl'>
         <div className='flex flex-col justify-center gap-10'>
           <div className='flex flex-col justify-center gap-3'>
-            <div className='flex items-center gap-2'>
+            <div className='flex items-center gap-2 text-zinc-50'>
               <Bs1CircleFill /> 스트리밍 소프트웨어를 설치하세요.
             </div>
             <a href='https://obsproject.com/ko' target='_blank' rel='noopener noreferrer'>
@@ -24,7 +24,7 @@ export default function StreamingDownLoad() {
             </a>
           </div>
           <div className='flex flex-col justify-center gap-3'>
-            <div className='flex items-center gap-2'>
+            <div className='flex items-center gap-2 text-zinc-50'>
               <Bs2CircleFill /> 서버 URL과 스트림 키를 소프트웨어에 붙여 넣어주세요.
             </div>
             <img src={obsGuide} alt='설치 가이드' />
@@ -33,7 +33,7 @@ export default function StreamingDownLoad() {
             </p>
           </div>
           <div className='flex flex-col justify-center gap-3'>
-            <div className='flex items-center gap-2'>
+            <div className='flex items-center gap-2 text-zinc-50'>
               <Bs3CircleFill /> 스트리밍 소프트웨어에서 방송 시작 버튼을 누르면 라이브 스트리밍이
               시작됩니다.
             </div>
