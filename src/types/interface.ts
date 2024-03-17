@@ -45,6 +45,4 @@ export interface IProfile {
 export interface LiveSet {
   title: string;
   category: string;
-  streamUrl: string;
-  streamKey: string;
 }
