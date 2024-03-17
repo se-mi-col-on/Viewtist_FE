@@ -1,14 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAuthAxios } from '../utils/signIn/authAxios';
-const categoryList = ['음악', '댄스', '그림', '사진', '연기'];
-
-type LiveSet = {
-  title: string;
-  category: string;
-  streamUrl: string;
-  streamKey: string;
-};
+import { STREAM_CATEGORY_LIST, STREAM_URL } from '../constants/constant';
+import { LiveSet } from '../types/interface';
 
 export default function StreamingSetting() {
   const navigate = useNavigate();
@@ -16,7 +9,7 @@ export default function StreamingSetting() {
   const [streamOption, setStreamOption] = useState<LiveSet>({
     title: '',
     category: '',
-    streamUrl: 'rtmp://15.164.226.60:1935/live',
+    streamUrl: STREAM_URL,
     streamKey: '',
   });
 
@@ -27,19 +20,6 @@ export default function StreamingSetting() {
     console.log(streamOption);
     navigate('/streaming/live');
   };
-
-  useEffect(() => {
-    const access = localStorage.getItem('accessToken');
-    const refresh = localStorage.getItem('refreshToken');
-    const authAxios = getAuthAxios(access!, refresh!);
-
-    const fetch = async () => {
-      const res = (await authAxios.get('/api/users/stream-key')).data;
-      console.log(res);
-    };
-
-    fetch();
-  }, []);
 
   return (
     <div className='flex flex-col items-center w-2/3 h-full gap-3 p-10 border-2'>
@@ -71,7 +51,7 @@ export default function StreamingSetting() {
             onChange={(e) => setStreamOption({ ...streamOption, category: e.target.value })}
           >
             <option value=''>선택</option>
-            {categoryList.map((category) => (
+            {STREAM_CATEGORY_LIST.map((category) => (
               <option key={category} value={category}>
                 {category}
               </option>
