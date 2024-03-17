@@ -117,13 +117,22 @@ export const updateIntro = async (intro: string) => {
   return res;
 };
 
-export const getStreamKey = async (isRefresh: boolean = false) => {
+export const getStreamKey = async (): Promise<string> => {
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
-  const endpoint = isRefresh ? '/api/users/refresh-stream-key' : '/api/users/stream-key';
 
-  const res = (await authAxios.get(endpoint)).data;
+  const res = (await authAxios.get('/api/users/stream-key')).data;
+  console.log(res);
+  return res;
+};
+
+export const getRefreshStreamKey = async (): Promise<string> => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = (await authAxios.get('/api/users/refresh/stream-key')).data;
   console.log(res);
   return res;
 };
