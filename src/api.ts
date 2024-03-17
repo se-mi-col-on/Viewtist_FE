@@ -116,29 +116,14 @@ export const updateIntro = async (intro: string) => {
   console.log(res);
   return res;
 };
-// export const updatePage = async (name: string, introduction: string) => {
-//   const accessToken = localStorage.getItem('accessToken');
-//   try {
-//     const res = await axios
-//       .put(
-//         '/api/api/users/update-mypage',
-//         {
-//           nickname: name,
-//           channelIntroduction: introduction,
-//         },
-//         {
-//           headers: {
-//             Authorization: `Bearer ${accessToken}`,
-//             'Content-Type': ' application/json',
-//             Accept: '*/*',
-//           },
-//         },
-//       )
-//       .then((res) => res.data);
-//     console.log(res);
-//     return res;
-//   } catch (e) {
-//     console.log(e);
-//     return e;
-//   }
-// };
+
+export const getStreamKey = async (isRefresh: boolean = false) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+  const endpoint = isRefresh ? '/api/users/refresh-stream-key' : '/api/users/stream-key';
+
+  const res = (await authAxios.get(endpoint)).data;
+  console.log(res);
+  return res;
+};
