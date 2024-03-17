@@ -16,6 +16,7 @@ import StreamingDownLoad from './pages/StreamingDownLoad';
 import StreamingSetting from './pages/StreamingSetting';
 import StreamingLive from './pages/StreamingLive';
 import NotFound from './pages/NotFound';
+import ProtectedRoute from './components/ProtectedRoute';
 
 export default function Router() {
   return (
@@ -26,24 +27,26 @@ export default function Router() {
           <Route path='/search/:streamerName' element={<Home />} />
         </Route>
 
-        <Route path='/channel' element={<Channel />}>
-          <Route path='muse' element={<Muse />} />
-          <Route path='subscriptions' element={<Subscriptions />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path='/channel' element={<Channel />}>
+            <Route path='muse' element={<Muse />} />
+            <Route path='subscriptions' element={<Subscriptions />} />
 
-          <Route path='community' element={<Community />}>
-            <Route path='write' element={<CreatePost />} />
-            <Route path='detail/:id' element={<PostDetail />} />
-            <Route path='update/:id' element={<UpdatePost />} />
+            <Route path='community' element={<Community />}>
+              <Route path='write' element={<CreatePost />} />
+              <Route path='detail/:id' element={<PostDetail />} />
+              <Route path='update/:id' element={<UpdatePost />} />
+            </Route>
           </Route>
+          <Route path='/notify' element={<Notify />} />
+          <Route path='/channel-settings' element={<ChannelSettings />} />
+          <Route path='/streaming/obs_downLoad' element={<StreamingDownLoad />} />
+          <Route path='/streaming/setting' element={<StreamingSetting />} />
+          <Route path='/streaming/live' element={<StreamingLive />} />
         </Route>
 
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/sign-up' element={<SignUp />} />
-        <Route path='/notify' element={<Notify />} />
-        <Route path='/channel-settings' element={<ChannelSettings />} />
-        <Route path='/streaming/obs_downLoad' element={<StreamingDownLoad />} />
-        <Route path='/streaming/setting' element={<StreamingSetting />} />
-        <Route path='/streaming/live' element={<StreamingLive />} />
         <Route path='*' element={<NotFound />} />
       </Route>
     </Routes>
