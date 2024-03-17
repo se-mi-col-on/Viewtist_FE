@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
         element: <StreamingSetting />,
       },
       {
-        path: 'streaming/live',
+        path: 'streaming/live/:streamerId',
         element: <StreamingLive />,
       },
       {
