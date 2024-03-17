@@ -1,17 +1,14 @@
-import { Outlet } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Header from './components/Header';
 import ScrollBarButton from './components/ScrollBarButton';
+import Router from './router';
 
 export default function App() {
   return (
-    <>
+    <BrowserRouter>
       <Header />
-      <div className='flex mt-20 '>
-        <div className='flex justify-center w-full ml-auto overflow-x-hidden'>
-          <Outlet />
-        </div>
-      </div>
+      <Router />
       <ScrollBarButton />
-    </>
+    </BrowserRouter>
   );
 }
