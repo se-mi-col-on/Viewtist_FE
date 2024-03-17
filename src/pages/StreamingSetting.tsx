@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStreamKey } from '../utils/streamingSetting/useStreamKey';
-import { getRefreshStreamKey } from '../api';
+import { getRefreshStreamKey, createStreaming } from '../api';
 import { STREAM_CATEGORY_LIST, STREAM_URL } from '../constants/constant';
 import { LiveSet } from '../types/interface';
 import { FaEye } from 'react-icons/fa';
@@ -18,10 +18,10 @@ export default function StreamingSetting() {
     category: '',
   });
   const isFormInValid = Object.values(streamOption).some((value) => value === '');
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(streamOption);
-    navigate('/streaming/live');
+    const { id } = await createStreaming(streamOption);
+    navigate(`/streaming/live/${id}`);
   };
   const handleRefreshKey = async (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
