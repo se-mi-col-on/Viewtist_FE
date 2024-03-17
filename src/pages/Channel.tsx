@@ -18,7 +18,7 @@ export default function Channel() {
 
   if (isLoading) return <h1>loading...</h1>;
   return (
-    <div className='w-2/3 p-3 mt-5 border-2'>
+    <div className='p-3 mt-5 border-2 sm:w-full min-[750px]:w-2/3'>
       <div className='flex p-3 my-5 border-2 sm:flex-col sm:items-center sm:justify-center sm:gap-y-5 md:flex-row md:items-start md:justify-between'>
         <div className='flex items-center gap-x-5'>
           <div className='avatar'>
