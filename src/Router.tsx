@@ -18,7 +18,6 @@ import StreamingLive from './pages/StreamingLive';
 import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 
-
 export default function Router() {
   return (
     <Routes>

@@ -3,7 +3,6 @@ import { getRefreshToken } from '../../api';
 
 export const getAuthAxios = (accessToken: string, refreshToken: string) => {
   const authAxios = axios.create({
-    baseURL: '/api',
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

@@ -33,7 +33,7 @@ export default function ChannelSettings() {
       formData.append('file', file);
 
       return await authAxios
-        .put('/api/users/profile-photo', formData, {
+        .put('/api/api/users/profile-photo', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -43,7 +43,7 @@ export default function ChannelSettings() {
   };
 
   const handleRemoveImg = async () => {
-    const res = (await authAxios.put('/api/users/reset-profile-photo')).data;
+    const res = (await authAxios.put('/api/api/users/reset-profile-photo')).data;
     setImgUrl(res);
   };
 
