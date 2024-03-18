@@ -25,7 +25,7 @@ export default defineConfig({
       '/stream': {
         target: 'http://ec2-3-35-234-97.ap-northeast-2.compute.amazonaws.com:8082',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/chat/, ''),
+        rewrite: (path) => path.replace(/^\/stream/, ''),
         secure: false,
         ws: true,
       },
