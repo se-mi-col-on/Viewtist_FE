@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { ISubscribeList, IUpdatePost, StreamingListArray, LiveSet } from './types/interface';
+import {
+  ISubscribeList,
+  IUpdatePost,
+  StreamingListArray,
+  LiveSet,
+  StreamDetail,
+} from './types/interface';
 import { getAuthAxios } from './utils/signIn/authAxios';
 
 export const getsubscribeList = async () => {
@@ -149,4 +155,14 @@ export const createStreaming = async (streamOption: LiveSet) => {
   } catch (e) {
     console.log(e);
   }
+};
+
+export const getStreamDetail = async (streamId: number): Promise<StreamDetail> => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = (await authAxios.get(`stream/api/live-streaming/${streamId}`)).data;
+  console.log(res);
+  return res;
 };
