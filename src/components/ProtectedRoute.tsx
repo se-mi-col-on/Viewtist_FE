@@ -1,8 +1,7 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
-export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
+export default function ProtectedRoute() {
   const accessToken = localStorage.getItem('accessToken');
 
-  return accessToken ? children : <Navigate to={'/sign-in'} />;
+  return accessToken ? <Outlet /> : <Navigate to={'/sign-in'} />;
 }

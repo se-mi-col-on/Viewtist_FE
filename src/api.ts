@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ISubscribeList, IUpdatePost, StreamingListArray } from './types/interface';
+import { ISubscribeList, IUpdatePost, StreamingListArray, LiveSet } from './types/interface';
 import { getAuthAxios } from './utils/signIn/authAxios';
 
 export const getsubscribeList = async () => {
@@ -59,7 +59,7 @@ export const getMyPage = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
-  const res = (await authAxios.get('/api/users/mypage')).data;
+  const res = (await authAxios.get('/api/api/users/mypage')).data;
   console.log(res);
   return res;
 };
@@ -86,7 +86,7 @@ export const updateNickname = async (nickname: string) => {
 
   const res = await authAxios
     .put(
-      '/api/users/update-nickname',
+      '/api/api/users/nickname',
       { nickname },
       {
         headers: { 'Content-Type': 'application/json' },
@@ -104,7 +104,7 @@ export const updateIntro = async (intro: string) => {
 
   const res = await authAxios
     .put(
-      '/api/users/update-introduction',
+      '/api/api/users/introduction',
       {
         introduction: intro,
       },
@@ -116,29 +116,37 @@ export const updateIntro = async (intro: string) => {
   console.log(res);
   return res;
 };
-// export const updatePage = async (name: string, introduction: string) => {
-//   const accessToken = localStorage.getItem('accessToken');
-//   try {
-//     const res = await axios
-//       .put(
-//         '/api/api/users/update-mypage',
-//         {
-//           nickname: name,
-//           channelIntroduction: introduction,
-//         },
-//         {
-//           headers: {
-//             Authorization: `Bearer ${accessToken}`,
-//             'Content-Type': ' application/json',
-//             Accept: '*/*',
-//           },
-//         },
-//       )
-//       .then((res) => res.data);
-//     console.log(res);
-//     return res;
-//   } catch (e) {
-//     console.log(e);
-//     return e;
-//   }
-// };
+
+export const getStreamKey = async (): Promise<string> => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = (await authAxios.get('/api/api/users/stream-key')).data;
+  console.log(res);
+  return res;
+};
+
+export const getRefreshStreamKey = async (): Promise<string> => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = (await authAxios.get('/api/api/users/refresh-stream-key')).data;
+  console.log(res);
+  return res;
+};
+
+export const createStreaming = async (streamOption: LiveSet) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  try {
+    return await authAxios
+      .post(`/stream/api/live-streaming/start`, streamOption)
+      .then((res) => res.data);
+  } catch (e) {
+    console.log(e);
+  }
+};
