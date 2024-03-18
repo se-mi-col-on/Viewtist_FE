@@ -143,9 +143,7 @@ export const createStreaming = async (streamOption: LiveSet) => {
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
   try {
-    return await authAxios
-      .post(`/api/live-streaming/start`, JSON.stringify(streamOption))
-      .then((res) => res.data);
+    return await authAxios.post(`/api/live-streaming/start`, streamOption).then((res) => res.data);
   } catch (e) {
     console.log(e);
   }

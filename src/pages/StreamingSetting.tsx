@@ -28,6 +28,7 @@ export default function StreamingSetting() {
       e.preventDefault();
       const newKey = await getRefreshStreamKey();
       setStreamKey(newKey);
+      alert('스트림 키 재발급이 완료되었습니다.');
     } catch (error) {
       console.log(error);
     }
