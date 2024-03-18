@@ -1,45 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { useMyPage } from '../utils/channelSetting/useMyPage';
-import axios from 'axios';
 import { useUpdateNickname } from '../utils/channelSetting/useUpdateNickname';
 import { useUpdateIntro } from '../utils/channelSetting/useUpdateIntro';
 import { useNavigate } from 'react-router-dom';
+import { getAuthAxios } from '../utils/signIn/authAxios';
 
 export default function ChannelSettings() {
   const [name, setName] = useState('');
   const [introduction, setIntroduction] = useState('');
+  const [imgUrl, setImgUrl] = useState('');
   const { data, isLoading } = useMyPage();
   const updateName = useUpdateNickname(name);
   const updateChannelIntro = useUpdateIntro(introduction);
   const navigate = useNavigate();
 
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
   useEffect(() => {
     if (data) {
       setName(data.nickname);
       setIntroduction(data.channelIntroduction);
+      setImgUrl(data.profilePhotoUrl);
     }
   }, [data]);
 
-  const handleChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files) {
       const file = e.currentTarget.files[0];
       const formData = new FormData();
       formData.append('file', file);
-      console.log(file);
 
-      const res = axios
-        .put('/api/api/users/update-profile-photo', formData, {
+      return await authAxios
+        .put('/api/users/profile-photo', formData, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
             'Content-Type': 'multipart/form-data',
           },
         })
-        .then((res) => res.data);
-
-      console.log(res);
-
-      return res;
+        .then((res) => setImgUrl(res.data));
     }
+  };
+
+  const handleRemoveImg = async () => {
+    const res = (await authAxios.put('/api/users/reset-profile-photo')).data;
+    setImgUrl(res);
   };
 
   const handleUpdatePage = () => {
@@ -83,7 +88,7 @@ export default function ChannelSettings() {
             <div className='flex items-center w-full sm:justify-center md:justify-start gap-x-4'>
               <div className='avatar'>
                 <div className='rounded-full sm:w-16 md:w-20 ring ring-primary ring-offset-base-100 ring-offset-2'>
-                  <img src={data?.profilePhotoUrl} />
+                  <img src={imgUrl} />
                 </div>
               </div>
               <div className='flex flex-col items-center justify-center gap-y-3'>
@@ -98,10 +103,15 @@ export default function ChannelSettings() {
                     className='hidden '
                     id='fileUpload'
                   />
-                  이미지 수정
+                  등록
                 </label>
 
-                <button className='w-full px-3 py-2 text-sm bg-transparent border-2 rounded-xl hover:bg-[rgba(0,0,0,.4)]'>삭제</button>
+                <button
+                  onClick={handleRemoveImg}
+                  className='w-full px-3 py-2 text-sm bg-transparent border-2 rounded-xl hover:bg-[rgba(0,0,0,.4)]'
+                >
+                  삭제
+                </button>
               </div>
             </div>
           </div>

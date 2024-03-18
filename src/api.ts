@@ -86,7 +86,7 @@ export const updateNickname = async (nickname: string) => {
 
   const res = await authAxios
     .put(
-      '/api/users/update-nickname',
+      '/api/users/nickname',
       { nickname },
       {
         headers: { 'Content-Type': 'application/json' },
@@ -104,7 +104,7 @@ export const updateIntro = async (intro: string) => {
 
   const res = await authAxios
     .put(
-      '/api/users/update-introduction',
+      '/api/users/introduction',
       {
         introduction: intro,
       },
@@ -116,29 +116,3 @@ export const updateIntro = async (intro: string) => {
   console.log(res);
   return res;
 };
-// export const updatePage = async (name: string, introduction: string) => {
-//   const accessToken = localStorage.getItem('accessToken');
-//   try {
-//     const res = await axios
-//       .put(
-//         '/api/api/users/update-mypage',
-//         {
-//           nickname: name,
-//           channelIntroduction: introduction,
-//         },
-//         {
-//           headers: {
-//             Authorization: `Bearer ${accessToken}`,
-//             'Content-Type': ' application/json',
-//             Accept: '*/*',
-//           },
-//         },
-//       )
-//       .then((res) => res.data);
-//     console.log(res);
-//     return res;
-//   } catch (e) {
-//     console.log(e);
-//     return e;
-//   }
-// };
