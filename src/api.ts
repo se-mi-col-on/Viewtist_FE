@@ -59,7 +59,7 @@ export const getMyPage = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
-  const res = (await authAxios.get('/api/users/mypage')).data;
+  const res = (await authAxios.get('/api/api/users/mypage')).data;
   console.log(res);
   return res;
 };
@@ -86,7 +86,7 @@ export const updateNickname = async (nickname: string) => {
 
   const res = await authAxios
     .put(
-      '/api/users/nickname',
+      '/api/api/users/nickname',
       { nickname },
       {
         headers: { 'Content-Type': 'application/json' },
@@ -104,7 +104,7 @@ export const updateIntro = async (intro: string) => {
 
   const res = await authAxios
     .put(
-      '/api/users/introduction',
+      '/api/api/users/introduction',
       {
         introduction: intro,
       },
@@ -122,7 +122,7 @@ export const getStreamKey = async (): Promise<string> => {
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
-  const res = (await authAxios.get('/api/users/stream-key')).data;
+  const res = (await authAxios.get('/api/api/users/stream-key')).data;
   console.log(res);
   return res;
 };
@@ -132,7 +132,7 @@ export const getRefreshStreamKey = async (): Promise<string> => {
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
-  const res = (await authAxios.get('/api/users/refresh-stream-key')).data;
+  const res = (await authAxios.get('/api/api/users/refresh-stream-key')).data;
   console.log(res);
   return res;
 };
@@ -143,9 +143,10 @@ export const createStreaming = async (streamOption: LiveSet) => {
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
   try {
-    return await authAxios.post(`/api/live-streaming/start`, streamOption).then((res) => res.data);
+    return await authAxios
+      .post(`/stream/api/live-streaming/start`, streamOption)
+      .then((res) => res.data);
   } catch (e) {
     console.log(e);
   }
 };
-
