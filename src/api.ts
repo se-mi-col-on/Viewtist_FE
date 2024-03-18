@@ -86,7 +86,7 @@ export const updateNickname = async (nickname: string) => {
 
   const res = await authAxios
     .put(
-      '/api/users/update-nickname',
+      '/api/users/nickname',
       { nickname },
       {
         headers: { 'Content-Type': 'application/json' },
@@ -104,7 +104,7 @@ export const updateIntro = async (intro: string) => {
 
   const res = await authAxios
     .put(
-      '/api/users/update-introduction',
+      '/api/users/introduction',
       {
         introduction: intro,
       },
@@ -148,3 +148,4 @@ export const createStreaming = async (streamOption: LiveSet) => {
     console.log(e);
   }
 };
+
