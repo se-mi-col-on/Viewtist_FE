@@ -41,3 +41,8 @@ export interface IProfile {
   accountId: number | null;
   channelIntroduction: string;
 }
+
+export interface LiveSet {
+  title: string;
+  category: string;
+}

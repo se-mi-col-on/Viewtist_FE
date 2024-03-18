@@ -18,6 +18,7 @@ import StreamingLive from './pages/StreamingLive';
 import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 
+
 export default function Router() {
   return (
     <Routes>
@@ -42,7 +43,7 @@ export default function Router() {
           <Route path='/channel-settings' element={<ChannelSettings />} />
           <Route path='/streaming/obs_downLoad' element={<StreamingDownLoad />} />
           <Route path='/streaming/setting' element={<StreamingSetting />} />
-          <Route path='/streaming/live' element={<StreamingLive />} />
+          <Route path='/streaming/live:id' element={<StreamingLive />} />
         </Route>
 
         <Route path='/sign-in' element={<SignIn />} />

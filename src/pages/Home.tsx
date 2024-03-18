@@ -1,4 +1,3 @@
-import ScrollBarButton from '../components/ScrollBarButton';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { filterStreamer } from '../utils/filterStreamer';
@@ -63,7 +62,7 @@ export default function Home() {
     <div className='flex flex-col items-center gap-4 p-3'>
       <p className='text-2xl'>현재 스트리밍 중인 채널</p>
       <div className='p-3'>
-        <div className='grid grid-cols-4 gap-6'>
+        <div className='grid grid-cols-3 gap-3 transition-all xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1'>
           {filteredLiveStreamingList?.map(({ id, title, category, viewer_count, user_id }) => (
             <Card
               key={id}
@@ -86,7 +85,7 @@ export default function Home() {
 
 const Card: React.FC<CardProps> = ({ title, category, viewer_count, user_id }) => {
   return (
-    <div className='shadow-xl card w-80 bg-base-100'>
+    <div className='shadow-xl card min-w-[15rem] max-w-[20rem] bg-base-100'>
       <figure>
         <img
           className='object-cover h-48 w-96'
