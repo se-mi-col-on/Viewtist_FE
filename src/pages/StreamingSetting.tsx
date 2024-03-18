@@ -20,8 +20,13 @@ export default function StreamingSetting() {
   const isFormInValid = Object.values(streamOption).some((value) => value === '');
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { id } = await createStreaming(streamOption);
-    navigate(`/streaming/live/${id}`);
+    const result = confirm(
+      '스트리밍을 시작하기 전 OBS에서 방송시작 버튼을 누르셔야 합니다. 정말 라이브 스트리밍을 시작할까요?',
+    );
+    if (result) {
+      const { id } = await createStreaming(streamOption);
+      navigate(`/streaming/live/${id}`);
+    }
   };
   const handleRefreshKey = async (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
