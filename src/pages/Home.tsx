@@ -3,6 +3,10 @@ import { useParams } from 'react-router-dom';
 import { filterStreamer } from '../utils/filterStreamer';
 import { StreamingData } from '../types/interface';
 import { getLiveStreamingList } from '../api';
+import { useMyPage } from '../utils/channelSetting/useMyPage';
+import { currentUserInfo } from '../store';
+import { useSetRecoilState } from 'recoil';
+import { useEffect } from 'react';
 
 interface CardProps {
   title: string;
@@ -34,6 +38,13 @@ const fetchPage = async (page: number): Promise<Page> => {
 //json-server --watch db.json --port 3001
 
 export default function Home() {
+  const { data: userInfo } = useMyPage();
+  const setCurrentUserInfo = useSetRecoilState(currentUserInfo);
+
+  useEffect(() => {
+    setCurrentUserInfo(userInfo);
+  }, [userInfo, setCurrentUserInfo]);
+
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ['myInfiniteQuery'],
     queryFn: ({ pageParam }) => fetchPage(pageParam),
