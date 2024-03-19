@@ -7,6 +7,7 @@ import { useRecoilValue } from 'recoil';
 import { currentUserInfo } from '../store';
 import { deleteStreaming } from '../api';
 import { useNavigate } from 'react-router-dom';
+import Modal from '../components/Modal';
 const testUrl = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
 
 export default function StreamingLive() {
@@ -58,7 +59,12 @@ export default function StreamingLive() {
             <div className='flex gap-2'>
               {isAuthor ? (
                 <>
-                  <button className='btn btn-active btn-secondary btn-sm'>설정</button>
+                  <button
+                    className='btn btn-active btn-secondary btn-sm'
+                    onClick={() => document.getElementById('my_modal_4').showModal()}
+                  >
+                    설정
+                  </button>
                   <button className='btn btn-success btn-sm' onClick={handleDeleteStreamClick}>
                     방송종료
                   </button>
@@ -84,6 +90,7 @@ export default function StreamingLive() {
           </div>
         </div>
       </div>
+      <Modal />
     </div>
   );
 }
