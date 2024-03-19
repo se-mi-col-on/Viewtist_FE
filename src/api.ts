@@ -157,12 +157,12 @@ export const createStreaming = async (streamOption: LiveSet) => {
   }
 };
 
-export const getStreamDetail = async (streamId: number): Promise<StreamDetail> => {
+export const getStreamDetail = async (streamId: string | undefined): Promise<StreamDetail> => {
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
-  const res = (await authAxios.get(`stream/api/live-streaming/${streamId}`)).data;
+  const res = (await authAxios.get(`/stream/api/live-streaming/${streamId}`)).data;
   console.log(res);
   return res;
 };

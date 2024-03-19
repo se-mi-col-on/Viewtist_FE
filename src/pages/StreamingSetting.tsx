@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useStreamKey } from '../utils/streamingSetting/useStreamKey';
+import { useStreamKey } from '../utils/streaming/useStreamKey';
 import { getRefreshStreamKey, createStreaming } from '../api';
 import { STREAM_CATEGORY_LIST, STREAM_URL } from '../constants/constant';
 import { LiveSet } from '../types/interface';
