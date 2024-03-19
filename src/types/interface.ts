@@ -55,3 +55,8 @@ export interface StreamDetail {
   startAt: string;
   viewerCount: null;
 }
+
+export interface UpdateStreamDetail {
+  updateTitle: string;
+  updateCategory: string;
+}

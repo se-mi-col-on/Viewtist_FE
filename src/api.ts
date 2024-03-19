@@ -5,6 +5,7 @@ import {
   StreamingListArray,
   LiveSet,
   StreamDetail,
+  UpdateStreamDetail,
 } from './types/interface';
 import { getAuthAxios } from './utils/signIn/authAxios';
 
@@ -173,6 +174,21 @@ export const deleteStreaming = async (streamId: string | undefined): Promise<str
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
   const res = (await authAxios.delete(`/stream/api/live-streaming/${streamId}`)).data;
+  console.log(res);
+  return res;
+};
+
+export const updateStreamDetail = async (
+  streamId: string | undefined,
+  newDetail: UpdateStreamDetail,
+): Promise<string> => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = await authAxios
+    .put(`/stream/api/live-streaming/${streamId}`, newDetail)
+    .then((res) => res.data);
   console.log(res);
   return res;
 };
