@@ -6,6 +6,7 @@ export const useStreamDetail = (streamId: string | undefined) => {
   const { data, isLoading, isError } = useQuery<StreamDetail>({
     queryKey: ['stream-detail'],
     queryFn: () => getStreamDetail(streamId),
+    refetchInterval: 10000,
   });
 
   return { data, isLoading, isError };

@@ -90,7 +90,7 @@ export default function StreamingLive() {
           </div>
         </div>
       </div>
-      <Modal />
+      <Modal streamId={id} />
     </div>
   );
 }
