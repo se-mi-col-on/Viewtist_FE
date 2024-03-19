@@ -3,20 +3,33 @@ import StreamVideo from '../components/StreamVideo';
 import { useStreamServer } from '../utils/streaming/useStreamServer';
 import { useStreamDetail } from '../utils/streaming/useStreamDetail';
 import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { currentUserInfo } from '../store';
+import { deleteStreaming } from '../api';
+import { useNavigate } from 'react-router-dom';
 const testUrl = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
 
 export default function StreamingLive() {
+  const navigate = useNavigate();
   const streamServer = useStreamServer();
   const { id } = useParams();
   const { data, isLoading } = useStreamDetail(id);
   const [streamDetail, setStreamDetail] = useState(data);
-  // 방송 정보 수정 넣어야됨, setStreamDetail 그떄 사용
 
-  console.log(streamDetail);
+  const userInfo = useRecoilValue(currentUserInfo);
+  const isAuthor = streamDetail?.streamerNickname === userInfo.nickname;
 
   useEffect(() => {
     setStreamDetail(data);
   }, [data]);
+
+  const handleDeleteStreamClick = async () => {
+    const result = confirm('정말 스트리밍을 종료하시겠습니까?');
+    if (result) {
+      await deleteStreaming(id);
+      navigate('/');
+    }
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -43,8 +56,16 @@ export default function StreamingLive() {
               </div>
             </div>
             <div className='flex gap-2'>
-              <button className='btn btn-active btn-secondary btn-sm'>구독</button>
-              <button className='btn btn-success btn-sm'>후원</button>
+              {isAuthor ? (
+                <>
+                  <button className='btn btn-active btn-secondary btn-sm'>설정</button>
+                  <button className='btn btn-success btn-sm' onClick={handleDeleteStreamClick}>
+                    방송종료
+                  </button>
+                </>
+              ) : (
+                <button className='btn btn-active btn-secondary btn-sm'>구독</button>
+              )}
             </div>
           </div>
         </div>
