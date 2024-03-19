@@ -166,3 +166,13 @@ export const getStreamDetail = async (streamId: string | undefined): Promise<Str
   console.log(res);
   return res;
 };
+
+export const deleteStreaming = async (streamId: string | undefined): Promise<string> => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = (await authAxios.delete(`/stream/api/live-streaming/${streamId}`)).data;
+  console.log(res);
+  return res;
+};
