@@ -52,6 +52,7 @@ export interface StreamDetail {
   title: string;
   category: string;
   streamerNickname: string;
+  profilePhotoUrl: string;
   startAt: string;
   viewerCount: null;
 }
