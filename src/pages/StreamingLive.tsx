@@ -17,6 +17,7 @@ export default function StreamingLive() {
   useEffect(() => {
     setStreamDetail(data);
   }, [data]);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
