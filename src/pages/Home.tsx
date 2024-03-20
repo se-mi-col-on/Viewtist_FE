@@ -2,7 +2,11 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { filterStreamer } from '../utils/filterStreamer';
 import { StreamingData } from '../types/interface';
-import { getLiveStreamingList } from '../api';
+import {
+  getLiveStreamingList,
+  getLiveStreamingCategoryList,
+  getLiveStreamingKeywordList,
+} from '../api';
 import { useMyPage } from '../utils/channelSetting/useMyPage';
 import { currentUserInfo } from '../store';
 import { useSetRecoilState } from 'recoil';
@@ -21,26 +25,36 @@ interface Page {
   nextCursor?: number | null;
 }
 
-const fetchPage = async (page: number): Promise<Page> => {
-  const { last, content } = await getLiveStreamingList(page);
-  const currentPage = content;
-  const nextPage = last ? null : page + 1;
-
-  return {
-    data: currentPage,
-    nextCursor: nextPage,
-  };
-};
-
 //json-server --watch db.json --port 3001
 
 export default function Home() {
   const { data: userInfo } = useMyPage();
   const setCurrentUserInfo = useSetRecoilState(currentUserInfo);
+  const { categoryName } = useParams<{ categoryName: string }>();
+  const { streamerName } = useParams<{ streamerName: string }>();
 
   useEffect(() => {
     setCurrentUserInfo(userInfo);
   }, [userInfo, setCurrentUserInfo]);
+
+  const fetchPage = async (page: number): Promise<Page> => {
+    let result;
+    if (categoryName && categoryName !== 'all') {
+      result = await getLiveStreamingCategoryList(page, categoryName);
+    } else if (streamerName) {
+      result = await getLiveStreamingKeywordList(page, streamerName);
+    } else {
+      result = await getLiveStreamingList(page);
+    }
+
+    const currentPage = result.content;
+    const nextPage = result.last ? null : page + 1;
+
+    return {
+      data: currentPage,
+      nextCursor: nextPage,
+    };
+  };
 
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ['myInfiniteQuery'],
@@ -52,14 +66,11 @@ export default function Home() {
   const flattenArray = (arr: Array<Page>) => arr.flatMap((obj) => obj.data);
   const liveStreamingList = data ? flattenArray(data.pages) : [];
 
-  const { categoryName } = useParams<{ categoryName: string }>();
-  const { streamerName } = useParams<{ streamerName: string }>();
-
   let filteredLiveStreamingList = liveStreamingList;
 
   if (categoryName && categoryName !== 'all') {
     filteredLiveStreamingList = liveStreamingList?.filter(
-      ({ category }) => category === categoryName,
+      ({ category }) => category === categoryName.toUpperCase(),
     );
   }
   if (streamerName) {

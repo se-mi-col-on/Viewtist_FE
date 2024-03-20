@@ -221,3 +221,18 @@ export const getLiveStreamingCategoryList = async (pageNumber: number, category:
   console.log(res);
   return res;
 };
+
+export const getLiveStreamingKeywordList = async (pageNumber: number, keyWord: string) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+  const pageSize = 8;
+
+  const res = (
+    await authAxios.get(
+      `/live/api/live-streaming/search?keyword=${keyWord}&page=${pageNumber}&size=${pageSize}'`,
+    )
+  ).data;
+  console.log(res);
+  return res;
+};
