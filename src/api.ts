@@ -151,7 +151,7 @@ export const createStreaming = async (streamOption: LiveSet) => {
 
   try {
     return await authAxios
-      .post(`/stream/api/live-streaming/start`, streamOption)
+      .post(`/live/api/live-streaming/start`, streamOption)
       .then((res) => res.data);
   } catch (e) {
     console.log(e);
@@ -163,7 +163,7 @@ export const getStreamDetail = async (streamId: string | undefined): Promise<Str
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
-  const res = (await authAxios.get(`/stream/api/live-streaming/${streamId}`)).data;
+  const res = (await authAxios.get(`/live/api/live-streaming/${streamId}`)).data;
   console.log(res);
   return res;
 };
@@ -173,7 +173,7 @@ export const deleteStreaming = async (streamId: string | undefined): Promise<str
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
-  const res = (await authAxios.delete(`/stream/api/live-streaming/${streamId}`)).data;
+  const res = (await authAxios.delete(`/live/api/live-streaming/${streamId}`)).data;
   console.log(res);
   return res;
 };
@@ -187,7 +187,7 @@ export const updateStreamDetail = async (
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
   const res = await authAxios
-    .put(`/stream/api/live-streaming/${streamId}`, newDetail)
+    .put(`/live/api/live-streaming/${streamId}`, newDetail)
     .then((res) => res.data);
   console.log(res);
   return res;

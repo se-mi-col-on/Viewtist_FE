@@ -22,10 +22,10 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
-      '/stream': {
+      '/live': {
         target: 'http://ec2-3-35-234-97.ap-northeast-2.compute.amazonaws.com:8082',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/stream/, ''),
+        rewrite: (path) => path.replace(/^\/live/, ''),
         secure: false,
         ws: true,
       },
