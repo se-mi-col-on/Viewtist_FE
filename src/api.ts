@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { ISubscribeList, IUpdatePost, StreamingListArray, LiveSet } from './types/interface';
+import {
+  ISubscribeList,
+  IUpdatePost,
+  StreamingListArray,
+  LiveSet,
+  StreamDetail,
+  UpdateStreamDetail,
+} from './types/interface';
 import { getAuthAxios } from './utils/signIn/authAxios';
 
 export const getsubscribeList = async () => {
@@ -144,9 +151,44 @@ export const createStreaming = async (streamOption: LiveSet) => {
 
   try {
     return await authAxios
-      .post(`/stream/api/live-streaming/start`, streamOption)
+      .post(`/live/api/live-streaming/start`, streamOption)
       .then((res) => res.data);
   } catch (e) {
     console.log(e);
   }
+};
+
+export const getStreamDetail = async (streamId: string | undefined): Promise<StreamDetail> => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = (await authAxios.get(`/live/api/live-streaming/${streamId}`)).data;
+  console.log(res);
+  return res;
+};
+
+export const deleteStreaming = async (streamId: string | undefined): Promise<string> => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = (await authAxios.delete(`/live/api/live-streaming/${streamId}`)).data;
+  console.log(res);
+  return res;
+};
+
+export const updateStreamDetail = async (
+  streamId: string | undefined,
+  newDetail: UpdateStreamDetail,
+): Promise<string> => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = await authAxios
+    .put(`/live/api/live-streaming/${streamId}`, newDetail)
+    .then((res) => res.data);
+  console.log(res);
+  return res;
 };
