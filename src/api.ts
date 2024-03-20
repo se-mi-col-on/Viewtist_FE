@@ -192,3 +192,13 @@ export const updateStreamDetail = async (
   console.log(res);
   return res;
 };
+
+export const getLiveStreamingList1 = async () => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = (await authAxios.get(`/stream/api/live-streaming/all-streaming?page=0&size=10`)).data;
+  console.log(res);
+  return res;
+};

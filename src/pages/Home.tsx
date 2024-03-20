@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { filterStreamer } from '../utils/filterStreamer';
 import { StreamingData } from '../types/interface';
-import { getLiveStreamingList } from '../api';
+import { getLiveStreamingList, getLiveStreamingList1 } from '../api';
 import { useMyPage } from '../utils/channelSetting/useMyPage';
 import { currentUserInfo } from '../store';
 import { useSetRecoilState } from 'recoil';
