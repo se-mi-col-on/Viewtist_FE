@@ -46,3 +46,18 @@ export interface LiveSet {
   title: string;
   category: string;
 }
+
+export interface StreamDetail {
+  id: number;
+  title: string;
+  category: string;
+  streamerNickname: string;
+  profilePhotoUrl: string;
+  startAt: string;
+  viewerCount: null;
+}
+
+export interface UpdateStreamDetail {
+  updateTitle: string;
+  updateCategory: string;
+}

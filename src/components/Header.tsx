@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
 import { GoBell } from 'react-icons/go';
 import { IoVideocamOutline } from 'react-icons/io5';
-import { isLoggedIn } from './../store';
+import { isLoggedIn, currentUserInfo } from './../store';
 import ToggleThemeBtn from './ToggleThemeBtn';
 import Drawer from './Drawer';
 import { CiSearch } from 'react-icons/ci';
@@ -30,6 +30,7 @@ export default function Header() {
     }
   };
 
+  const setCurrentUserInfo = useSetRecoilState(currentUserInfo);
   const [isLogIn, setIsLogIn] = useRecoilState(isLoggedIn);
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ export default function Header() {
 
   const handleLogoutClick = () => {
     localStorage.removeItem('accessToken'), localStorage.removeItem('refreshToken');
+    setCurrentUserInfo({});
     setIsLogIn(false);
     navigate('/');
   };
