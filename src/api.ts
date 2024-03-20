@@ -196,9 +196,27 @@ export const getLiveStreamingList = async (pageNumber: number) => {
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
+  const pageSize = 8;
 
   const res = (
-    await authAxios.get(`/live/api/live-streaming/all-streaming?page=${pageNumber}&size=8`)
+    await authAxios.get(
+      `/live/api/live-streaming/all-streaming?page=${pageNumber}&size=${pageSize}`,
+    )
+  ).data;
+  console.log(res);
+  return res;
+};
+
+export const getLiveStreamingCategoryList = async (pageNumber: number, category: string) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+  const pageSize = 8;
+
+  const res = (
+    await authAxios.get(
+      `/live/api/live-streaming/category?category=${category.toUpperCase()}&page=${pageNumber}&size=${pageSize}'`,
+    )
   ).data;
   console.log(res);
   return res;
