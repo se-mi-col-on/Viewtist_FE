@@ -2,7 +2,6 @@ import axios from 'axios';
 import {
   ISubscribeList,
   IUpdatePost,
-  StreamingListArray,
   LiveSet,
   StreamDetail,
   UpdateStreamDetail,
@@ -24,10 +23,10 @@ export const removeSubscribe = async (id: number) => {
   return (await axios.delete(`http://localhost:3001/subscribe-list/${id}`)).data;
 };
 
-export const getLiveStreamingList = async () => {
-  const response = await axios.get('http://localhost:3001/liveStreaming-list');
-  return response.data as StreamingListArray;
-};
+// export const getLiveStreamingList = async () => {
+//   const response = await axios.get('http://localhost:3001/liveStreaming-list');
+//   return response.data as StreamingListArray;
+// };
 
 export const getPosts = async () => {
   // 전체 게시글 get
@@ -193,12 +192,14 @@ export const updateStreamDetail = async (
   return res;
 };
 
-export const getLiveStreamingList1 = async () => {
+export const getLiveStreamingList = async (pageNumber: number) => {
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
-  const res = (await authAxios.get(`/stream/api/live-streaming/all-streaming?page=0&size=10`)).data;
+  const res = (
+    await authAxios.get(`/live/api/live-streaming/all-streaming?page=${pageNumber}&size=8`)
+  ).data;
   console.log(res);
   return res;
 };

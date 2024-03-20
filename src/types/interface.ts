@@ -21,15 +21,13 @@ export interface IUpdatePost {
 }
 
 export interface StreamingData {
-  readonly id: number;
-  readonly user_id: string;
-  readonly title: string;
   readonly category: string;
+  readonly id: number;
+  readonly profilePhotoUrl: string;
   readonly start_at: string;
-  readonly viewer_count: number;
-  readonly transmission_method: string;
-  readonly created_at: string;
-  readonly modified_at: string;
+  readonly streamerNickname: string;
+  readonly title: string;
+  readonly viewerCount: number;
 }
 
 export interface StreamingListArray extends Array<StreamingData> {}

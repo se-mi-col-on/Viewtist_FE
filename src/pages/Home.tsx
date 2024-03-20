@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { filterStreamer } from '../utils/filterStreamer';
 import { StreamingData } from '../types/interface';
-import { getLiveStreamingList, getLiveStreamingList1 } from '../api';
+import { getLiveStreamingList } from '../api';
 import { useMyPage } from '../utils/channelSetting/useMyPage';
 import { currentUserInfo } from '../store';
 import { useSetRecoilState } from 'recoil';
@@ -11,8 +11,9 @@ import { useEffect } from 'react';
 interface CardProps {
   title: string;
   category: string;
-  viewer_count: number;
-  user_id: string;
+  viewerCount: number;
+  streamerNickname: string;
+  profilePhotoUrl: string;
 }
 
 interface Page {
@@ -21,17 +22,13 @@ interface Page {
 }
 
 const fetchPage = async (page: number): Promise<Page> => {
-  const pageSize = 8;
-  const startIdx = (page - 1) * pageSize;
-  const endIdx = startIdx + pageSize;
-
-  const fetchDataList = await getLiveStreamingList();
-  const currentPage = fetchDataList.slice(startIdx, endIdx);
-  const nextPage = endIdx < fetchDataList.length ? page + 1 : null;
+  const { last, content } = await getLiveStreamingList(page);
+  const currentPage = content;
+  const nextPage = last ? null : page + 1;
 
   return {
     data: currentPage,
-    nextCursor: nextPage ? nextPage : null,
+    nextCursor: nextPage,
   };
 };
 
@@ -48,7 +45,7 @@ export default function Home() {
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ['myInfiniteQuery'],
     queryFn: ({ pageParam }) => fetchPage(pageParam),
-    initialPageParam: 1,
+    initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
 
@@ -74,15 +71,18 @@ export default function Home() {
       <p className='text-2xl'>현재 스트리밍 중인 채널</p>
       <div className='p-3'>
         <div className='grid grid-cols-3 gap-3 transition-all xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1'>
-          {filteredLiveStreamingList?.map(({ id, title, category, viewer_count, user_id }) => (
-            <Card
-              key={id}
-              title={title}
-              category={category}
-              viewer_count={viewer_count}
-              user_id={user_id}
-            />
-          ))}
+          {filteredLiveStreamingList?.map(
+            ({ id, title, category, profilePhotoUrl, streamerNickname, viewerCount }) => (
+              <Card
+                key={id}
+                title={title}
+                category={category}
+                viewerCount={viewerCount}
+                streamerNickname={streamerNickname}
+                profilePhotoUrl={profilePhotoUrl}
+              />
+            ),
+          )}
         </div>
       </div>
       {hasNextPage && (
@@ -94,7 +94,13 @@ export default function Home() {
   );
 }
 
-const Card: React.FC<CardProps> = ({ title, category, viewer_count, user_id }) => {
+const Card: React.FC<CardProps> = ({
+  title,
+  category,
+  viewerCount,
+  streamerNickname,
+  profilePhotoUrl,
+}) => {
   return (
     <div className='shadow-xl card min-w-[15rem] max-w-[20rem] bg-base-100'>
       <figure>
@@ -107,16 +113,16 @@ const Card: React.FC<CardProps> = ({ title, category, viewer_count, user_id }) =
       <div className='flex items-start gap-4 p-2'>
         <div className='avatar'>
           <div className='w-12 rounded-full'>
-            <img src='https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg' />
+            <img src={profilePhotoUrl} />
           </div>
         </div>
         <div className='flex flex-col gap-2 text-sm'>
-          <p className='text-amber-200'>{user_id}</p>
+          <p className='text-amber-200'>{streamerNickname}</p>
           <p className='font-extrabold'>{title}</p>
         </div>
         <div className='flex flex-col gap-1 ml-auto mr-3'>
           <button className='btn btn-xs'>{category}</button>
-          <button className='btn btn-xs'>{viewer_count} 명 시청</button>
+          <button className='btn btn-xs'>{viewerCount} 명 시청</button>
         </div>
       </div>
     </div>
