@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { filterStreamer } from '../utils/filterStreamer';
+import { useMemo } from 'react';
 import { StreamingData } from '../types/interface';
 import {
   getLiveStreamingList,
@@ -30,19 +30,25 @@ interface Page {
 export default function Home() {
   const { data: userInfo } = useMyPage();
   const setCurrentUserInfo = useSetRecoilState(currentUserInfo);
-  const { categoryName } = useParams<{ categoryName: string }>();
-  const { streamerName } = useParams<{ streamerName: string }>();
+  const { categoryName, streamerName } = useParams<{
+    categoryName: string;
+    streamerName: string;
+  }>();
 
   useEffect(() => {
     setCurrentUserInfo(userInfo);
   }, [userInfo, setCurrentUserInfo]);
 
-  const fetchPage = async (page: number): Promise<Page> => {
+  const fetchPage = async (
+    page: number,
+    category: string | undefined,
+    streamer: string | undefined,
+  ): Promise<Page> => {
     let result;
-    if (categoryName && categoryName !== 'all') {
-      result = await getLiveStreamingCategoryList(page, categoryName);
-    } else if (streamerName) {
-      result = await getLiveStreamingKeywordList(page, streamerName);
+    if (category && category !== 'all') {
+      result = await getLiveStreamingCategoryList(page, category);
+    } else if (streamer) {
+      result = await getLiveStreamingKeywordList(page, streamer);
     } else {
       result = await getLiveStreamingList(page);
     }
@@ -56,9 +62,19 @@ export default function Home() {
     };
   };
 
+  // 초기 queryKey 설정
+  const initialQueryKey = useMemo(() => {
+    if (categoryName && categoryName !== 'all') {
+      return ['myInfiniteQuery', categoryName];
+    } else if (streamerName) {
+      return ['myInfiniteQuery', streamerName];
+    }
+    return ['myInfiniteQuery'];
+  }, [categoryName, streamerName]);
+
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: ['myInfiniteQuery'],
-    queryFn: ({ pageParam }) => fetchPage(pageParam),
+    queryKey: initialQueryKey,
+    queryFn: ({ pageParam }) => fetchPage(pageParam, categoryName, streamerName),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
@@ -66,23 +82,12 @@ export default function Home() {
   const flattenArray = (arr: Array<Page>) => arr.flatMap((obj) => obj.data);
   const liveStreamingList = data ? flattenArray(data.pages) : [];
 
-  let filteredLiveStreamingList = liveStreamingList;
-
-  if (categoryName && categoryName !== 'all') {
-    filteredLiveStreamingList = liveStreamingList?.filter(
-      ({ category }) => category === categoryName.toUpperCase(),
-    );
-  }
-  if (streamerName) {
-    filteredLiveStreamingList = filterStreamer(filteredLiveStreamingList, streamerName);
-  }
-
   return (
     <div className='flex flex-col items-center gap-4 p-3'>
       <p className='text-2xl'>현재 스트리밍 중인 채널</p>
       <div className='p-3'>
         <div className='grid grid-cols-3 gap-3 transition-all xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1'>
-          {filteredLiveStreamingList?.map(
+          {liveStreamingList?.map(
             ({ id, title, category, profilePhotoUrl, streamerNickname, viewerCount }) => (
               <Card
                 key={id}
