@@ -36,11 +36,22 @@ export const getPosts = async () => {
 
 export const sendPost = async (payload: IUpdatePost) => {
   // 게시글 생성
-  try {
-    (await axios.post('http://localhost:3001/posts', payload)).data;
-  } catch (e) {
-    console.log(e);
-  }
+  // try {
+  //   (await axios.post('http://localhost:3001/posts', payload)).data;
+  // } catch (e) {
+  //   console.log(e);
+  // }
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  return await authAxios
+    .post('/api/api/post/write', payload, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((res) => res.data);
 };
 export const getPostDetail = async (id: number) => {
   // 각 게시글 get
