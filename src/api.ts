@@ -6,6 +6,7 @@ import {
   LiveSet,
   StreamDetail,
   UpdateStreamDetail,
+  IAllPosts,
 } from './types/interface';
 import { getAuthAxios } from './utils/signIn/authAxios';
 
@@ -29,9 +30,22 @@ export const getLiveStreamingList = async () => {
   return response.data as StreamingListArray;
 };
 
-export const getPosts = async () => {
+export const getPosts = async (page: number = 0, size: number = 1000) => {
   // 전체 게시글 get
-  return (await axios.get('http://localhost:3001/posts')).data;
+  // return (await axios.get('http://localhost:3001/posts')).data;
+
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  return await authAxios
+    .get<IAllPosts>('/api/api/post', {
+      params: {
+        page,
+        size,
+      },
+    })
+    .then((res) => res.data.content);
 };
 
 export const sendPost = async (payload: IUpdatePost) => {

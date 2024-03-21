@@ -61,3 +61,24 @@ export interface UpdateStreamDetail {
   updateTitle: string;
   updateCategory: string;
 }
+
+export interface IAllPosts {
+  content: IContent[];
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+  size: number;
+  number: number;
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
+}
+
+export interface IContent {
+  id: number;
+  title: string;
+  content: string;
+  nickname: string;
+  createdAt: string;
+  updatedAt: string;
+}
