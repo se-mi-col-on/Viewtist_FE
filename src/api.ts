@@ -83,7 +83,12 @@ export const deletePost = async (id: number) => {
 
 export const updatePost = async (id: number, payload: { title: string; content: string }) => {
   // 게시글 수정
-  return (await axios.put(`http://localhost:3001/posts/${id}`, payload)).data;
+  // return (await axios.put(`/api/api/post/${id}`, payload)).data;
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  return (await authAxios.put(`/api/api/post/${id}`, payload)).data;
 };
 
 export const getMyPage = async () => {
