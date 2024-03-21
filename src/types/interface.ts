@@ -82,3 +82,7 @@ export interface IContent {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IPostListItem extends IContent {
+  src: string;
+}

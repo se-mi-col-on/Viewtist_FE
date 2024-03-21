@@ -1,6 +1,6 @@
 import { BsEmojiTear } from 'react-icons/bs';
 import { Link, Outlet, useMatch, useNavigate, useOutletContext } from 'react-router-dom';
-import { IContent, IProfile } from '../types/interface';
+import { IPostListItem, IProfile } from '../types/interface';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { TiPinOutline } from 'react-icons/ti';
 import { GoTrash } from 'react-icons/go';
@@ -32,7 +32,7 @@ export default function Community() {
           </Link>
           <ul className='flex flex-col gap-y-5'>
             {posts?.map((item) => (
-              <PostListItem key={item.id} {...item} />
+              <PostListItem key={item.id} {...item} src={contextData.profilePhotoUrl} />
             ))}
           </ul>
         </div>
@@ -42,7 +42,7 @@ export default function Community() {
   );
 }
 
-const PostListItem = (props: IContent) => {
+const PostListItem = ({ src, ...props }: IPostListItem) => {
   const createdTime = new Date(props.createdAt).toLocaleDateString().slice(2);
   const navigate = useNavigate();
   const deletePost = useDeletePost(props.id);
@@ -59,7 +59,7 @@ const PostListItem = (props: IContent) => {
       <div className='relative flex p-1 gap-x-12'>
         <div className='avatar'>
           <div className='absolute rounded-full sm:w-6 md:w-8 ring ring-primary ring-offset-base-100 ring-offset-2'>
-            <img src='https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg' />
+            <img src={src} />
           </div>
         </div>
 

@@ -73,7 +73,7 @@ export default function Channel() {
         </li>
         <li className={`relative ${communityMatch && 'font-extrabold'}`}>
           <Link to={'community'}>
-            <button>커뮤니티</button>
+            <button>공지</button>
           </Link>
           {matches ? (
             <motion.div
