@@ -74,11 +74,11 @@ export const getPostDetail = async (id: number) => {
 
 export const deletePost = async (id: number) => {
   // 게시글 삭제
-  try {
-    (await axios.delete(`http://localhost:3001/posts/${id}`)).data;
-  } catch (e) {
-    console.log(e);
-  }
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  return (await authAxios.delete(`/api/api/post/${id}`)).data;
 };
 
 export const updatePost = async (id: number, payload: { title: string; content: string }) => {
