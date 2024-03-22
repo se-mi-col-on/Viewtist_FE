@@ -97,7 +97,7 @@ export const getMyPage = async () => {
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
   const res = (await authAxios.get('/api/api/users/mypage')).data;
-  console.log(res);
+  // console.log(res);
   return res;
 };
 
@@ -219,6 +219,16 @@ export const updateStreamDetail = async (
   const res = await authAxios
     .put(`/live/api/live-streaming/${streamId}`, newDetail)
     .then((res) => res.data);
+  console.log(res);
+  return res;
+};
+
+export const getUserInfo = async (userNickname: string) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = (await authAxios.get(`/api/api/users/${userNickname}`)).data;
   console.log(res);
   return res;
 };

@@ -8,6 +8,7 @@ import ToggleThemeBtn from './ToggleThemeBtn';
 import Drawer from './Drawer';
 import { CiSearch } from 'react-icons/ci';
 import { motion } from 'framer-motion';
+import { useMyPage } from '../utils/channelSetting/useMyPage';
 
 export default function Header() {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
@@ -118,12 +119,16 @@ export default function Header() {
 
 const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
   const [version, setVersion] = useState(1);
+
+  const { data: myInfo, isLoading } = useMyPage();
+
+  if (isLoading) return <h1>loading...</h1>;
   return (
     <div className='dropdown dropdown-end' key={version}>
       <div tabIndex={0} role='button' className='m-1'>
         <div className='avatar'>
           <div className='w-10 rounded-full'>
-            <img src='https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg' />
+            <img src={myInfo?.profilePhotoUrl} />
           </div>
         </div>
       </div>
@@ -132,12 +137,12 @@ const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
         className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'
       >
         <li onClick={() => setVersion((prev) => (prev += 1))}>
-          <Link to={'channel/muse'}>
+          <Link to={`channel/${myInfo?.nickname}/muse`}>
             <button className='text-white'>내 채널</button>
           </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
-          <Link to={'channel/subscriptions'}>
+          <Link to={`channel/${myInfo?.nickname}/subscriptions`}>
             <button className='text-white'>내 구독 리스트</button>
           </Link>
         </li>

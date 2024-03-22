@@ -54,13 +54,15 @@ export default function ChannelSettings() {
     }
     if (data?.nickname !== name) {
       updateName();
+      navigate(`/channel/${name}/muse`)
       return;
     }
     if (data.channelIntroduction !== introduction) {
       updateChannelIntro();
       return;
     }
-    console.log(name);
+
+    // 업데이트 로직 수정
   };
 
   if (isLoading) return <h1>loading...</h1>;

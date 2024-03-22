@@ -85,4 +85,5 @@ export interface IContent {
 
 export interface IPostListItem extends IContent {
   src: string;
+  myName: string;
 }

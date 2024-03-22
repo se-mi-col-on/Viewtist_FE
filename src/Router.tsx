@@ -28,7 +28,7 @@ export default function Router() {
         </Route>
 
         <Route element={<ProtectedRoute />}>
-          <Route path='/channel' element={<Channel />}>
+          <Route path='/channel/:name' element={<Channel />}>
             <Route path='muse' element={<Muse />} />
             <Route path='subscriptions' element={<Subscriptions />} />
 
