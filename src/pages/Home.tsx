@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useMemo } from 'react';
 import { StreamingData } from '../types/interface';
 import {
@@ -89,14 +89,15 @@ export default function Home() {
         <div className='grid grid-cols-3 gap-3 transition-all xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1'>
           {liveStreamingList?.map(
             ({ id, title, category, profilePhotoUrl, streamerNickname, viewerCount }) => (
-              <Card
-                key={id}
-                title={title}
-                category={category}
-                viewerCount={viewerCount}
-                streamerNickname={streamerNickname}
-                profilePhotoUrl={profilePhotoUrl}
-              />
+              <Link key={id} to={`/streaming/live/${id}`}>
+                <Card
+                  title={title}
+                  category={category}
+                  viewerCount={viewerCount}
+                  streamerNickname={streamerNickname}
+                  profilePhotoUrl={profilePhotoUrl}
+                />
+              </Link>
             ),
           )}
         </div>
