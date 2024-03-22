@@ -28,6 +28,7 @@ export interface StreamingData {
   readonly streamerNickname: string;
   readonly title: string;
   readonly viewerCount: number;
+  readonly thumbnail: string;
 }
 
 export interface StreamingListArray extends Array<StreamingData> {}

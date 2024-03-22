@@ -11,6 +11,7 @@ import { useMyPage } from '../utils/channelSetting/useMyPage';
 import { currentUserInfo } from '../store';
 import { useSetRecoilState } from 'recoil';
 import { useEffect } from 'react';
+import thumbnailDefault from '../assets/thumbnail_default.jpg';
 
 interface CardProps {
   title: string;
@@ -18,6 +19,7 @@ interface CardProps {
   viewerCount: number;
   streamerNickname: string;
   profilePhotoUrl: string;
+  thumbnail: string;
 }
 
 interface Page {
@@ -77,6 +79,7 @@ export default function Home() {
     queryFn: ({ pageParam }) => fetchPage(pageParam, categoryName, streamerName),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
+    refetchInterval: 60000,
   });
 
   const flattenArray = (arr: Array<Page>) => arr.flatMap((obj) => obj.data);
@@ -88,7 +91,15 @@ export default function Home() {
       <div className='p-3'>
         <div className='grid grid-cols-3 gap-3 transition-all xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1'>
           {liveStreamingList?.map(
-            ({ id, title, category, profilePhotoUrl, streamerNickname, viewerCount }) => (
+            ({
+              id,
+              title,
+              category,
+              profilePhotoUrl,
+              streamerNickname,
+              viewerCount,
+              thumbnail,
+            }) => (
               <Link key={id} to={`/streaming/live/${id}`}>
                 <Card
                   title={title}
@@ -96,6 +107,7 @@ export default function Home() {
                   viewerCount={viewerCount}
                   streamerNickname={streamerNickname}
                   profilePhotoUrl={profilePhotoUrl}
+                  thumbnail={thumbnail}
                 />
               </Link>
             ),
@@ -117,13 +129,25 @@ const Card: React.FC<CardProps> = ({
   viewerCount,
   streamerNickname,
   profilePhotoUrl,
+  thumbnail,
 }) => {
+  const toBinaryIMG = Uint8Array.from(atob(thumbnail), (c) => c.charCodeAt(0));
+  const file = new Blob([toBinaryIMG], { type: 'image/png' });
+  const thumbnailUrl = URL.createObjectURL(file);
+
+  // 브라우저 메모리 누수를 방지하기 위해 thumbnail이 바뀌면 해당 URL 해지하기
+  useEffect(() => {
+    return () => {
+      URL.revokeObjectURL(thumbnailUrl);
+    };
+  }, [thumbnailUrl]);
+
   return (
     <div className='shadow-xl card min-w-[15rem] max-w-[20rem] bg-base-100'>
       <figure>
         <img
           className='object-cover h-48 w-96'
-          src='https://via.placeholder.com/300x200.jpg'
+          src={thumbnail ? thumbnailUrl : thumbnailDefault}
           alt='스트리밍 화면'
         />
       </figure>
