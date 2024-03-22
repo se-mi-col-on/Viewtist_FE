@@ -79,7 +79,7 @@ export default function Home() {
     queryFn: ({ pageParam }) => fetchPage(pageParam, categoryName, streamerName),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
-    refetchInterval: 60000,
+    refetchInterval: 10000,
   });
 
   const flattenArray = (arr: Array<Page>) => arr.flatMap((obj) => obj.data);

@@ -50,7 +50,7 @@ const StreamVideo: React.FC<StreamVideoProps> = ({ src, streamId, isAuthor }) =>
       }
     };
 
-    const interval = setInterval(captureFrame, 60000); // 1분마다 프레임 캡처
+    const interval = setInterval(captureFrame, 10000); // 10초마다 프레임 캡처
 
     return () => clearInterval(interval);
   }, [streamId, isAuthor]);
