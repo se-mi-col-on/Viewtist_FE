@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
 import { GoBell } from 'react-icons/go';
 import { IoVideocamOutline } from 'react-icons/io5';
@@ -14,7 +14,6 @@ export default function Header() {
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light',
   );
-  const userInfo = useRecoilValue(currentUserInfo);
 
   useEffect(() => {
     localStorage.setItem('theme', theme!);
@@ -30,7 +29,7 @@ export default function Header() {
     }
   };
 
-  const setCurrentUserInfo = useSetRecoilState(currentUserInfo);
+  const [userInfo, setUserInfo] = useRecoilState(currentUserInfo);
   const [isLogIn, setIsLogIn] = useRecoilState(isLoggedIn);
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
@@ -44,7 +43,7 @@ export default function Header() {
 
   const handleLogoutClick = () => {
     localStorage.removeItem('accessToken'), localStorage.removeItem('refreshToken');
-    setCurrentUserInfo({});
+    setUserInfo({});
     setIsLogIn(false);
     navigate('/');
   };
@@ -106,7 +105,7 @@ export default function Header() {
               <GoBell className='text-xl hover:text-white' />
             </Link>
             <DropDown
-              profilePhotoUrl={userInfo.profilePhotoUrl}
+              profilePhotoUrl={userInfo?.profilePhotoUrl}
               onLogoutClick={handleLogoutClick}
             />
           </>
