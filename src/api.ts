@@ -236,3 +236,19 @@ export const getLiveStreamingKeywordList = async (pageNumber: number, keyWord: s
   console.log(res);
   return res;
 };
+
+export const updateThumbnail = async (streamId: string | undefined, encodeString: string) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  // const formData = new FormData();
+  // formData.append('thumbnail', file); // 파일을 FormData에 추가
+
+  const res = await authAxios.put(`/live/api/live-streaming/thumbnail/${streamId}`, {
+    thumbnail: encodeString,
+  });
+
+  console.log(res.data);
+  return res.data;
+};
