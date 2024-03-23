@@ -3,8 +3,6 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import { Link, Outlet, useMatch, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useUserInfo } from '../utils/channelSetting/useUserInfo';
-import { currentUserInfo } from '../store';
-import { useRecoilValue } from 'recoil';
 
 export default function Channel() {
   const museMatch = useMatch('channel/:name/muse');
@@ -15,24 +13,24 @@ export default function Channel() {
   const detailMatch = useMatch('/channel/:name/community/detail/:id');
   const { name } = useParams();
 
-
   const { data, isLoading } = useUserInfo(name!);
 
   const matches = communityMatch || writeMatch || updateMatch || detailMatch;
 
+  if (isLoading) return <h1>loading...</h1>;
   return (
     <div className='p-3 mt-5 border-2 sm:w-full md:w-2/3'>
       <div className='flex p-3 my-5 border-2 sm:flex-col sm:items-center sm:justify-center sm:gap-y-5 md:flex-row md:items-start md:justify-between'>
         <div className='flex items-center gap-x-5'>
           <div className='avatar'>
             <div className='rounded-full w-14 ring ring-primary ring-offset-base-100 ring-offset-2'>
-              <img src={userInfo?.profilePhotoUrl} />
+              <img src={data?.profilePhotoUrl} />
             </div>
           </div>
 
           <div>
-            <h1 className='mb-1 text-2xl'>{userInfo?.nickname}</h1>
-            <span>{userInfo?.channelIntroduction}</span>
+            <h1 className='mb-1 text-2xl'>{data?.nickname}</h1>
+            <span>{data?.channelIntroduction}</span>
           </div>
         </div>
 
