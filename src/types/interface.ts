@@ -61,3 +61,8 @@ export interface UpdateStreamDetail {
   updateTitle: string;
   updateCategory: string;
 }
+
+export interface IChatHistory {
+  message: string;
+  senderId: number;
+}

@@ -8,6 +8,8 @@ import { currentUserInfo } from '../store';
 import { deleteStreaming } from '../api';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../components/Modal';
+import Chat from '../components/Chat';
+
 const testUrl = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
 
 export default function StreamingLive() {
@@ -76,20 +78,7 @@ export default function StreamingLive() {
           </div>
         </div>
       </div>
-      <div className='flex flex-col border-2 h-[90%] sm:w-full lg:w-auto'>
-        <div className='flex items-center justify-center h-5/6 '>실시간 채팅 영역</div>
-        <div className='flex flex-col gap-2 p-3'>
-          <div>
-            <textarea
-              className='w-full textarea textarea-bordered'
-              placeholder='채팅을 입력하세요.'
-            ></textarea>
-          </div>
-          <div className='flex justify-end'>
-            <button className='btn btn-xs btn-primary'>채팅</button>
-          </div>
-        </div>
-      </div>
+        <Chat />
       <Modal streamId={id} />
     </div>
   );
