@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
 
 export interface ISubscribeList {
-  readonly id: number;
-  readonly name: string;
+  readonly streamerNickname: string;
+  readonly profilephotoURL: string;
 }
 export interface IPosts {
   readonly title: string;

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {
-  ISubscribeList,
+  // ISubscribeList,
   IUpdatePost,
   LiveSet,
   StreamDetail,
@@ -9,20 +9,20 @@ import {
 } from './types/interface';
 import { getAuthAxios } from './utils/signIn/authAxios';
 
-export const getsubscribeList = async () => {
-  // 구독 리스트 get
-  return (await axios.get('http://localhost:3001/subscribe-list')).data;
-};
+// export const getsubscribeList = async () => {
+//   // 구독 리스트 get
+//   return (await axios.get('http://localhost:3001/subscribe-list')).data;
+// };
 
-export const addSubscribe = async ({ id, name }: ISubscribeList) => {
-  //구독 추가
-  return (await axios.post('http://localhost:3001/subscribe-list', { id, name })).data;
-};
+// export const addSubscribe = async ({ id, name }: ISubscribeList) => {
+//   //구독 추가
+//   return (await axios.post('http://localhost:3001/subscribe-list', { id, name })).data;
+// };
 
-export const removeSubscribe = async (id: number) => {
-  // 구독 취소
-  return (await axios.delete(`http://localhost:3001/subscribe-list/${id}`)).data;
-};
+// export const removeSubscribe = async (id: number) => {
+//   // 구독 취소
+//   return (await axios.delete(`http://localhost:3001/subscribe-list/${id}`)).data;
+// };
 
 // export const getLiveStreamingList = async () => {
 //   const response = await axios.get('http://localhost:3001/liveStreaming-list');
@@ -222,7 +222,6 @@ export const updateStreamDetail = async (
   return res;
 };
 
-
 export const getUserInfo = async (userNickname: string) => {
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
@@ -283,9 +282,6 @@ export const updateThumbnail = async (streamId: string | undefined, encodeString
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
-  // const formData = new FormData();
-  // formData.append('thumbnail', file); // 파일을 FormData에 추가
-
   const res = await authAxios.put(`/live/api/live-streaming/thumbnail/${streamId}`, {
     thumbnail: encodeString,
   });
@@ -294,3 +290,36 @@ export const updateThumbnail = async (streamId: string | undefined, encodeString
   return res.data;
 };
 
+export const getSubscribeList = async (nickname: string) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = (await authAxios.get(`/api/api/users/subscribe/${nickname}?page=0&size=999`)).data;
+  console.log(res);
+  return res.content;
+};
+
+export const addSubscribe = async (nickname: string) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = (await authAxios.post(`/api/api/users/subscribe`, nickname)).data;
+  console.log(res);
+  return res;
+};
+
+export const deleteSubscribe = async (nickname: string) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = (
+    await authAxios.delete(`/api/api/users/unsubscribe`, {
+      data: nickname,
+    })
+  ).data;
+  console.log(res);
+  return res;
+};
