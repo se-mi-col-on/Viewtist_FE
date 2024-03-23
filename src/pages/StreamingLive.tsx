@@ -5,8 +5,9 @@ import { useStreamDetail } from '../utils/streaming/useStreamDetail';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { currentUserInfo } from '../store';
-import { deleteStreaming } from '../api';
+import { deleteStreaming, getSubscribeList, addSubscribe, deleteSubscribe } from '../api';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 import Modal from '../components/Modal';
 const testUrl = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
 
@@ -16,13 +17,49 @@ export default function StreamingLive() {
   const { id } = useParams();
   const { data, isLoading } = useStreamDetail(id);
   const [streamDetail, setStreamDetail] = useState(data);
-
+  const [isSubscribe, setIsSubscribe] = useState<boolean>();
   const userInfo = useRecoilValue(currentUserInfo);
   const isAuthor = streamDetail?.streamerNickname === userInfo.nickname;
 
   useEffect(() => {
     setStreamDetail(data);
   }, [data]);
+
+  const { mutate: addFn } = useMutation({
+    mutationFn: () => addSubscribe(streamDetail?.streamerNickname),
+  });
+
+  const { mutate: removeFn } = useMutation({
+    mutationFn: () => deleteSubscribe(streamDetail?.streamerNickname),
+  });
+
+  const subscribe = () => {
+    console.log(streamDetail?.streamerNickname);
+    if (streamDetail?.streamerNickname) {
+      console.log('구독' + streamDetail?.streamerNickname);
+      addFn();
+      setIsSubscribe(true);
+    }
+  };
+
+  const cancelSubscribe = () => {
+    if (streamDetail?.streamerNickname) {
+      console.log('구독취소' + streamDetail?.streamerNickname);
+      removeFn();
+      setIsSubscribe(false);
+    }
+  };
+
+  useEffect(() => {
+    const checkSubscribe = async (nickname: string) => {
+      const subscribeList: { streamerNickname: string }[] = await getSubscribeList(nickname);
+      const isAlreadySubscribe = subscribeList.some(
+        ({ streamerNickname }) => streamerNickname === streamDetail?.streamerNickname,
+      );
+      setIsSubscribe(isAlreadySubscribe);
+    };
+    checkSubscribe(userInfo.nickname);
+  }, [userInfo.nickname, streamDetail?.streamerNickname]);
 
   const handleDeleteStreamClick = async () => {
     const result = confirm('정말 스트리밍을 종료하시겠습니까?');
@@ -69,8 +106,14 @@ export default function StreamingLive() {
                     방송종료
                   </button>
                 </>
+              ) : isSubscribe ? (
+                <button onClick={cancelSubscribe} className='btn btn-active btn-secondary btn-sm'>
+                  구독취소
+                </button>
               ) : (
-                <button className='btn btn-active btn-secondary btn-sm'>구독</button>
+                <button onClick={subscribe} className='btn btn-active btn-secondary btn-sm'>
+                  구독
+                </button>
               )}
             </div>
           </div>

@@ -300,7 +300,7 @@ export const getSubscribeList = async (nickname: string) => {
   return res.content;
 };
 
-export const addSubscribe = async (nickname: string) => {
+export const addSubscribe = async (nickname: string | undefined) => {
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
@@ -310,7 +310,7 @@ export const addSubscribe = async (nickname: string) => {
   return res;
 };
 
-export const deleteSubscribe = async (nickname: string) => {
+export const deleteSubscribe = async (nickname: string | undefined) => {
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
