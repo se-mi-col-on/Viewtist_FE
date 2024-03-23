@@ -86,3 +86,12 @@ export interface IPostListItem extends IContent {
   src: string;
   myName: string;
 }
+
+export interface OutletContext {
+  data: IProfile;
+  isAuthor: boolean;
+}
+
+export interface SubscriptionProps extends ISubscribeList {
+  isAuthor: boolean;
+}

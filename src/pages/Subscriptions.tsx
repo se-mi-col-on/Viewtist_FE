@@ -1,17 +1,17 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getSubscribeList, addSubscribe, deleteSubscribe } from '../api';
-import { IProfile, ISubscribeList } from '../types/interface';
+import { SubscriptionProps, ISubscribeList, OutletContext } from '../types/interface';
 import { useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useOutletContext, useNavigate } from 'react-router-dom';
 
 //json-server --watch db.json --port 3001
 
 export default function Subscriptions() {
-  const contextData: IProfile = useOutletContext();
+  const contextData: OutletContext = useOutletContext();
   console.log(contextData);
   const { data, isLoading, isError } = useQuery<ISubscribeList[]>({
     queryKey: ['subscribe-list'],
-    queryFn: () => getSubscribeList(contextData.nickname),
+    queryFn: () => getSubscribeList(contextData.data.nickname),
   });
 
   if (isLoading)
@@ -22,16 +22,20 @@ export default function Subscriptions() {
     );
   if (isError) return <h1>error...</h1>;
   return (
-    <div className='border-2 rounded-lg border-slate-500'>
-      <ul className='max-w-md m-auto divide-y divide-gray-200 dark:divide-gray-700'>
-        {data?.map((item) => <SubscriptionListItem key={item.streamerNickname} {...item} />)}
-      </ul>
-    </div>
+    <ul className='max-w-md m-auto divide-y divide-gray-200 dark:divide-gray-700'>
+      {data?.map((item) => (
+        <SubscriptionListItem
+          key={item.streamerNickname}
+          {...item}
+          isAuthor={contextData.isAuthor}
+        />
+      ))}
+    </ul>
   );
 }
 
-const SubscriptionListItem = (props: ISubscribeList) => {
-  console.log(props);
+const SubscriptionListItem = (props: SubscriptionProps) => {
+  const navigate = useNavigate();
   const [isSubscribe, setIsSubscribe] = useState(true);
 
   const { mutate: addFn } = useMutation({
@@ -64,13 +68,24 @@ const SubscriptionListItem = (props: ISubscribeList) => {
           <p className='text-sm font-medium '>{props.streamerNickname}</p>
         </div>
         <div className='inline-flex items-center text-base font-semibold'>
-          {isSubscribe ? (
-            <button onClick={cancelSubscribe} className='btn btn-outline btn-error btn-sm'>
-              구독 취소
-            </button>
+          {props.isAuthor ? (
+            isSubscribe ? (
+              <button onClick={cancelSubscribe} className='btn btn-outline btn-error btn-sm'>
+                구독 취소
+              </button>
+            ) : (
+              <button onClick={subscribe} className='btn btn-outline btn-success btn-sm'>
+                구독하기
+              </button>
+            )
           ) : (
-            <button onClick={subscribe} className='btn btn-outline btn-success btn-sm'>
-              구독하기
+            <button
+              onClick={() => {
+                navigate(`/channel/${props.streamerNickname}/muse`);
+              }}
+              className='btn btn-outline btn-success btn-sm'
+            >
+              채널 방문
             </button>
           )}
         </div>
