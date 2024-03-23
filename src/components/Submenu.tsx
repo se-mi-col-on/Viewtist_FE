@@ -11,8 +11,12 @@ import { PiBroadcastBold } from 'react-icons/pi';
 import { FaListAlt } from 'react-icons/fa';
 import { PiFinnTheHumanFill } from 'react-icons/pi';
 import { FaCirclePlay } from 'react-icons/fa6';
+import { useRecoilValue } from 'recoil';
+import { currentUserInfo } from '../store';
 
 export default function Submenu() {
+  const { nickname: currentUserNickName } = useRecoilValue(currentUserInfo);
+
   return (
     <ul className='sm:w-[11rem] md:w-[15rem] min-h-full p-4 menu bg-base-100 text-base-content rounded-r-lg'>
       <li>
@@ -29,7 +33,7 @@ export default function Submenu() {
           </summary>
           <ul>
             <li>
-              <Link to={'/channel/muse'}>
+              <Link to={`/channel/${currentUserNickName}/muse`}>
                 <button className='flex items-center gap-x-2'>
                   <GrChannel /> 내 채널
                 </button>
@@ -43,7 +47,7 @@ export default function Submenu() {
               </Link>
             </li>
             <li>
-              <Link to={'/channel/subscriptions'}>
+              <Link to={`/channel/${currentUserNickName}/subscriptions`}>
                 <button className='flex items-center gap-x-2'>
                   <FaListAlt /> 구독
                 </button>
