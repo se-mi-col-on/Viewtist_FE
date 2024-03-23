@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
 import { GoBell } from 'react-icons/go';
 import { IoVideocamOutline } from 'react-icons/io5';
@@ -29,7 +29,7 @@ export default function Header() {
     }
   };
 
-  const setCurrentUserInfo = useSetRecoilState(currentUserInfo);
+  const [userInfo, setUserInfo] = useRecoilState(currentUserInfo);
   const [isLogIn, setIsLogIn] = useRecoilState(isLoggedIn);
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ export default function Header() {
 
   const handleLogoutClick = () => {
     localStorage.removeItem('accessToken'), localStorage.removeItem('refreshToken');
-    setCurrentUserInfo({});
+    setUserInfo({});
     setIsLogIn(false);
     navigate('/');
   };
@@ -104,7 +104,10 @@ export default function Header() {
             <Link to={'notify'}>
               <GoBell className='text-xl hover:text-white' />
             </Link>
-            <DropDown onLogoutClick={handleLogoutClick} />
+            <DropDown
+              profilePhotoUrl={userInfo?.profilePhotoUrl}
+              onLogoutClick={handleLogoutClick}
+            />
           </>
         ) : (
           <Link to={'sign-in'}>
@@ -116,14 +119,20 @@ export default function Header() {
   );
 }
 
-const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
+const DropDown = ({
+  profilePhotoUrl,
+  onLogoutClick,
+}: {
+  profilePhotoUrl: string;
+  onLogoutClick: () => void;
+}) => {
   const [version, setVersion] = useState(1);
   return (
     <div className='dropdown dropdown-end' key={version}>
       <div tabIndex={0} role='button' className='m-1'>
         <div className='avatar'>
           <div className='w-10 rounded-full'>
-            <img src='https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg' />
+            <img src={profilePhotoUrl} />
           </div>
         </div>
       </div>
