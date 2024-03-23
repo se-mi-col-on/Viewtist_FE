@@ -6,6 +6,7 @@ import {
   LiveSet,
   StreamDetail,
   UpdateStreamDetail,
+  IAllPosts,
 } from './types/interface';
 import { getAuthAxios } from './utils/signIn/authAxios';
 
@@ -29,18 +30,42 @@ export const getLiveStreamingList = async () => {
   return response.data as StreamingListArray;
 };
 
-export const getPosts = async () => {
+export const getPosts = async (page: number = 0, size: number = 1000) => {
   // 전체 게시글 get
-  return (await axios.get('http://localhost:3001/posts')).data;
+  // return (await axios.get('http://localhost:3001/posts')).data;
+
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  return await authAxios
+    .get<IAllPosts>('/api/api/post', {
+      params: {
+        page,
+        size,
+      },
+    })
+    .then((res) => res.data.content);
 };
 
 export const sendPost = async (payload: IUpdatePost) => {
   // 게시글 생성
-  try {
-    (await axios.post('http://localhost:3001/posts', payload)).data;
-  } catch (e) {
-    console.log(e);
-  }
+  // try {
+  //   (await axios.post('http://localhost:3001/posts', payload)).data;
+  // } catch (e) {
+  //   console.log(e);
+  // }
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  return await authAxios
+    .post('/api/api/post/write', payload, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((res) => res.data);
 };
 export const getPostDetail = async (id: number) => {
   // 각 게시글 get
@@ -49,16 +74,21 @@ export const getPostDetail = async (id: number) => {
 
 export const deletePost = async (id: number) => {
   // 게시글 삭제
-  try {
-    (await axios.delete(`http://localhost:3001/posts/${id}`)).data;
-  } catch (e) {
-    console.log(e);
-  }
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  return (await authAxios.delete(`/api/api/post/${id}`)).data;
 };
 
 export const updatePost = async (id: number, payload: { title: string; content: string }) => {
   // 게시글 수정
-  return (await axios.put(`http://localhost:3001/posts/${id}`, payload)).data;
+  // return (await axios.put(`/api/api/post/${id}`, payload)).data;
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  return (await authAxios.put(`/api/api/post/${id}`, payload)).data;
 };
 
 export const getMyPage = async () => {
