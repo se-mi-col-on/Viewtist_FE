@@ -8,7 +8,6 @@ import { useOutletContext, useNavigate } from 'react-router-dom';
 
 export default function Subscriptions() {
   const contextData: OutletContext = useOutletContext();
-  console.log(contextData);
   const { data, isLoading, isError } = useQuery<ISubscribeList[]>({
     queryKey: ['subscribe-list'],
     queryFn: () => getSubscribeList(contextData.data.nickname),
@@ -67,7 +66,15 @@ const SubscriptionListItem = (props: SubscriptionProps) => {
         <div className='flex-1 min-w-0'>
           <p className='text-sm font-medium '>{props.streamerNickname}</p>
         </div>
-        <div className='inline-flex items-center text-base font-semibold'>
+        <div className='inline-flex items-center gap-2 text-base font-semibold'>
+          <button
+            onClick={() => {
+              navigate(`/channel/${props.streamerNickname}/muse`);
+            }}
+            className='btn btn-outline btn-success btn-sm'
+          >
+            채널 방문
+          </button>
           {props.isAuthor ? (
             isSubscribe ? (
               <button onClick={cancelSubscribe} className='btn btn-outline btn-error btn-sm'>
