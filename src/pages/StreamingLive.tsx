@@ -39,7 +39,7 @@ export default function StreamingLive() {
     <div className='flex justify-center w-full h-screen lg:items-start flex-grow-1 sm:flex-col sm:items-center lg:flex-row bg-base-200'>
       <div className='flex flex-col lg:w-2/3 lg:h-[90%] sm:w-full'>
         <div className='flex items-center justify-center border-2 h-5/6'>
-          <StreamVideo src={streamServer} />
+          <StreamVideo src={streamServer} streamId={id} isAuthor={isAuthor} />
         </div>
         <div className='flex flex-col gap-2 p-2 border-2 lg:h-1/6'>
           <p className='text-2xl sm:text-lg'>{streamDetail?.title}</p>
