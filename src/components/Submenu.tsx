@@ -9,7 +9,6 @@ import { FaUserCircle } from 'react-icons/fa';
 import { GrChannel } from 'react-icons/gr';
 import { PiBroadcastBold } from 'react-icons/pi';
 import { FaListAlt } from 'react-icons/fa';
-import { TbMoodUnamused } from 'react-icons/tb';
 import { PiFinnTheHumanFill } from 'react-icons/pi';
 import { FaCirclePlay } from 'react-icons/fa6';
 
@@ -31,29 +30,22 @@ export default function Submenu() {
           <ul>
             <li>
               <Link to={'/channel/muse'}>
-                <button className='flex items-center text-white gap-x-2'>
+                <button className='flex items-center gap-x-2'>
                   <GrChannel /> 내 채널
                 </button>
               </Link>
             </li>
             <li>
               <Link to={'streaming/obs_downLoad'}>
-                <button className='flex items-center text-white gap-x-2'>
+                <button className='flex items-center gap-x-2'>
                   <PiBroadcastBold /> 스트리밍
                 </button>
               </Link>
             </li>
             <li>
               <Link to={'/channel/subscriptions'}>
-                <button className='flex items-center text-white gap-x-2'>
+                <button className='flex items-center gap-x-2'>
                   <FaListAlt /> 구독
-                </button>
-              </Link>
-            </li>
-            <li>
-              <Link to={'/channel/muse'}>
-                <button className='flex items-center text-white gap-x-2'>
-                  <TbMoodUnamused /> 뮤즈
                 </button>
               </Link>
             </li>

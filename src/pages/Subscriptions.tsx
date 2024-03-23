@@ -1,11 +1,14 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { addSubscribe, getsubscribeList, removeSubscribe } from '../api';
-import { ISubscribeList } from '../types/interface';
+import { IProfile, ISubscribeList } from '../types/interface';
 import { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 
 //json-server --watch db.json --port 3001
 
 export default function Subscriptions() {
+  const contextData: IProfile = useOutletContext();
+  console.log(contextData);
   const { data, isLoading, isError } = useQuery<ISubscribeList[]>({
     queryKey: ['subscribe-list'],
     queryFn: getsubscribeList,
@@ -19,7 +22,7 @@ export default function Subscriptions() {
     );
   if (isError) return <h1>error...</h1>;
   return (
-    <div className='border-2 '>
+    <div className='border-2 rounded-lg border-slate-500'>
       <ul className='max-w-md m-auto divide-y divide-gray-200 dark:divide-gray-700'>
         {data?.map((item) => <SubscriptionListItem key={item.id} {...item} />)}
       </ul>

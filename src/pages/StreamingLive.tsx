@@ -37,11 +37,11 @@ export default function StreamingLive() {
   }
   return (
     <div className='flex justify-center w-full h-screen lg:items-start flex-grow-1 sm:flex-col sm:items-center lg:flex-row bg-base-200'>
-      <div className='flex flex-col lg:w-2/3 lg:h-[90%] sm:w-full'>
-        <div className='flex items-center justify-center border-2 h-5/6'>
+      <div className='mt-2 flex flex-col lg:w-2/3 lg:h-[90%] sm:w-full border-2 rounded-lg border-slate-500'>
+        <div className='flex items-center justify-center h-5/6'>
           <StreamVideo src={streamServer} streamId={id} isAuthor={isAuthor} />
         </div>
-        <div className='flex flex-col gap-2 p-2 border-2 lg:h-1/6'>
+        <div className='flex flex-col gap-2 p-2 lg:h-1/6'>
           <p className='text-2xl sm:text-lg'>{streamDetail?.title}</p>
           <div className='flex items-center justify-between pl-2 pr-2'>
             <div className='flex gap-4'>
@@ -76,7 +76,7 @@ export default function StreamingLive() {
           </div>
         </div>
       </div>
-      <div className='flex flex-col border-2 h-[90%] sm:w-full lg:w-auto'>
+      <div className='mt-2 flex flex-col  h-[90%] sm:w-full lg:w-auto border-2 rounded-lg border-slate-500'>
         <div className='flex items-center justify-center h-5/6 '>실시간 채팅 영역</div>
         <div className='flex flex-col gap-2 p-3'>
           <div>

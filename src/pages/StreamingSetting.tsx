@@ -59,10 +59,10 @@ export default function StreamingSetting() {
   }, [data]);
 
   return (
-    <div className='flex flex-col items-center h-full gap-3 p-10 border-2 lg:w-3/4 sm:w-full'>
+    <div className='flex flex-col items-center h-full gap-3 p-10 border-2 rounded-lg border-slate-500 lg:w-3/4 sm:w-full'>
       <p className='text-xl'>라이브 스트리밍 설정</p>
       <form className='flex flex-col w-5/6 gap-5 sm:w-full' onSubmit={(e) => handleSubmit(e)}>
-        <div className='flex p-8 border-2 border-gray-500 md:items-center md:gap-8 md:flex-row sm:flex-col sm:gap-2'>
+        <div className='flex p-8 border-2 rounded-lg border-slate-500 md:items-center md:gap-8 md:flex-row sm:flex-col sm:gap-2'>
           <label className='p-2 w-36' htmlFor='title'>
             스트리밍 제목
           </label>
@@ -77,7 +77,7 @@ export default function StreamingSetting() {
             />
           </div>
         </div>
-        <div className='flex p-8 border-2 border-gray-500 md:items-center md:gap-8 md:flex-row sm:flex-col sm:gap-2'>
+        <div className='flex p-8 border-2 rounded-lg border-slate-500 md:items-center md:gap-8 md:flex-row sm:flex-col sm:gap-2'>
           <label className='p-2 w-36' htmlFor='category'>
             카테고리
           </label>
@@ -95,7 +95,7 @@ export default function StreamingSetting() {
             ))}
           </select>
         </div>
-        <div className='flex p-8 border-2 border-gray-500 md:items-center md:gap-8 md:flex-row sm:flex-col sm:gap-2'>
+        <div className='flex p-8 border-2 rounded-lg border-slate-500 md:items-center md:gap-8 md:flex-row sm:flex-col sm:gap-2'>
           <label className='p-2 w-36' htmlFor='streamUrl'>
             스트림 URL
           </label>
@@ -111,7 +111,7 @@ export default function StreamingSetting() {
             복사
           </button>
         </div>
-        <div className='flex p-8 border-2 border-gray-500 md:items-center md:gap-8 md:flex-row sm:flex-col sm:gap-2'>
+        <div className='flex p-8 border-2 rounded-lg border-slate-500 md:items-center md:gap-8 md:flex-row sm:flex-col sm:gap-2'>
           <label className='p-2 w-36' htmlFor='streamKey'>
             스트림 키
           </label>
