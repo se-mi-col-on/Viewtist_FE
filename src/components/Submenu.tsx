@@ -15,7 +15,7 @@ import { useRecoilValue } from 'recoil';
 import { currentUserInfo } from '../store';
 
 export default function Submenu() {
-  const { nickname: currentUserNickName } = useRecoilValue(currentUserInfo);
+  const userInfo = useRecoilValue(currentUserInfo);
 
   return (
     <ul className='sm:w-[11rem] md:w-[15rem] min-h-full p-4 menu bg-base-100 text-base-content rounded-r-lg'>
@@ -33,7 +33,7 @@ export default function Submenu() {
           </summary>
           <ul>
             <li>
-              <Link to={`/channel/${currentUserNickName}/muse`}>
+              <Link to={`/channel/${userInfo?.nickname}/muse`}>
                 <button className='flex items-center gap-x-2'>
                   <GrChannel /> 내 채널
                 </button>
@@ -47,7 +47,7 @@ export default function Submenu() {
               </Link>
             </li>
             <li>
-              <Link to={`/channel/${currentUserNickName}/subscriptions`}>
+              <Link to={`/channel/${userInfo?.nickname}/subscriptions`}>
                 <button className='flex items-center gap-x-2'>
                   <FaListAlt /> 구독
                 </button>
