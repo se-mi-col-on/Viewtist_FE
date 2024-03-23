@@ -2,7 +2,6 @@ import axios from 'axios';
 import {
   ISubscribeList,
   IUpdatePost,
-  StreamingListArray,
   LiveSet,
   StreamDetail,
   UpdateStreamDetail,
@@ -25,10 +24,10 @@ export const removeSubscribe = async (id: number) => {
   return (await axios.delete(`http://localhost:3001/subscribe-list/${id}`)).data;
 };
 
-export const getLiveStreamingList = async () => {
-  const response = await axios.get('http://localhost:3001/liveStreaming-list');
-  return response.data as StreamingListArray;
-};
+// export const getLiveStreamingList = async () => {
+//   const response = await axios.get('http://localhost:3001/liveStreaming-list');
+//   return response.data as StreamingListArray;
+// };
 
 export const getPosts = async (page: number = 0, size: number = 1000) => {
   // 전체 게시글 get
@@ -223,6 +222,7 @@ export const updateStreamDetail = async (
   return res;
 };
 
+
 export const getUserInfo = async (userNickname: string) => {
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
@@ -232,3 +232,65 @@ export const getUserInfo = async (userNickname: string) => {
   console.log(res);
   return res;
 };
+
+export const getLiveStreamingList = async (pageNumber: number) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+  const pageSize = 8;
+
+  const res = (
+    await authAxios.get(
+      `/live/api/live-streaming/all-streaming?page=${pageNumber}&size=${pageSize}`,
+    )
+  ).data;
+  console.log(res);
+  return res;
+};
+
+export const getLiveStreamingCategoryList = async (pageNumber: number, category: string) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+  const pageSize = 8;
+
+  const res = (
+    await authAxios.get(
+      `/live/api/live-streaming/category?category=${category.toUpperCase()}&page=${pageNumber}&size=${pageSize}'`,
+    )
+  ).data;
+  console.log(res);
+  return res;
+};
+
+export const getLiveStreamingKeywordList = async (pageNumber: number, keyWord: string) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+  const pageSize = 8;
+
+  const res = (
+    await authAxios.get(
+      `/live/api/live-streaming/search?keyword=${keyWord}&page=${pageNumber}&size=${pageSize}'`,
+    )
+  ).data;
+  console.log(res);
+  return res;
+};
+
+export const updateThumbnail = async (streamId: string | undefined, encodeString: string) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  // const formData = new FormData();
+  // formData.append('thumbnail', file); // 파일을 FormData에 추가
+
+  const res = await authAxios.put(`/live/api/live-streaming/thumbnail/${streamId}`, {
+    thumbnail: encodeString,
+  });
+
+  console.log(res.data);
+  return res.data;
+};
+

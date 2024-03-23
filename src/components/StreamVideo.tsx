@@ -1,12 +1,16 @@
 import { useEffect, useRef } from 'react';
 import Hls from 'hls.js';
+import { updateThumbnail } from '../api';
 
 interface StreamVideoProps {
   src: string;
+  streamId: string | undefined;
+  isAuthor: boolean;
 }
 
-const StreamVideo: React.FC<StreamVideoProps> = ({ src }) => {
+const StreamVideo: React.FC<StreamVideoProps> = ({ src, streamId, isAuthor }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     let hls: any;
@@ -32,13 +36,37 @@ const StreamVideo: React.FC<StreamVideoProps> = ({ src }) => {
     };
   }, [src]);
 
+  useEffect(() => {
+    if (!isAuthor) return;
+    const captureFrame = async () => {
+      if (videoRef.current && canvasRef.current) {
+        const ctx = canvasRef.current.getContext('2d');
+        if (ctx && streamId) {
+          ctx.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
+          const thumbnailDataUrl = canvasRef.current.toDataURL('image/jpeg').split(',')[1];
+          await updateThumbnail(streamId, thumbnailDataUrl);
+          console.log('썸네일 업데이트 완료');
+        }
+      }
+    };
+
+    const interval = setInterval(captureFrame, 10000); // 10초마다 프레임 캡처
+
+    return () => clearInterval(interval);
+  }, [streamId, isAuthor]);
+
   const videoStyle = {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
   };
 
-  return <video ref={videoRef} src={src} controls style={videoStyle} />;
+  return (
+    <>
+      <video ref={videoRef} muted src={src} controls style={videoStyle} />
+      <canvas ref={canvasRef} style={{ display: 'none' }} />
+    </>
+  );
 };
 
 export default StreamVideo;

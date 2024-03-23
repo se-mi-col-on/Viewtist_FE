@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useMyPage } from '../utils/channelSetting/useMyPage';
+import React, { useState } from 'react';
 import { useUpdateNickname } from '../utils/channelSetting/useUpdateNickname';
 import { useUpdateIntro } from '../utils/channelSetting/useUpdateIntro';
 import { useNavigate } from 'react-router-dom';
 import { getAuthAxios } from '../utils/signIn/authAxios';
+import { useRecoilState } from 'recoil';
+import { currentUserInfo } from '../store';
 
 export default function ChannelSettings() {
-  const [name, setName] = useState('');
-  const [introduction, setIntroduction] = useState('');
-  const [imgUrl, setImgUrl] = useState('');
-  const { data, isLoading } = useMyPage();
+  const [userInfo, setUserInfo] = useRecoilState(currentUserInfo);
+  const [name, setName] = useState(userInfo.nickname);
+  const [introduction, setIntroduction] = useState(userInfo.channelIntroduction);
+  const [imgUrl, setImgUrl] = useState(userInfo.profilePhotoUrl);
   const updateName = useUpdateNickname(name);
   const updateChannelIntro = useUpdateIntro(introduction);
   const navigate = useNavigate();
@@ -17,14 +18,6 @@ export default function ChannelSettings() {
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
-
-  useEffect(() => {
-    if (data) {
-      setName(data.nickname);
-      setIntroduction(data.channelIntroduction);
-      setImgUrl(data.profilePhotoUrl);
-    }
-  }, [data]);
 
   const handleChangeImg = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files) {
@@ -52,20 +45,23 @@ export default function ChannelSettings() {
       alert('retry');
       return;
     }
-    if (data?.nickname !== name) {
+    if (userInfo.nickname !== name) {
       updateName();
+
       navigate(`/channel/${name}/muse`)
+
+      setUserInfo({ ...userInfo, nickname: name });
       return;
     }
-    if (data.channelIntroduction !== introduction) {
+    if (userInfo.channelIntroduction !== introduction) {
       updateChannelIntro();
+      setUserInfo({ ...userInfo, channelIntroduction: introduction });
       return;
     }
 
     // 업데이트 로직 수정
   };
 
-  if (isLoading) return <h1>loading...</h1>;
   return (
     <div>
       <div className='p-2 m-auto sm:w-full md:w-4/5'>
