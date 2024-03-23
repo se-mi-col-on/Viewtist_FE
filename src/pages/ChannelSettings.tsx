@@ -47,6 +47,9 @@ export default function ChannelSettings() {
     }
     if (userInfo.nickname !== name) {
       updateName();
+
+      navigate(`/channel/${name}/muse`)
+
       setUserInfo({ ...userInfo, nickname: name });
       return;
     }
@@ -55,7 +58,8 @@ export default function ChannelSettings() {
       setUserInfo({ ...userInfo, channelIntroduction: introduction });
       return;
     }
-    console.log(name);
+
+    // 업데이트 로직 수정
   };
 
   return (

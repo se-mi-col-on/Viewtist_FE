@@ -96,7 +96,7 @@ export const getMyPage = async () => {
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
   const res = (await authAxios.get('/api/api/users/mypage')).data;
-  console.log(res);
+  // console.log(res);
   return res;
 };
 
@@ -222,6 +222,17 @@ export const updateStreamDetail = async (
   return res;
 };
 
+
+export const getUserInfo = async (userNickname: string) => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = (await authAxios.get(`/api/api/users/${userNickname}`)).data;
+  console.log(res);
+  return res;
+};
+
 export const getLiveStreamingList = async (pageNumber: number) => {
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
@@ -282,3 +293,4 @@ export const updateThumbnail = async (streamId: string | undefined, encodeString
   console.log(res.data);
   return res.data;
 };
+

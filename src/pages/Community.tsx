@@ -6,11 +6,13 @@ import { TiPinOutline } from 'react-icons/ti';
 import { GoTrash } from 'react-icons/go';
 import { useDeletePost } from '../utils/community/deletePost';
 import { usePostsQuery } from '../utils/community/getPosts';
+import { useMyPage } from '../utils/channelSetting/useMyPage';
 
 export default function Community() {
-  const communityMatch = useMatch('/channel/community');
+  const { data: myData } = useMyPage();
   const { data, isLoading } = usePostsQuery();
   const contextData: IProfile = useOutletContext();
+  const communityMatch = useMatch(`/channel/:name/community`);
   const posts = data?.filter((post) => post.nickname === contextData.nickname);
 
   if (isLoading) return <h1>loading....</h1>;
@@ -20,29 +22,38 @@ export default function Community() {
         <div className='flex flex-col items-center justify-center p-3 gap-y-3'>
           <BsEmojiTear className='sm:text-5xl md:text-7xl' />
           <span className='font-bold'>작성 된 글이 없습니다.</span>
-          <Link to={'write'} className='w-1/2 btn btn-success sm:btn-sm md:btn-md'>
-            <button>글 쓰기</button>
-          </Link>
+          {myData?.nickname === contextData.nickname && (
+            <Link to={'write'} className='w-2/3 btn btn-success sm:btn-sm md:btn-md'>
+              <button>글 쓰기</button>
+            </Link>
+          )}
         </div>
       )}
       {communityMatch && posts?.length !== 0 && (
         <div className='min-h-screen sm:w-full md:w-4/5'>
-          <Link to={'write'}>
-            <button className='mb-3 btn btn-outline btn-success'>글 쓰기</button>
-          </Link>
+          {myData?.nickname === contextData.nickname && (
+            <Link to={'write'}>
+              <button className='mb-3 btn btn-outline btn-success'>글 쓰기</button>
+            </Link>
+          )}
           <ul className='flex flex-col gap-y-5'>
             {posts?.map((item) => (
-              <PostListItem key={item.id} {...item} src={contextData.profilePhotoUrl} />
+              <PostListItem
+                key={item.id}
+                {...item}
+                src={contextData.profilePhotoUrl}
+                myName={myData!.nickname}
+              />
             ))}
           </ul>
         </div>
       )}
-      <Outlet />
+      <Outlet context={contextData} />
     </div>
   );
 }
 
-const PostListItem = ({ src, ...props }: IPostListItem) => {
+const PostListItem = ({ myName, src, ...props }: IPostListItem) => {
   const createdTime = new Date(props.createdAt).toLocaleDateString().slice(2);
   const navigate = useNavigate();
   const deletePost = useDeletePost(props.id);
@@ -72,25 +83,27 @@ const PostListItem = ({ src, ...props }: IPostListItem) => {
         </div>
       </div>
 
-      <details className=' dropdown dropdown-end' onClick={(e) => e.stopPropagation()}>
-        <summary className='m-1 mb-auto btn btn-ghost'>
-          <HiOutlineDotsVertical />
-        </summary>
-        <ul className='z-50 p-2 shadow menu dropdown-content bg-base-100 rounded-box w-28'>
-          <li onClick={() => navigate(`update/${props.id}`)}>
-            <button>
-              <TiPinOutline />
-              수정
-            </button>
-          </li>
-          <li className='text-red-500' onClick={removePost}>
-            <button>
-              <GoTrash />
-              삭제
-            </button>
-          </li>
-        </ul>
-      </details>
+      {myName === props.nickname && (
+        <details className=' dropdown dropdown-end' onClick={(e) => e.stopPropagation()}>
+          <summary className='m-1 mb-auto btn btn-ghost'>
+            <HiOutlineDotsVertical />
+          </summary>
+          <ul className='z-50 p-2 shadow menu dropdown-content bg-base-100 rounded-box w-28'>
+            <li onClick={() => navigate(`update/${props.id}`)}>
+              <button>
+                <TiPinOutline />
+                수정
+              </button>
+            </li>
+            <li className='text-red-500' onClick={removePost}>
+              <button>
+                <GoTrash />
+                삭제
+              </button>
+            </li>
+          </ul>
+        </details>
+      )}
     </li>
   );
 };

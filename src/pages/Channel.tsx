@@ -1,19 +1,22 @@
 import { IoVideocamOutline } from 'react-icons/io5';
 import { IoSettingsOutline } from 'react-icons/io5';
-import { Link, Outlet, useMatch } from 'react-router-dom';
+import { Link, Outlet, useMatch, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useUserInfo } from '../utils/channelSetting/useUserInfo';
 import { currentUserInfo } from '../store';
 import { useRecoilValue } from 'recoil';
 
 export default function Channel() {
-  const museMatch = useMatch('channel/muse');
-  const subscriptionsMatch = useMatch('channel/subscriptions');
-  const communityMatch = useMatch('/channel/community');
-  const writeMatch = useMatch('/channel/community/write');
-  const updateMatch = useMatch('/channel/community/update/:id');
-  const detailMatch = useMatch('/channel/community/detail/:id');
+  const museMatch = useMatch('channel/:name/muse');
+  const subscriptionsMatch = useMatch('channel/:name/subscriptions');
+  const communityMatch = useMatch('/channel/:name/community');
+  const writeMatch = useMatch('/channel/:name/community/write');
+  const updateMatch = useMatch('/channel/:name/community/update/:id');
+  const detailMatch = useMatch('/channel/:name/community/detail/:id');
+  const { name } = useParams();
 
-  const userInfo = useRecoilValue(currentUserInfo);
+
+  const { data, isLoading } = useUserInfo(name!);
 
   const matches = communityMatch || writeMatch || updateMatch || detailMatch;
 
@@ -50,7 +53,7 @@ export default function Channel() {
       </div>
       <ul className='flex items-center justify-center sm:text-xs sm:gap-x-5 md:text-lg md:gap-x-10'>
         <li className={`relative ${museMatch && 'font-extrabold'}`}>
-          <Link to={'muse'}>
+          <Link to={`/channel/${data?.nickname}/muse`}>
             <button>후원관리</button>
           </Link>
           {museMatch && (
@@ -61,7 +64,7 @@ export default function Channel() {
           )}
         </li>
         <li className={`relative ${subscriptionsMatch && 'font-extrabold'}`}>
-          <Link to={'subscriptions'}>
+          <Link to={`/channel/${data?.nickname}/subscriptions`}>
             <button>내가 구독한 채널</button>
           </Link>
           {subscriptionsMatch && (
@@ -72,7 +75,7 @@ export default function Channel() {
           )}
         </li>
         <li className={`relative ${communityMatch && 'font-extrabold'}`}>
-          <Link to={'community'}>
+          <Link to={`/channel/${data?.nickname}/community`}>
             <button>공지</button>
           </Link>
           {matches ? (
