@@ -8,16 +8,17 @@ import { useMyPage } from '../utils/channelSetting/useMyPage';
 
 export default function PostDetail() {
   const { id } = useParams();
-  const { data, isLoading } = usePostDetailQuery(+id!);
+  const { data: postInfo, isLoading } = usePostDetailQuery(+id!);
   const [content, setContent] = useState('');
   const contextData: IProfile = useOutletContext();
   const { data: myInfo } = useMyPage();
+  const createdTime = new Date(postInfo?.createdAt as string).toLocaleTimeString();
 
   useEffect(() => {
-    if (data) {
-      setContent(data.content);
+    if (postInfo) {
+      setContent(postInfo.content);
     }
-  }, [data]);
+  }, [postInfo]);
 
   const navigate = useNavigate();
 
@@ -49,16 +50,16 @@ export default function PostDetail() {
       </div>
 
       <div className='p-3 rounded-lg'>
-        <div className='mb-5 text-4xl'>{data?.title}</div>
+        <div className='mb-5 text-4xl'>{postInfo?.title}</div>
         <div className='flex items-center gap-x-5'>
           <div className='avatar'>
             <div className='w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
-              <img src='https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg' />
+              <img src={myInfo?.profilePhotoUrl} />
             </div>
           </div>
           <div className='flex items-center gap-x-3'>
-            <span>name</span>
-            <span>time</span>
+            <span>{postInfo?.nickname}</span>
+            <span>{createdTime}</span>
           </div>
         </div>
         <div className='divider'></div>
