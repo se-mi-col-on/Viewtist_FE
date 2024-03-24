@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
 import { GoBell } from 'react-icons/go';
 import { IoVideocamOutline } from 'react-icons/io5';
@@ -30,7 +30,7 @@ export default function Header() {
     }
   };
 
-  const [userInfo, setUserInfo] = useRecoilState(currentUserInfo);
+  const setUserInfo = useSetRecoilState(currentUserInfo);
   const [isLogIn, setIsLogIn] = useRecoilState(isLoggedIn);
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
@@ -105,10 +105,7 @@ export default function Header() {
             <Link to={'notify'}>
               <GoBell className='text-xl hover:text-white' />
             </Link>
-            <DropDown
-              profilePhotoUrl={userInfo?.profilePhotoUrl}
-              onLogoutClick={handleLogoutClick}
-            />
+            <DropDown onLogoutClick={handleLogoutClick} />
           </>
         ) : (
           <Link to={'sign-in'}>
@@ -120,13 +117,7 @@ export default function Header() {
   );
 }
 
-const DropDown = ({
-  profilePhotoUrl,
-  onLogoutClick,
-}: {
-  profilePhotoUrl: string;
-  onLogoutClick: () => void;
-}) => {
+const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
   const [version, setVersion] = useState(1);
 
   const { data: myInfo, isLoading } = useMyPage();
@@ -138,7 +129,6 @@ const DropDown = ({
         <div className='avatar'>
           <div className='w-10 rounded-full'>
             <img src={myInfo?.profilePhotoUrl} />
-
           </div>
         </div>
       </div>
