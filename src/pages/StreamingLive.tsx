@@ -90,7 +90,7 @@ export default function StreamingLive() {
               <div>
                 <p className='text-orange-600 sm:text-sm'>{streamDetail?.streamerNickname}</p>
                 <p className='text-amber-400 sm:text-sm'>{streamDetail?.category}</p>
-                <p className='text-lime-400 sm:text-sm'>1,456명 시청 중</p>
+                <p className='text-lime-400 sm:text-sm'>{streamDetail?.viewerCount}명 시청 중</p>
               </div>
             </div>
             <div className='flex gap-2'>
