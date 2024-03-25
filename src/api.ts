@@ -68,7 +68,11 @@ export const sendPost = async (payload: IUpdatePost) => {
 };
 export const getPostDetail = async (id: number) => {
   // 각 게시글 get
-  return (await axios.get(`http://localhost:3001/posts/${id}`)).data;
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  return (await authAxios.get(`/api/api/post/${id}`)).data;
 };
 
 export const deletePost = async (id: number) => {
@@ -222,7 +226,6 @@ export const updateStreamDetail = async (
   return res;
 };
 
-
 export const getUserInfo = async (userNickname: string) => {
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
@@ -293,4 +296,3 @@ export const updateThumbnail = async (streamId: string | undefined, encodeString
   console.log(res.data);
   return res.data;
 };
-
