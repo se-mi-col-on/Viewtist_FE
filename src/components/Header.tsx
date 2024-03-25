@@ -52,6 +52,7 @@ export default function Header() {
   const handleLogoutClick = () => {
     localStorage.removeItem('accessToken'), localStorage.removeItem('refreshToken');
     setUserInfo({});
+    setNotifyList([]);
     setIsLogIn(false);
     navigate('/');
   };
