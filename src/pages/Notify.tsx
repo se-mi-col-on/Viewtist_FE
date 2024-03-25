@@ -3,7 +3,7 @@ import notify from '../../public/data/notify.json';
 export default function Notify() {
   // const paginatedList=// pagination or infinite scroll
   return (
-    <div className='flex items-center w-2/3 border-2'>
+    <div className='flex items-center border-2 sm:w-full md:w-2/3'>
       <div className='w-full overflow-x-auto'>
         <table className='table'>
           <thead>

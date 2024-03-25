@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { isLoggedIn } from '../store';
 import axios from 'axios';
-import { googleLogin } from '../utils/signIn/googleLogin';
-// import { login } from '../utils/signIn/login';
+import { KAKAO_AUTH_URL,KAKAO_IMG_URL } from '../constants/constant';
+
 export default function SignIn() {
   const [email, setEmail] = useState('ehdgns8339@naver.com');
   const [password, setpassword] = useState('azsxdc123123');
@@ -90,13 +89,12 @@ export default function SignIn() {
           </Link>
         </div>
 
-        <button
-          onClick={googleLogin}
-          className='flex justify-center items-center w-full px-2 py-1 m-auto sm:text-xs md:text-sm lg:text-sm text-black bg-white border-2 rounded-lg gap-x-3 border-slate-400 hover:bg-[rgba(255,255,255,.8)]'
-        >
-          <FcGoogle className='text-xl' />
-          <span>구글 계정으로 로그인</span>
-        </button>
+        <a href={KAKAO_AUTH_URL}>
+          <button className='flex justify-center items-center w-full px-2 py-1 m-auto sm:text-xs md:text-sm lg:text-sm text-black bg-[rgb(250,228,7)]  rounded-lg gap-x-3 border-slate-400'>
+            <img src={KAKAO_IMG_URL} alt='logo' className='w-5 h-5' />
+            <span>카카오 계정으로 로그인</span>
+          </button>
+        </a>
       </div>
     </div>
   );

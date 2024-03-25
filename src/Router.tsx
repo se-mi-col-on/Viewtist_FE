@@ -17,6 +17,7 @@ import StreamingSetting from './pages/StreamingSetting';
 import StreamingLive from './pages/StreamingLive';
 import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
+import KakaoAuth from './components/KakaoAuth';
 
 export default function Router() {
   return (
@@ -47,6 +48,7 @@ export default function Router() {
 
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/sign-up' element={<SignUp />} />
+        <Route path='/kakao/auth' element={<KakaoAuth />} />
         <Route path='*' element={<NotFound />} />
       </Route>
     </Routes>
