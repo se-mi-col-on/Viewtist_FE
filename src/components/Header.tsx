@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
 import { GoBell } from 'react-icons/go';
 import { IoVideocamOutline } from 'react-icons/io5';
@@ -126,6 +126,7 @@ const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
   const [version, setVersion] = useState(1);
 
   const { data: myInfo, isLoading } = useMyPage();
+  const notifyLength = useRecoilValue(notifyList).length;
 
   if (isLoading) return <h1>loading...</h1>;
   return (
@@ -143,7 +144,10 @@ const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
       >
         <li onClick={() => setVersion((prev) => (prev += 1))}>
           <Link to={'notify'}>
-            <button className='text-white'>알람</button>
+            <button className='flex items-center justify-center gap-2 text-white'>
+              <p>알람</p>
+              <p className='text-xs indicator-item badge badge-error'>{notifyLength}</p>
+            </button>
           </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
