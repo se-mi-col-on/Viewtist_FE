@@ -3,18 +3,25 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
 import { GoBell } from 'react-icons/go';
 import { IoVideocamOutline } from 'react-icons/io5';
-import { isLoggedIn, currentUserInfo } from './../store';
+import { isLoggedIn, currentUserInfo, notifyList } from './../store';
 import ToggleThemeBtn from './ToggleThemeBtn';
 import Drawer from './Drawer';
 import { CiSearch } from 'react-icons/ci';
 import { motion } from 'framer-motion';
 import { useMyPage } from '../utils/channelSetting/useMyPage';
+import { useNotification } from '../utils/notify/useNotification';
 
 export default function Header() {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light',
   );
+  const notificationList = useNotification();
+  const setNotifyList = useSetRecoilState(notifyList);
+
+  useEffect(() => {
+    setNotifyList(notificationList);
+  }, [notificationList, setNotifyList]);
 
   useEffect(() => {
     localStorage.setItem('theme', theme!);
