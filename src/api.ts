@@ -236,6 +236,20 @@ export const getUserInfo = async (userNickname: string) => {
   return res;
 };
 
+export const getLiveStreamingAllList = async () => {
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  const res = (
+    await authAxios.get(
+      `/live/api/live-streaming/all-streaming?page=0&size=999&sort=viewerCount,desc`,
+    )
+  ).data;
+  console.log(res);
+  return res;
+};
+
 export const getLiveStreamingList = async (pageNumber: number) => {
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
@@ -327,4 +341,3 @@ export const deleteSubscribe = async (nickname: string | undefined) => {
   console.log(res);
   return res;
 };
-
