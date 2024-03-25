@@ -54,7 +54,7 @@ export default function Header() {
     setUserInfo({});
     setNotifyList([]);
     setIsLogIn(false);
-    navigate('/');
+    navigate('/sign-in');
   };
   return (
     <header className='fixed top-0 left-0 z-10 flex items-center justify-between w-full p-3 bg-base-100 '>
