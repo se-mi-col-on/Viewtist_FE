@@ -5,7 +5,7 @@ export default function Notify() {
   const [streamerList, setStreamerList] = useRecoilState(notifyList);
 
   return (
-    <div className='flex items-center w-2/3 border-2'>
+    <div className='flex items-center border-2 sm:w-full md:w-2/3'>
       <div className='w-full overflow-x-auto'>
         <table className='table'>
           <thead>

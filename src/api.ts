@@ -197,7 +197,7 @@ export const getStreamDetail = async (streamId: string | undefined): Promise<Str
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
   const res = (await authAxios.get(`/live/api/live-streaming/${streamId}`)).data;
-  console.log(res);
+  // console.log(res);
   return res;
 };
 

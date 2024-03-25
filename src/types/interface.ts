@@ -95,3 +95,8 @@ export interface OutletContext {
 export interface SubscriptionProps extends ISubscribeList {
   isAuthor: boolean;
 }
+
+export interface IChatHistory {
+  message: string;
+  nickname: string;
+}

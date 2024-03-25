@@ -57,11 +57,11 @@ export default function Header() {
     navigate('/sign-in');
   };
   return (
-    <header className='fixed top-0 left-0 z-10 flex items-center justify-between w-full p-3 bg-base-100 '>
+    <header className='fixed top-0 left-0 z-10 flex items-center justify-between w-full px-1 py-3 bg-base-100'>
       <div className='flex items-center justify-center'>
         <Drawer />
-        <Link to={'/'}>
-          <button className='p-3 rounded-lg'>Viewtist</button>
+        <Link to={'/'} className='block '>
+          <button>Viewtist</button>
         </Link>
       </div>
       <form onSubmit={handleInputSubmit} className='w-1/3 sm:hidden md:block'>
@@ -88,12 +88,12 @@ export default function Header() {
         </label>
       </form>
 
-      <div className='flex items-center cursor-pointer sm:gap-x-3 md:gap-x-5 shrink-0'>
+      <div className='flex items-center justify-center cursor-pointer sm:gap-x-2 md:gap-x-5 shrink-0'>
         <div className='items-center sm:flex md:hidden gap-x-2'>
           <form onSubmit={handleInputSubmit}>
             <motion.input
               animate={{ scaleX: isOpenSearch ? 1 : 0 }}
-              className=' origin-top-right min-[320px]:w-28 min-[375px]:w-40 border-2 rounded-lg px-2 py-1 text-sm placeholder:text-sm'
+              className=' origin-top-right min-[320px]:w-20 min-[375px]:w-28 border-2 rounded-lg px-2 py-1 text-sm placeholder:text-sm'
               placeholder='스트리머 검색'
               value={inputValue}
               onChange={handleInputChange}
@@ -134,8 +134,8 @@ const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
   return (
     <div className='dropdown dropdown-end' key={version}>
       <div tabIndex={0} role='button' className='m-1'>
-        <div className='avatar'>
-          <div className='w-10 rounded-full'>
+        <div className='flex avatar'>
+          <div className='rounded-full w-7'>
             <img src={myInfo?.profilePhotoUrl} />
           </div>
         </div>
@@ -144,6 +144,11 @@ const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
         tabIndex={0}
         className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'
       >
+        <li onClick={() => setVersion((prev) => (prev += 1))}>
+          <Link to={'notify'}>
+            <button className='text-white'>알람</button>
+          </Link>
+        </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
           <Link to={`channel/${myInfo?.nickname}/muse`}>
             <button className='text-white'>내 채널</button>
