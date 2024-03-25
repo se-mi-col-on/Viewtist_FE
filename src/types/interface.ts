@@ -64,5 +64,5 @@ export interface UpdateStreamDetail {
 
 export interface IChatHistory {
   message: string;
-  senderId: number;
+  nickname: string;
 }
