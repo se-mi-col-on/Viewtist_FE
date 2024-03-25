@@ -7,9 +7,12 @@ const NOTIFY_URL = '/live/api/notify/connect';
 
 export function useNotification() {
   const [notifyList, setNotifyList] = useState<string[]>([]);
-  const { nickname } = useRecoilValue(currentUserInfo);
+  const nickname = useRecoilValue(currentUserInfo)?.nickname || '';
+  console.log(nickname);
 
   useEffect(() => {
+    if (!nickname) return;
+
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) return;
 
@@ -37,6 +40,7 @@ export function useNotification() {
     });
 
     eventSource.onerror = (event) => {
+      console.log('에러 발생 SSE 연결 종료');
       eventSource.close();
       console.error(event);
     };
