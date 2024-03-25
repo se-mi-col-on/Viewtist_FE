@@ -68,7 +68,11 @@ export const sendPost = async (payload: IUpdatePost) => {
 };
 export const getPostDetail = async (id: number) => {
   // 각 게시글 get
-  return (await axios.get(`http://localhost:3001/posts/${id}`)).data;
+  const accessToken = localStorage.getItem('accessToken');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const authAxios = getAuthAxios(accessToken!, refreshToken!);
+
+  return (await authAxios.get(`/api/api/post/${id}`)).data;
 };
 
 export const deletePost = async (id: number) => {
@@ -323,3 +327,4 @@ export const deleteSubscribe = async (nickname: string | undefined) => {
   console.log(res);
   return res;
 };
+
