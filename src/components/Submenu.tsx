@@ -9,11 +9,14 @@ import { FaUserCircle } from 'react-icons/fa';
 import { GrChannel } from 'react-icons/gr';
 import { PiBroadcastBold } from 'react-icons/pi';
 import { FaListAlt } from 'react-icons/fa';
-import { TbMoodUnamused } from 'react-icons/tb';
 import { PiFinnTheHumanFill } from 'react-icons/pi';
 import { FaCirclePlay } from 'react-icons/fa6';
+import { useRecoilValue } from 'recoil';
+import { currentUserInfo } from '../store';
 
 export default function Submenu() {
+  const userInfo = useRecoilValue(currentUserInfo);
+
   return (
     <ul className='sm:w-[11rem] md:w-[15rem] min-h-full p-4 menu bg-base-100 text-base-content rounded-r-lg'>
       <li>
@@ -30,30 +33,23 @@ export default function Submenu() {
           </summary>
           <ul>
             <li>
-              <Link to={'/channel/muse'}>
-                <button className='flex items-center text-white gap-x-2'>
+              <Link to={`/channel/${userInfo?.nickname}/muse`}>
+                <button className='flex items-center gap-x-2'>
                   <GrChannel /> 내 채널
                 </button>
               </Link>
             </li>
             <li>
               <Link to={'streaming/obs_downLoad'}>
-                <button className='flex items-center text-white gap-x-2'>
+                <button className='flex items-center gap-x-2'>
                   <PiBroadcastBold /> 스트리밍
                 </button>
               </Link>
             </li>
             <li>
-              <Link to={'/channel/subscriptions'}>
-                <button className='flex items-center text-white gap-x-2'>
+              <Link to={`/channel/${userInfo?.nickname}/subscriptions`}>
+                <button className='flex items-center gap-x-2'>
                   <FaListAlt /> 구독
-                </button>
-              </Link>
-            </li>
-            <li>
-              <Link to={'/channel/muse'}>
-                <button className='flex items-center text-white gap-x-2'>
-                  <TbMoodUnamused /> 뮤즈
                 </button>
               </Link>
             </li>

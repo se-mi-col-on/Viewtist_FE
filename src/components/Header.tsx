@@ -30,7 +30,7 @@ export default function Header() {
     }
   };
 
-  const setCurrentUserInfo = useSetRecoilState(currentUserInfo);
+  const [userInfo, setUserInfo] = useRecoilState(currentUserInfo);
   const [isLogIn, setIsLogIn] = useRecoilState(isLoggedIn);
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export default function Header() {
 
   const handleLogoutClick = () => {
     localStorage.removeItem('accessToken'), localStorage.removeItem('refreshToken');
-    setCurrentUserInfo({});
+    setUserInfo({});
     setIsLogIn(false);
     navigate('/');
   };
@@ -102,8 +102,13 @@ export default function Header() {
             <Link to={'streaming/obs_downLoad'}>
               <IoVideocamOutline className='text-xl' />
             </Link>
-            
-            <DropDown onLogoutClick={handleLogoutClick} />
+            <Link to={'notify'}>
+              <GoBell className='text-xl hover:text-white' />
+            </Link>
+            <DropDown
+              profilePhotoUrl={userInfo?.profilePhotoUrl}
+              onLogoutClick={handleLogoutClick}
+            />
           </>
         ) : (
           <Link to={'sign-in'}>
@@ -115,15 +120,24 @@ export default function Header() {
   );
 }
 
-const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
+const DropDown = ({
+  profilePhotoUrl,
+  onLogoutClick,
+}: {
+  profilePhotoUrl: string;
+  onLogoutClick: () => void;
+}) => {
   const [version, setVersion] = useState(1);
-  const { data } = useMyPage();
+
+  const { data: myInfo, isLoading } = useMyPage();
+
+  if (isLoading) return <h1>loading...</h1>;
   return (
     <div className='dropdown dropdown-end' key={version}>
       <div tabIndex={0} role='button' className='m-1'>
         <div className='flex avatar'>
           <div className='rounded-full w-7'>
-            <img src={data?.profilePhotoUrl} />
+            <img src={myInfo?.profilePhotoUrl} />
           </div>
         </div>
       </div>
@@ -137,12 +151,12 @@ const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
           </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
-          <Link to={'channel/muse'}>
+          <Link to={`channel/${myInfo?.nickname}/muse`}>
             <button className='text-white'>내 채널</button>
           </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
-          <Link to={'channel/subscriptions'}>
+          <Link to={`channel/${myInfo?.nickname}/subscriptions`}>
             <button className='text-white'>내 구독 리스트</button>
           </Link>
         </li>

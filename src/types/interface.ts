@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
 
 export interface ISubscribeList {
-  readonly id: number;
-  readonly name: string;
+  readonly streamerNickname: string;
+  readonly profilephotoURL: string;
 }
 export interface IPosts {
   readonly title: string;
@@ -21,15 +21,14 @@ export interface IUpdatePost {
 }
 
 export interface StreamingData {
-  readonly id: number;
-  readonly user_id: string;
-  readonly title: string;
   readonly category: string;
+  readonly id: number;
+  readonly profilePhotoUrl: string;
   readonly start_at: string;
-  readonly viewer_count: number;
-  readonly transmission_method: string;
-  readonly created_at: string;
-  readonly modified_at: string;
+  readonly streamerNickname: string;
+  readonly title: string;
+  readonly viewerCount: number;
+  readonly thumbnail: string;
 }
 
 export interface StreamingListArray extends Array<StreamingData> {}
@@ -60,6 +59,41 @@ export interface StreamDetail {
 export interface UpdateStreamDetail {
   updateTitle: string;
   updateCategory: string;
+}
+
+export interface IAllPosts {
+  content: IContent[];
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+  size: number;
+  number: number;
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
+}
+
+export interface IContent {
+  id: number;
+  title: string;
+  content: string;
+  nickname: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IPostListItem extends IContent {
+  src: string;
+  myName: string;
+}
+
+export interface OutletContext {
+  data: IProfile;
+  isAuthor: boolean;
+}
+
+export interface SubscriptionProps extends ISubscribeList {
+  isAuthor: boolean;
 }
 
 export interface IChatHistory {
