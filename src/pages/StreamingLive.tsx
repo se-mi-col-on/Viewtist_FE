@@ -42,7 +42,6 @@ export default function StreamingLive() {
   });
 
   const subscribe = () => {
-    console.log(streamDetail?.streamerNickname);
     if (streamDetail?.streamerNickname) {
       console.log('구독' + streamDetail?.streamerNickname);
       addFn();

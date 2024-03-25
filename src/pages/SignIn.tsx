@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { isLoggedIn } from '../store';
 import axios from 'axios';
-import { KAKAO_AUTH_URL,KAKAO_IMG_URL } from '../constants/constant';
+import { KAKAO_AUTH_URL, KAKAO_IMG_URL } from '../constants/constant';
 
 export default function SignIn() {
   const [email, setEmail] = useState('ehdgns8339@naver.com');
@@ -26,7 +26,6 @@ export default function SignIn() {
 
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
-      console.log(accessToken);
       setIsLogin(true);
       navigate('/');
     } catch (e) {

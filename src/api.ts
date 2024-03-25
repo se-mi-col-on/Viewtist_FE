@@ -48,12 +48,6 @@ export const getPosts = async (page: number = 0, size: number = 1000) => {
 };
 
 export const sendPost = async (payload: IUpdatePost) => {
-  // 게시글 생성
-  // try {
-  //   (await axios.post('http://localhost:3001/posts', payload)).data;
-  // } catch (e) {
-  //   console.log(e);
-  // }
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
@@ -86,7 +80,7 @@ export const deletePost = async (id: number) => {
 
 export const updatePost = async (id: number, payload: { title: string; content: string }) => {
   // 게시글 수정
-  // return (await axios.put(`/api/api/post/${id}`, payload)).data;
+
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
@@ -100,7 +94,6 @@ export const getMyPage = async () => {
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
   const res = (await authAxios.get('/api/api/users/mypage')).data;
-  // console.log(res);
   return res;
 };
 
@@ -133,7 +126,6 @@ export const updateNickname = async (nickname: string) => {
       },
     )
     .then((res) => res.data);
-  console.log(res);
   return res;
 };
 
@@ -153,7 +145,6 @@ export const updateIntro = async (intro: string) => {
       },
     )
     .then((res) => res.data);
-  console.log(res);
   return res;
 };
 
@@ -163,7 +154,6 @@ export const getStreamKey = async (): Promise<string> => {
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
   const res = (await authAxios.get('/api/api/users/stream-key')).data;
-  console.log(res);
   return res;
 };
 
@@ -173,7 +163,6 @@ export const getRefreshStreamKey = async (): Promise<string> => {
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
   const res = (await authAxios.get('/api/api/users/refresh-stream-key')).data;
-  console.log(res);
   return res;
 };
 
@@ -197,7 +186,6 @@ export const getStreamDetail = async (streamId: string | undefined): Promise<Str
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
   const res = (await authAxios.get(`/live/api/live-streaming/${streamId}`)).data;
-  // console.log(res);
   return res;
 };
 
@@ -207,7 +195,6 @@ export const deleteStreaming = async (streamId: string | undefined): Promise<str
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
   const res = (await authAxios.delete(`/live/api/live-streaming/${streamId}`)).data;
-  console.log(res);
   return res;
 };
 
@@ -222,7 +209,6 @@ export const updateStreamDetail = async (
   const res = await authAxios
     .put(`/live/api/live-streaming/${streamId}`, newDetail)
     .then((res) => res.data);
-  console.log(res);
   return res;
 };
 
@@ -232,7 +218,6 @@ export const getUserInfo = async (userNickname: string) => {
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
   const res = (await authAxios.get(`/api/api/users/${userNickname}`)).data;
-  console.log(res);
   return res;
 };
 
@@ -246,7 +231,6 @@ export const getLiveStreamingAllList = async () => {
       `/live/api/live-streaming/all-streaming?page=0&size=999&sort=viewerCount,desc`,
     )
   ).data;
-  console.log(res);
   return res;
 };
 
@@ -261,7 +245,6 @@ export const getLiveStreamingList = async (pageNumber: number) => {
       `/live/api/live-streaming/all-streaming?page=${pageNumber}&size=${pageSize}&sort=viewerCount,desc`,
     )
   ).data;
-  console.log(res);
   return res;
 };
 
@@ -276,7 +259,6 @@ export const getLiveStreamingCategoryList = async (pageNumber: number, category:
       `/live/api/live-streaming/category?category=${category.toUpperCase()}&page=${pageNumber}&size=${pageSize}&sort=viewerCount,desc'`,
     )
   ).data;
-  console.log(res);
   return res;
 };
 
@@ -291,7 +273,6 @@ export const getLiveStreamingKeywordList = async (pageNumber: number, keyWord: s
       `/live/api/live-streaming/search?keyword=${keyWord}&page=${pageNumber}&size=${pageSize}&sort=viewerCount,desc`,
     )
   ).data;
-  console.log(res);
   return res;
 };
 
@@ -303,8 +284,6 @@ export const updateThumbnail = async (streamId: string | undefined, encodeString
   const res = await authAxios.put(`/live/api/live-streaming/thumbnail/${streamId}`, {
     thumbnail: encodeString,
   });
-
-  console.log(res.data);
   return res.data;
 };
 
@@ -314,7 +293,6 @@ export const getSubscribeList = async (nickname: string) => {
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
   const res = (await authAxios.get(`/api/api/users/subscribe/${nickname}?page=0&size=999`)).data;
-  console.log(res);
   return res.content;
 };
 
@@ -324,7 +302,6 @@ export const addSubscribe = async (nickname: string | undefined) => {
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
 
   const res = (await authAxios.post(`/api/api/users/subscribe`, nickname)).data;
-  console.log(res);
   return res;
 };
 
@@ -338,6 +315,5 @@ export const deleteSubscribe = async (nickname: string | undefined) => {
       data: nickname,
     })
   ).data;
-  console.log(res);
   return res;
 };
