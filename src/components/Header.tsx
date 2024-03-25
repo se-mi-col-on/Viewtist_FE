@@ -110,9 +110,6 @@ export default function Header() {
             <Link to={'streaming/obs_downLoad'}>
               <IoVideocamOutline className='text-xl' />
             </Link>
-            <Link to={'notify'}>
-              <GoBell className='text-xl hover:text-white' />
-            </Link>
             <DropDown onLogoutClick={handleLogoutClick} />
           </>
         ) : (
