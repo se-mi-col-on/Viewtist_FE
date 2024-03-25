@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
+import { useRecoilValue } from 'recoil';
+import { currentUserInfo } from '../../store';
 
 const NOTIFY_URL = '/live/api/notify/connect';
 
 export function useNotification() {
   const [notifyList, setNotifyList] = useState<string[]>([]);
+  const { nickname } = useRecoilValue(currentUserInfo);
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -42,7 +45,7 @@ export function useNotification() {
       eventSource.close();
       console.log('SSE 연결 종료');
     };
-  }, []);
+  }, [nickname]);
 
   return notifyList;
 }
