@@ -48,7 +48,7 @@ export default function ChannelSettings() {
     if (userInfo.nickname !== name) {
       updateName();
 
-      navigate(`/channel/${name}/muse`)
+      navigate(`/channel/${name}/muse`);
 
       setUserInfo({ ...userInfo, nickname: name });
       return;
@@ -80,7 +80,7 @@ export default function ChannelSettings() {
           </div>
         </div>
 
-        <div className='flex flex-col px-5 py-10 border-2 rounded-lg gap-y-10'>
+        <div className='flex flex-col px-5 py-10 border-2 rounded-lg border-slate-500 gap-y-10'>
           <div className='flex sm:flex-col sm:gap-y-3 md:flex-row md:gap-x-32'>
             <span className='w-56 font-bold'>프로필 이미지</span>
             <div className='flex items-center w-full sm:justify-center md:justify-start gap-x-4'>

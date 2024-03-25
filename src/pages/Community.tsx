@@ -64,7 +64,7 @@ const PostListItem = ({ myName, src, ...props }: IPostListItem) => {
   };
   return (
     <li
-      className='flex justify-between w-full p-3 border-2 rounded-lg cursor-pointer'
+      className='flex justify-between w-full p-3 border-2 rounded-lg cursor-pointer border-slate-500'
       onClick={() => navigate(`detail/${props.id}`)}
     >
       <div className='relative flex p-1 gap-x-12'>

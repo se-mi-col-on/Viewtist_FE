@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
 
 export interface ISubscribeList {
-  readonly id: number;
-  readonly name: string;
+  readonly streamerNickname: string;
+  readonly profilephotoURL: string;
 }
 export interface IPosts {
   readonly title: string;
@@ -85,4 +85,13 @@ export interface IContent {
 export interface IPostListItem extends IContent {
   src: string;
   myName: string;
+}
+
+export interface OutletContext {
+  data: IProfile;
+  isAuthor: boolean;
+}
+
+export interface SubscriptionProps extends ISubscribeList {
+  isAuthor: boolean;
 }
