@@ -8,7 +8,6 @@ const NOTIFY_URL = '/live/api/notify/connect';
 export function useNotification() {
   const [notifyList, setNotifyList] = useState<string[]>([]);
   const nickname = useRecoilValue(currentUserInfo)?.nickname || '';
-  console.log(nickname);
 
   useEffect(() => {
     if (!nickname) return;
