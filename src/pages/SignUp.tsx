@@ -20,8 +20,8 @@ export default function SignUp() {
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if(watch('pw')!==watch('pwRequired')){
-      alert('비밀번호가 일치하지 않습니다.')
+    if (watch('pw') !== watch('pwRequired')) {
+      alert('비밀번호가 일치하지 않습니다.');
       return;
     }
 
@@ -45,7 +45,6 @@ export default function SignUp() {
           },
         )
         .then((res) => res);
-      console.log(res);
 
       alert('회원가입 완료.');
       navigate('/sign-in');
@@ -68,7 +67,6 @@ export default function SignUp() {
           },
         )
         .then((res) => res);
-      console.log(res);
 
       setIsEmailVerified(true);
     } catch (e) {
@@ -108,7 +106,7 @@ export default function SignUp() {
           </button>
           {errors.email && <span className='text-red-700 '>{errors.email.message}</span>}
         </div>
-        
+
         <div className='relative z-0 w-full mb-5 group'>
           <input
             type='password'

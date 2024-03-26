@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
 import { GoBell } from 'react-icons/go';
 import { IoVideocamOutline } from 'react-icons/io5';
-import { isLoggedIn, currentUserInfo } from './../store';
+import { isLoggedIn, currentUserInfo, notifyList } from './../store';
 import ToggleThemeBtn from './ToggleThemeBtn';
 import Drawer from './Drawer';
 import { CiSearch } from 'react-icons/ci';
 import { motion } from 'framer-motion';
 import { useMyPage } from '../utils/channelSetting/useMyPage';
+import { useNotification } from '../utils/notify/useNotification';
 
 export default function Header() {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light',
   );
+  const notificationList = useNotification();
+  const setNotifyList = useSetRecoilState(notifyList);
+
+  useEffect(() => {
+    setNotifyList(notificationList);
+  }, [notificationList, setNotifyList]);
 
   useEffect(() => {
     localStorage.setItem('theme', theme!);
@@ -30,7 +37,7 @@ export default function Header() {
     }
   };
 
-  const [userInfo, setUserInfo] = useRecoilState(currentUserInfo);
+  const setUserInfo = useSetRecoilState(currentUserInfo);
   const [isLogIn, setIsLogIn] = useRecoilState(isLoggedIn);
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
@@ -45,8 +52,9 @@ export default function Header() {
   const handleLogoutClick = () => {
     localStorage.removeItem('accessToken'), localStorage.removeItem('refreshToken');
     setUserInfo({});
+    setNotifyList([]);
     setIsLogIn(false);
-    navigate('/');
+    navigate('/sign-in');
   };
   return (
     <header className='fixed top-0 left-0 z-10 flex items-center justify-between w-full px-1 py-3 bg-base-100'>
@@ -102,13 +110,7 @@ export default function Header() {
             <Link to={'streaming/obs_downLoad'}>
               <IoVideocamOutline className='text-xl' />
             </Link>
-            <Link to={'notify'}>
-              <GoBell className='text-xl hover:text-white' />
-            </Link>
-            <DropDown
-              profilePhotoUrl={userInfo?.profilePhotoUrl}
-              onLogoutClick={handleLogoutClick}
-            />
+            <DropDown onLogoutClick={handleLogoutClick} />
           </>
         ) : (
           <Link to={'sign-in'}>
@@ -120,16 +122,11 @@ export default function Header() {
   );
 }
 
-const DropDown = ({
-  profilePhotoUrl,
-  onLogoutClick,
-}: {
-  profilePhotoUrl: string;
-  onLogoutClick: () => void;
-}) => {
+const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
   const [version, setVersion] = useState(1);
 
   const { data: myInfo, isLoading } = useMyPage();
+  const notifyLength = useRecoilValue(notifyList).length;
 
   if (isLoading) return <h1>loading...</h1>;
   return (
@@ -147,7 +144,10 @@ const DropDown = ({
       >
         <li onClick={() => setVersion((prev) => (prev += 1))}>
           <Link to={'notify'}>
-            <button className='text-white'>알람</button>
+            <button className='flex items-center justify-center gap-2 text-white'>
+              <p>알람</p>
+              <p className='text-xs indicator-item badge badge-error'>{notifyLength}</p>
+            </button>
           </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
