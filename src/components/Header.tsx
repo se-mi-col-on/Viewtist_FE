@@ -152,21 +152,21 @@ const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
           <Link to={`channel/${myInfo?.nickname}`}>
-            <button className='text-white'>내 채널</button>
+            <button >내 채널</button>
           </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
           <Link to={`channel/${myInfo?.nickname}/subscriptions`}>
-            <button className='text-white'>내 구독 리스트</button>
+            <button >내 구독 리스트</button>
           </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
           <Link to={'channel-settings'}>
-            <button className='text-white'>설정</button>
+            <button >설정</button>
           </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
-          <button className='text-white' onClick={onLogoutClick}>
+          <button  onClick={onLogoutClick}>
             로그아웃
           </button>
         </li>

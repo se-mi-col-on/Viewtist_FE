@@ -21,7 +21,7 @@ export default function Submenu() {
     <ul className='sm:w-[11rem] md:w-[15rem] min-h-full p-4 menu bg-base-100 text-base-content rounded-r-lg'>
       <li>
         <Link to={'/'}>
-          <button className='flex items-center text-white gap-x-2'>
+          <button className='flex items-center gap-x-2'>
             <FaHome /> 홈
           </button>
         </Link>

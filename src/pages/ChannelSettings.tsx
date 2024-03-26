@@ -25,7 +25,7 @@ export default function ChannelSettings() {
       const formData = new FormData();
       formData.append('file', file);
 
-      return await authAxios
+      await authAxios
         .put('/api/api/users/profile-photo', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -41,28 +41,41 @@ export default function ChannelSettings() {
   const handleRemoveImg = async () => {
     const res = (await authAxios.put('/api/api/users/reset-profile-photo')).data;
     setImgUrl(res);
+    setUserInfo({ ...userInfo, profilePhotoUrl: res });
   };
 
   const handleUpdatePage = () => {
     if (name === '') {
+      // 닉네임 공백
       alert('retry');
       return;
     }
     if (userInfo.nickname !== name) {
+      // 닉네임 변경
       updateName();
 
-      navigate(`/channel/${name}`);
-
       setUserInfo({ ...userInfo, nickname: name });
+      navigate(`/channel/${name}`);
+      window.location.reload();
       return;
     }
     if (userInfo.channelIntroduction !== introduction) {
+      // 채널 소개 변경
       updateChannelIntro();
+      navigate(`/channel/${name}`);
+      window.location.reload();
       setUserInfo({ ...userInfo, channelIntroduction: introduction });
       return;
     }
 
-    // 업데이트 로직 수정
+    if (userInfo.nickname !== name && userInfo.channelIntroduction !== introduction) {
+      updateName();
+      updateChannelIntro();
+      navigate(`/channel/${name}`);
+      window.location.reload();
+      setUserInfo({ ...userInfo, nickname: name, channelIntroduction: introduction });
+      return;
+    }
   };
 
   return (

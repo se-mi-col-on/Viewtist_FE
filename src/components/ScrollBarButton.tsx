@@ -9,7 +9,7 @@ export default function ScrollBarButton() {
   };
 
   return (
-    <button onClick={scrollToTop} className='fixed px-4 py-2 btn btn-circle bottom-16 right-4'>
+    <button onClick={scrollToTop} className='fixed px-4 py-2 btn btn-circle bottom-4 right-4'>
       <FaArrowUp />
     </button>
   );
