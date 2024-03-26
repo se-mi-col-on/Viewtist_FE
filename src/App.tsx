@@ -1,15 +1,14 @@
-import { Outlet } from "react-router-dom";
-import Sidebar from "./components/Sidebar";
-import Header from "./components/Header";
+import { BrowserRouter } from 'react-router-dom';
+import Header from './components/Header';
+import ScrollBarButton from './components/ScrollBarButton';
+import Router from './Router';
 
 export default function App() {
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="w-full">
-        <Header />
-        <Outlet />
-      </div>
-    </div>
+    <BrowserRouter>
+      <Header />
+      <Router />
+      <ScrollBarButton />
+    </BrowserRouter>
   );
 }
