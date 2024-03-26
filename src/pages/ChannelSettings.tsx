@@ -40,7 +40,6 @@ export default function ChannelSettings() {
 
   const handleRemoveImg = async () => {
     const res = (await authAxios.put('/api/api/users/reset-profile-photo')).data;
-    console.log(res);
     setImgUrl(res);
     setUserInfo({ ...userInfo, profilePhotoUrl: res });
   };
