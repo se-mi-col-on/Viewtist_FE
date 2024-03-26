@@ -151,7 +151,7 @@ const DropDown = ({
           </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
-          <Link to={`channel/${myInfo?.nickname}/muse`}>
+          <Link to={`channel/${myInfo?.nickname}`}>
             <button className='text-white'>내 채널</button>
           </Link>
         </li>

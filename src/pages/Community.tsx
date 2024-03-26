@@ -1,6 +1,6 @@
 import { BsEmojiTear } from 'react-icons/bs';
 import { Link, Outlet, useMatch, useNavigate, useOutletContext } from 'react-router-dom';
-import { IPostListItem, IProfile } from '../types/interface';
+import { IPostListItem, OutletContext } from '../types/interface';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { TiPinOutline } from 'react-icons/ti';
 import { GoTrash } from 'react-icons/go';
@@ -11,7 +11,7 @@ import { useMyPage } from '../utils/channelSetting/useMyPage';
 export default function Community() {
   const { data: myData } = useMyPage();
   const { data, isLoading } = usePostsQuery();
-  const contextData: IProfile = useOutletContext();
+  const { data: contextData }: OutletContext = useOutletContext();
   const communityMatch = useMatch(`/channel/:name/community`);
   const posts = data?.filter((post) => post.nickname === contextData.nickname);
 
