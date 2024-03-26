@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
-import { GoBell } from 'react-icons/go';
 import { IoVideocamOutline } from 'react-icons/io5';
 import { isLoggedIn, currentUserInfo, notifyList } from './../store';
 import ToggleThemeBtn from './ToggleThemeBtn';
@@ -152,23 +151,21 @@ const DropDown = ({ onLogoutClick }: { onLogoutClick: () => void }) => {
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
           <Link to={`channel/${myInfo?.nickname}`}>
-            <button >내 채널</button>
+            <button>내 채널</button>
           </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
           <Link to={`channel/${myInfo?.nickname}/subscriptions`}>
-            <button >내 구독 리스트</button>
+            <button>내 구독 리스트</button>
           </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
           <Link to={'channel-settings'}>
-            <button >설정</button>
+            <button>설정</button>
           </Link>
         </li>
         <li onClick={() => setVersion((prev) => (prev += 1))}>
-          <button  onClick={onLogoutClick}>
-            로그아웃
-          </button>
+          <button onClick={onLogoutClick}>로그아웃</button>
         </li>
       </ul>
     </div>
