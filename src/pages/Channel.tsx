@@ -10,7 +10,6 @@ import { useMutation } from '@tanstack/react-query';
 import { addSubscribe, deleteSubscribe, getSubscribeList } from '../api';
 
 export default function Channel() {
-  const museMatch = useMatch('channel/:name/muse');
   const subscriptionsMatch = useMatch('channel/:name/subscriptions');
   const communityMatch = useMatch('/channel/:name/community');
   const writeMatch = useMatch('/channel/:name/community/write');
@@ -107,17 +106,6 @@ export default function Channel() {
         </div>
       </div>
       <ul className='flex items-center justify-center sm:text-xs sm:gap-x-5 md:text-lg md:gap-x-10'>
-        <li className={`relative ${museMatch && 'font-extrabold'}`}>
-          <Link to={`/channel/${data?.nickname}/muse`}>
-            <button>후원관리</button>
-          </Link>
-          {museMatch && (
-            <motion.div
-              layoutId='indicator'
-              className='absolute left-0 right-0 m-auto bg-red-700 rounded-full sm:w-2 sm:h-2 md:w-3 md:h-3 -bottom-3'
-            ></motion.div>
-          )}
-        </li>
         <li className={`relative ${subscriptionsMatch && 'font-extrabold'}`}>
           <Link to={`/channel/${data?.nickname}/subscriptions`}>
             {isAuthor ? (

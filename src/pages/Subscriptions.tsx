@@ -69,7 +69,7 @@ const SubscriptionListItem = (props: SubscriptionProps) => {
         <div className='inline-flex items-center gap-2 text-base font-semibold'>
           <button
             onClick={() => {
-              navigate(`/channel/${props.streamerNickname}/muse`);
+              navigate(`/channel/${props.streamerNickname}`);
             }}
             className='btn btn-outline btn-success btn-sm'
           >
@@ -88,7 +88,7 @@ const SubscriptionListItem = (props: SubscriptionProps) => {
           ) : (
             <button
               onClick={() => {
-                navigate(`/channel/${props.streamerNickname}/muse`);
+                navigate(`/channel/${props.streamerNickname}`);
               }}
               className='btn btn-outline btn-success btn-sm'
             >

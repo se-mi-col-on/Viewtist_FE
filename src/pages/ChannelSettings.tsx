@@ -48,7 +48,7 @@ export default function ChannelSettings() {
     if (userInfo.nickname !== name) {
       updateName();
 
-      navigate(`/channel/${name}/muse`);
+      navigate(`/channel/${name}`);
 
       setUserInfo({ ...userInfo, nickname: name });
       return;

@@ -33,7 +33,7 @@ export default function Submenu() {
           </summary>
           <ul>
             <li>
-              <Link to={`/channel/${userInfo?.nickname}/muse`}>
+              <Link to={`/channel/${userInfo?.nickname}`}>
                 <button className='flex items-center gap-x-2'>
                   <GrChannel /> 내 채널
                 </button>

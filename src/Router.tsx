@@ -4,7 +4,6 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Notify from './pages/Notify';
 import ChannelSettings from './pages/ChannelSettings';
-import Muse from './pages/Muse';
 import Subscriptions from './pages/Subscriptions';
 import Community from './pages/Community';
 import Channel from './pages/Channel';
@@ -30,7 +29,6 @@ export default function Router() {
 
         <Route element={<ProtectedRoute />}>
           <Route path='/channel/:name' element={<Channel />}>
-            <Route path='muse' element={<Muse />} />
             <Route path='subscriptions' element={<Subscriptions />} />
 
             <Route path='community' element={<Community />}>
