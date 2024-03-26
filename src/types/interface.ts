@@ -100,3 +100,7 @@ export interface IChatHistory {
   message: string;
   nickname: string;
 }
+
+export interface NotifyProps extends StreamingData {
+  onDelete: (streamerNickname: string) => void;
+}

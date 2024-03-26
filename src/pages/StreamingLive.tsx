@@ -3,8 +3,8 @@ import StreamVideo from '../components/StreamVideo';
 import { useStreamServer } from '../utils/streaming/useStreamServer';
 import { useStreamDetail } from '../utils/streaming/useStreamDetail';
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { currentUserInfo } from '../store';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { currentUserInfo, notifyList } from '../store';
 import { deleteStreaming, getSubscribeList, addSubscribe, deleteSubscribe } from '../api';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
@@ -22,6 +22,12 @@ export default function StreamingLive() {
   const [isSubscribe, setIsSubscribe] = useState<boolean>();
   const userInfo = useRecoilValue(currentUserInfo);
   const isAuthor = streamDetail?.streamerNickname === userInfo.nickname;
+  const [streamList, setStreamList] = useRecoilState(notifyList);
+
+  const updateNotifyList = (streamerNickname: string | undefined) => {
+    const newNotifyList = streamList.filter((nickname: string) => nickname !== streamerNickname);
+    setStreamList(newNotifyList);
+  };
 
   useEffect(() => {
     setStreamDetail(data);
@@ -36,7 +42,6 @@ export default function StreamingLive() {
   });
 
   const subscribe = () => {
-    console.log(streamDetail?.streamerNickname);
     if (streamDetail?.streamerNickname) {
       console.log('구독' + streamDetail?.streamerNickname);
       addFn();
@@ -67,6 +72,7 @@ export default function StreamingLive() {
     const result = confirm('정말 스트리밍을 종료하시겠습니까?');
     if (result) {
       await deleteStreaming(id);
+      updateNotifyList(streamDetail?.streamerNickname);
       navigate('/');
     }
   };
@@ -92,7 +98,7 @@ export default function StreamingLive() {
               <div>
                 <p className='text-orange-600 sm:text-sm'>{streamDetail?.streamerNickname}</p>
                 <p className='text-amber-400 sm:text-sm'>{streamDetail?.category}</p>
-                <p className='text-lime-400 sm:text-sm'>1,456명 시청 중</p>
+                <p className='text-lime-400 sm:text-sm'>{streamDetail?.viewerCount}명 시청 중</p>
               </div>
             </div>
             <div className='flex gap-2'>
@@ -121,7 +127,7 @@ export default function StreamingLive() {
           </div>
         </div>
       </div>
-        <Chat />
+      <Chat />
       <Modal streamId={id} />
     </div>
   );

@@ -20,7 +20,6 @@ export const useRefreshToken = (accessToken: string, refreshToken: string) => {
             },
           )
           .then((res) => res.data);
-        console.log(res);
         return res;
       } catch (e) {
         console.log(e);

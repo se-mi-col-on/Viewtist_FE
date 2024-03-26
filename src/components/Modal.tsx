@@ -13,7 +13,6 @@ export default function Modal({ streamId }: { streamId: string | undefined }) {
   const handleUpdateDetail = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      console.log(newDetail);
       updateStreamDetail();
       alert('변경사항이 적용되었습니다!');
     } catch (error) {

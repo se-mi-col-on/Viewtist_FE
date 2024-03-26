@@ -18,3 +18,9 @@ export const currentUserInfo = atom({
   default: {},
   effects_UNSTABLE: [persistAtom],
 });
+
+export const notifyList = atom({
+  key: 'notifyList',
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});

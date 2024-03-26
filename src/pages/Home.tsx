@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
 import { StreamingData } from '../types/interface';
 import {
@@ -8,8 +8,8 @@ import {
   getLiveStreamingKeywordList,
 } from '../api';
 import { useMyPage } from '../utils/channelSetting/useMyPage';
-import { currentUserInfo } from '../store';
-import { useSetRecoilState } from 'recoil';
+import { currentUserInfo, isLoggedIn } from '../store';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useEffect } from 'react';
 import thumbnailDefault from '../assets/thumbnail_default.jpg';
 
@@ -32,10 +32,19 @@ interface Page {
 export default function Home() {
   const { data: userInfo } = useMyPage();
   const setCurrentUserInfo = useSetRecoilState(currentUserInfo);
+  const hasLoginData = useRecoilValue(isLoggedIn);
+  const navigate = useNavigate();
+
   const { categoryName, streamerName } = useParams<{
     categoryName: string;
     streamerName: string;
   }>();
+
+  useEffect(() => {
+    if (!hasLoginData) {
+      navigate('/sign-in');
+    }
+  }, []);
 
   useEffect(() => {
     setCurrentUserInfo(userInfo);
