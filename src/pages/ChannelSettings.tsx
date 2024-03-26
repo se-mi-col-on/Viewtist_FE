@@ -31,7 +31,10 @@ export default function ChannelSettings() {
             'Content-Type': 'multipart/form-data',
           },
         })
-        .then((res) => setImgUrl(res.data));
+        .then((res) => {
+          setImgUrl(res.data);
+          setUserInfo({ ...userInfo, profilePhotoUrl: res.data });
+        });
     }
   };
 
