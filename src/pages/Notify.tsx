@@ -2,7 +2,7 @@ import { useRecoilState } from 'recoil';
 import { notifyList } from '../store';
 import { getLiveStreamingAllList } from '../api';
 import { useEffect, useState } from 'react';
-import { StreamingData } from '../types/interface';
+import { StreamingData, NotifyProps } from '../types/interface';
 import { useNavigate } from 'react-router-dom';
 
 export default function Notify() {
@@ -52,10 +52,6 @@ export default function Notify() {
       </div>
     </div>
   );
-}
-
-interface NotifyProps extends StreamingData {
-  onDelete: (streamerNickname: string) => void;
 }
 
 const NotifyItems = (props: NotifyProps) => {
