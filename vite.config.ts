@@ -10,7 +10,7 @@ export default defineConfig({
         target: 'http://ec2-15-164-226-60.ap-northeast-2.compute.amazonaws.com:8083',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
-        secure: false,
+        secure: true,
       },
       '/chat': {
         target: 'http://ec2-3-35-234-97.ap-northeast-2.compute.amazonaws.com:8081',
