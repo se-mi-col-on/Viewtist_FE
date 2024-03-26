@@ -11,7 +11,8 @@
       "src": "/chat/(.*)",
       "dest": "http://ec2-3-35-234-97.ap-northeast-2.compute.amazonaws.com:8081/$1",
       "headers": {
-        "host": "ec2-3-35-234-97.ap-northeast-2.compute.amazonaws.com"
+        "host": "ec2-3-35-234-97.ap-northeast-2.compute.amazonaws.com",
+        "Upgrade": "websocket"
       }
     },
     {
