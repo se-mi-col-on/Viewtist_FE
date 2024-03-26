@@ -23,7 +23,7 @@ export default function Chat() {
 
       const getPrevChat = async () => {
         const res = (await axios.get(`/chat/api/chat/${id}`)).data;
-        setChatHistory((prev) => [prev, ...res.content]);
+        setChatHistory((prev) => [prev, ...res.content.reverse()]);
       };
       getPrevChat();
 
