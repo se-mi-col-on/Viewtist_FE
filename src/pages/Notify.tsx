@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 export default function Notify() {
   const [streamerList, setStreamerList] = useRecoilState(notifyList);
   const [notifyData, setNotifyData] = useState([]);
-  console.log(notifyData);
 
   const handleDeleteNotify = (streamerNickname: string) => {
     const newNicknameList = streamerList.filter(
