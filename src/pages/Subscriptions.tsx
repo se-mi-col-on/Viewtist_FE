@@ -67,24 +67,26 @@ const SubscriptionListItem = (props: SubscriptionProps) => {
           <p className='text-sm font-medium '>{props.streamerNickname}</p>
         </div>
         <div className='inline-flex items-center gap-2 text-base font-semibold'>
-          <button
-            onClick={() => {
-              navigate(`/channel/${props.streamerNickname}`);
-            }}
-            className='btn btn-outline btn-success btn-sm'
-          >
-            채널 방문
-          </button>
           {props.isAuthor ? (
-            isSubscribe ? (
-              <button onClick={cancelSubscribe} className='btn btn-outline btn-error btn-sm'>
-                구독 취소
+            <>
+              <button
+                onClick={() => {
+                  navigate(`/channel/${props.streamerNickname}`);
+                }}
+                className='btn btn-outline btn-success btn-sm'
+              >
+                채널 방문
               </button>
-            ) : (
-              <button onClick={subscribe} className='btn btn-outline btn-success btn-sm'>
-                구독하기
-              </button>
-            )
+              {isSubscribe ? (
+                <button onClick={cancelSubscribe} className='btn btn-outline btn-error btn-sm'>
+                  구독 취소
+                </button>
+              ) : (
+                <button onClick={subscribe} className='btn btn-outline btn-success btn-sm'>
+                  구독하기
+                </button>
+              )}
+            </>
           ) : (
             <button
               onClick={() => {
