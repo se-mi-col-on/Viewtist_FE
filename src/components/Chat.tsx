@@ -11,7 +11,6 @@ import { useMyPage } from '../utils/channelSetting/useMyPage';
 export default function Chat() {
   const [msg, setMsg] = useState('');
   const [chatHistory, setChatHistory] = useState<IChatHistory[]>([]);
-  const [isTalk, setIsTalk] = useState(false);
   const client = useRef<CompatClient | null>(null);
   const { id } = useParams();
   const { data: myInfo, isLoading } = useMyPage();
@@ -49,13 +48,12 @@ export default function Chat() {
         }),
       );
     }
-    setIsTalk(true);
   };
 
   if (isLoading) return <h1>loading...</h1>;
   return (
-    <div className='flex flex-col border-2 h-[90%] sm:w-full lg:w-auto'>
-      <ChatList chats={chatHistory} isTalk={isTalk} />
+    <div className='mt-2 flex flex-col border-l-0 border-2 rounded-lg border-slate-500 h-[90%] sm:w-full lg:w-auto'>
+      <ChatList chats={chatHistory} />
       <ChatForm value={msg} onChange={setMsg} onSendMsg={sendMessage} />
     </div>
   );
