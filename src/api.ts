@@ -256,7 +256,7 @@ export const getLiveStreamingCategoryList = async (pageNumber: number, category:
 
   const res = (
     await authAxios.get(
-      `/live/api/live-streaming/category?category=${category.toUpperCase()}&page=${pageNumber}&size=${pageSize}&sort=viewerCount,desc'`,
+      `/live/api/live-streaming/category?category=${category.toUpperCase()}&page=${pageNumber}&size=${pageSize}&sort=viewerCount,desc`,
     )
   ).data;
   return res;
