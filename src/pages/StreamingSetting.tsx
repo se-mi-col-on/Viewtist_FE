@@ -6,10 +6,13 @@ import { STREAM_CATEGORY_LIST, STREAM_URL } from '../constants/constant';
 import { LiveSet } from '../types/interface';
 import { FaEye } from 'react-icons/fa';
 import { FaEyeSlash } from 'react-icons/fa';
+import { useRecoilValue } from 'recoil';
+import { currentUserInfo } from '../store';
 
 export default function StreamingSetting() {
   const navigate = useNavigate();
-  const { data } = useStreamKey();
+  const useInfo = useRecoilValue(currentUserInfo);
+  const { data } = useStreamKey(useInfo.nickname);
   const [streamKey, setStreamKey] = useState(data || '');
   const [isView, setIsView] = useState(false);
 
