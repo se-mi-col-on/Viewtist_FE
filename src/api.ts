@@ -148,12 +148,11 @@ export const updateIntro = async (intro: string) => {
   return res;
 };
 
-export const getStreamKey = async (): Promise<string> => {
+export const getStreamKey = async (streamerNickname: string | undefined): Promise<string> => {
   const accessToken = localStorage.getItem('accessToken');
   const refreshToken = localStorage.getItem('refreshToken');
   const authAxios = getAuthAxios(accessToken!, refreshToken!);
-
-  const res = (await authAxios.get('/api/api/users/stream-key')).data;
+  const res = (await authAxios.get(`/api/api/users/stream-key/${streamerNickname}`)).data;
   return res;
 };
 
