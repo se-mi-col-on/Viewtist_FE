@@ -1,30 +1,164 @@
-# React + TypeScript + Vite
+## 🌱 1인 예술가 스트리밍 사이트
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## **💪** 기획배경
 
-Currently, two official plugins are available:
+- 창작물을 공유하기에 높은 진입 장벽
+    - 현재 대부분의 창작물을 공유하기 위해서는 복잡한 프로세스와 많은 중개 단계 필요. 이로 인해 많은 창작자들이 자신의 작품을 세계와 공유하는 것에 어려움을 가짐
+- 1인 창작가들의 증가와 플랫폼 부족
+    - 1인 창작가들이 증가하는 추세에 비해 사업 단위의 비지니스가 아니고서는 부족한 개인 홍보 수단
+- 단순 창작 영상보다는 같은 관심사를 가진 사람들과 실시간으로 소통하면서 이야기할 수 있는 공간이 없다.
+- 현재 라이브 스트리밍을 서비스하는 플랫폼은 많지만 1인 창작자를 위한 스트리밍 서비스는 존재하지 않는다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## **💪 기대 효과**
 
-## Expanding the ESLint configuration
+- 실시간 소통으로 창작 활동 지원
+    - 스트리밍 플랫폼을 통해 실시간으로 창작 과정을 공유하고 소통. 이를 통해 창작자들은 다른 이용자들로부터 피드백을 받고, 동기부여 받음
+- 창작자들 간의 네트워킹 기회
+    - 스트리밍 플랫폼을 통해 다양한 창작자들이 서로의 작품을 보거나 공유하여 네트워킹 장이 생성됨
+- 창작물의 접근성 향상
+    - 스트리밍 플랫폼을 통해 창작물에 대한 접근성이 향상됨으로써 창작자들의 작품을 더 많은 이용자들에게 전달할 수 있는 기회를 제공
+- 창작자들의 홍보 및 브랜딩 기회 제공
+    - 스트리밍 플랫폼을 통해 창작자들은 자신의 작품을 홍보하고 브랜딩할 수 있는 기회를 가짐
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## **💪  기능 정의**
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- 회원
+    - 회원가입
+        - 비밀번호 (암호화)
+        - 닉네임
+        - 이메일 (Mailgun)
+    - 로그인 (JWT)
+        - OAuth2.0 KaKao 로그인
+        - 이메일 로그인
+    - 유저 권한 구분
+        - 로그인
+            - 스트리밍 , 채팅,시청
+    - 구독
+        - 구독한 스트리머 스트리밍 알람 (SSE)
+        - 구독한 스트리밍 리스트업
+- 마이 페이지
+    - 회원 정보 조회
+        - 닉네임
+        - 프로필 사진
+        - 이메일
+        - 구독 리스트
+    - 회원 정보 수정
+        - 닉네임
+        - 프로필 사진
+    - 자신의 스튜디오  정보 조회
+        - 스튜디오 이름
+        - 스튜디오 소개글
+     
+- 스트리밍
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+[실시간 스트리밍 구조 & 용어](https://www.notion.so/d6f4a6c96d6546e699359e3e83812308?pvs=21)
+
+- 실시간 스트리밍
+    - 스트리밍 제목
+    - 카테고리
+    - 시작 시각
+    - 시청자 수
+    - 스트리머 닉네임
+    - 스트리밍 송출 방식 (캠 / 화면공유)
+- 실시간 채팅 (Websocket)
+    - 유저 닉네임
+    - 유저 아이콘
+    - 내용
+    
+- 스트리밍 검색
+    - 키워드
+        - 카테고리
+        - 스트리머 닉네임
+        - 스트리밍 제목
+    - 정렬
+        - 시청자 많은 수
+- 알림 (SSE)
+    - 구독한 스트리밍 시작 알림
+
+- 스트리머 스튜디오 게시판
+    - 글 작성 (스트리머)
+    
+
+    
+
+## **💪 유저** 플로우
+
+- 회원가입
+    - 사용자가 사이트에 접속 후 회원 가입 버튼 클릭
+        - 필요한 정보(비밀번호,닉네임, 이메일) 
+        입력 후 가입 완료
+            - 이메일 인증을 통한 가입 완료
+- 로그인
+    - 사용자가 로그인 버튼 클릭
+        - 아이디와 비밀번호 입력 후 로그인
+        - OAuth를 이용한 로그인 선택 시, 카카오 계정 정보로 로그인
+- 마이 페이지
+    - 로그인한 사용자가 마이 페이지 접속
+        - 사용자 정보(닉네임, 프로필 사진, 이메일, 후원 재화, 구독 리스트) 확인
+        - 필요한 정보 수정
+
+- 스트리밍
+    - 사용자가 스트리밍 페이지 접속
+        - 스트리밍 중인 방송 선택 후 시청
+        - 방송 검색을 위해 키워드 입력 후 검색
+        - 원하는 방송 선택 후 시청
+- 스트리밍 설정
+    - 스트리밍 시작 전 (제목, 카테고리)
+    - 스트리밍 중 (제목 및 카테고리 수정, 스트리밍 종료)
+- 실시간 채팅
+    - 스트리밍 시청 중 채팅창에서 다른 시청자들과 채팅
+        
+- 구독
+    - 원하는 스트리머의 페이지 접속
+        - 구독 버튼 클릭으로 스트리머 구독
+        - 구독한 스트리머가 방송 시작 시 알림 받음
+
+- 스트리머 스튜디오 게시판
+    - 스트리머 스튜디오 접속
+        - 글 작성 버튼 클릭 후 글 작성
+        
+
+
+## 💪 기술 스펙
+
+
+
+### FE
+
+
+- Language: `TypeScript`
+
+
+
+- Framework:`TailwindCSS`
+
+
+- Animation:`Framer motion`
+
+- Design System : `DaisyUi`
+
+
+- Login: `JWT`, `OAuth 2.0`
+
+- State Management: `Recoil`, `React Query(Tanstack Query v5)`
+
+- Chat: `WebSocket` , `STOMP`
+
+- Data Fetching : `Axios`, `React Query(Tanstack Query v5)`
+
+- Deploy : `Vercel`
+
+
+- Design Tools : `Figma`
+
+
+
+
+- Communication Tools : `Notion`, `Discord`, `Slack`
+
+
+## 💪 시연 영상
+
+https://reinvented-foxtrot-432.notion.site/ViewTist-2608aeb65e724d12b0882873d81085d8?pvs=4
